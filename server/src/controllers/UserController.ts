@@ -1,10 +1,16 @@
 import { Request, Response} from 'express';
 import { validationResult } from 'express-validator';
 import { loginValidation, registerValidation } from '../validations/validations';
-import UserModal from '../models/User';
+import { Types } from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import UserModal from '../models/User';
 
+const signToken = (userId: Types.ObjectId) => jwt.sign(
+	{_id: userId},
+	process.env.JWT_SECRET!,
+	{expiresIn: '7d'}
+)
 
 export const login = async (req: Request, res: Response) => {
 	try {
@@ -26,15 +32,8 @@ export const login = async (req: Request, res: Response) => {
 			return res.status(404).json({ message: 'Wrong password or email' });
 		}
 
-		const token = jwt.sign(
-			{
-				_id: user._id,
-			},
-			'secret-token',
-			{
-				expiresIn: '7d',
-			}
-		)
+		const token = signToken(user._id);
+
 		const { passwordHash, ...userData } = user._doc;
 
 		return res.json({
@@ -44,7 +43,6 @@ export const login = async (req: Request, res: Response) => {
 		})
 
 	} catch (err) {
-		console.log(err);
 		return res.status(500).json({message: 'Failed to login user'});
 	}
 }
@@ -71,15 +69,7 @@ export const register = async (req: Request, res: Response) => {
 
 		const user = await doc.save();
 
-		const token = jwt.sign(
-			{
-				_id: user._id,
-			},
-			'secret-token',
-			{
-				expiresIn: '7d',
-			},
-		);
+		const token = signToken(user._id);
 
 		const { passwordHash, ...userData } = user._doc;
 
@@ -89,7 +79,6 @@ export const register = async (req: Request, res: Response) => {
 			user: {...userData, token},
 		});
 	} catch (err) {
-		console.log(err);
 		return res.status(500).json({message: 'Failed to register new user'});
 	}
 }
@@ -98,7 +87,6 @@ export const register = async (req: Request, res: Response) => {
 export const getMe = async (req: Request, res: Response) => {
 	try {
 		const user = await UserModal.findById(res.locals.userId);
-		console.log(res.locals);
 
 		if (!user) {
 			return res.status(400).json({message: 'Such user does not exist'});

@@ -8,7 +8,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
 	if (token) {
 		try {
-			const decoded = jwt.verify(token, 'secret-token') as DecodePayloadType;
+			const decoded = jwt.verify(token, process.env.JWT_SECRET!) as DecodePayloadType;
 			res.locals.userId = decoded._id;
 
 			next()

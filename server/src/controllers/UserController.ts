@@ -1,6 +1,6 @@
 import { Request, Response} from 'express';
 import { validationResult } from 'express-validator';
-import { loginValidation, userValidation } from '../validations/validations';
+import { loginValidation, registerValidation } from '../validations/validations';
 import UserModal from '../models/User';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -52,7 +52,7 @@ export const login = async (req: Request, res: Response) => {
 
 export const register = async (req: Request, res: Response) => {
 	try {
-		const errors = validationResult(userValidation);
+		const errors = validationResult(registerValidation);
 
 		if (!errors.isEmpty()) {
 			return res.status(400).json({'errors': errors.array()});

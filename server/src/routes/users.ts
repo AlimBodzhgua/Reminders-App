@@ -1,6 +1,5 @@
 import { Router, Request, Response } from 'express';
-
-import { loginValidation, userValidation } from '../validations/validations';
+import { loginValidation, registerValidation } from '../validations/validations';
 import checkAuth from '../utils/checkAuth';
 import * as UserController from '../controllers/UserController';
 
@@ -11,6 +10,6 @@ router.get('/', async (req: Request, res: Response) => {
 })
 router.get('/auth/me', checkAuth, UserController.getMe);
 router.post('/auth/login', loginValidation, UserController.login);
-router.post('/auth/register', userValidation, UserController.register);
+router.post('/auth/register', registerValidation, UserController.register);
 
 export default router;

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { IUser } from '../types/types';
+import { ReminderSchema } from './Reminder';
 
 const UserSchema = new mongoose.Schema<IUser>({
 	login: {
@@ -16,6 +17,9 @@ const UserSchema = new mongoose.Schema<IUser>({
 		required: true,
 	},
 	avatarUrl: String,
+	reminders: {
+		type: [ReminderSchema],
+	}
 })
 
 const UserModal = mongoose.model<IUser>('User', UserSchema);

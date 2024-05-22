@@ -1,19 +1,15 @@
 import { Router } from 'express';
-import { reminderCreateValidation } from '../validations/validations';
-import * as RemindersContoller from '../controllers/RemindersContoller';
+import { reminderCreateValidation, reminderUpdateValidation } from '../validations/validations';
+import * as ReminderContoller from '../controllers/ReminderContoller';
 import checkAuth from '../utils/checkAuth';
 
 const router = Router();
 
-
 // /reminders
-router.post('/', checkAuth, reminderCreateValidation, RemindersContoller.create);
-router.get('/', RemindersContoller.getAll);
-//router.get('/:id', RemindersContoller.getOne);
-//router.delete('/:id', checkAuth, RemindersContoller.remove);
-//router.patch('/:id', checkAuth, RemindersContoller.update);
-
-
-
+router.post('/', checkAuth, reminderCreateValidation, ReminderContoller.create);
+router.get('/', checkAuth, ReminderContoller.getAll);
+router.get('/:id', checkAuth, ReminderContoller.getOne);
+router.delete('/:id', checkAuth, ReminderContoller.remove);
+router.patch('/:id', checkAuth, reminderUpdateValidation, ReminderContoller.update);
 
 export default router;

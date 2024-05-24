@@ -1,3 +1,5 @@
+/*@import url('https://fonts.cdnfonts.com/css/sf-pro-display');*/
+@import url(https://db.onlinewebfonts.com/c/060fd297f19446447a9a1325ad5b889b?family=SF+Pro+Rounded);
 
 *,
 *:after,
@@ -7,4 +9,7 @@
 	margin: 0;
 }
 
-
+#root {
+	/*font-family: 'SF Pro Display', sans-serif;*/
+	font-family: 'SF Pro Rounded';
+}

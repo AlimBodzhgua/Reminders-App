@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface CounterStateSchema {
 	count: number,
@@ -6,7 +6,7 @@ export interface CounterStateSchema {
 
 const initialState: CounterStateSchema = {
 	count: 0,
-}
+};
 
 const counterSlice = createSlice({
 	name: 'counterSlice',
@@ -19,7 +19,7 @@ const counterSlice = createSlice({
 			state.count -= 1;
 		}
 	}
-})
+});
 
 export const { reducer: counterReducer } = counterSlice;
 export const { actions: counterActions } = counterSlice;

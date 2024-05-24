@@ -4,7 +4,7 @@
     "main": "index.js",
     "scripts": {
         "start": "vite --port 3000 --open",
-        "lint:ts": "eslint -c .eslintrc.js --ext .ts,.tsx, .",
+        "lint:ts": "npx eslint",
         "lint:ts:fix": "npm run lint:ts -- --fix"
     },
     "keywords": [],
@@ -13,6 +13,7 @@
     "description": "",
     "dependencies": {
         "@reduxjs/toolkit": "^2.2.5",
+        "@typescript-eslint/parser": "^7.10.0",
         "@vitejs/plugin-react": "^4.3.0",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
@@ -20,9 +21,16 @@
         "vite": "^5.2.11"
     },
     "devDependencies": {
+        "@eslint/compat": "^1.0.1",
+        "@eslint/js": "^9.3.0",
         "@types/react": "^18.3.2",
         "@types/react-dom": "^18.3.0",
+        "eslint": "^9.3.0",
+        "eslint-plugin-react": "^7.34.1",
+        "globals": "^15.3.0",
         "typescript": "^5.4.5",
+        "typescript-eslint": "^7.10.0",
+        "vite-plugin-eslint": "^1.8.1",
         "vite-tsconfig-paths": "^4.3.2"
     }
 }

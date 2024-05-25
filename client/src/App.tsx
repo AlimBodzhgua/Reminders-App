@@ -1,8 +1,11 @@
-import { FC, memo} from 'react';
+import { FC, memo, useEffect } from 'react';
 import { Layout } from 'antd';
 import { Sider } from 'components/Layout/Sider';
 import { Header } from 'components/Layout/Header';
 import { Content } from 'components/Layout/Content';
+import { useAppDispatch } from 'hooks/redux';
+import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
+import { userActions } from 'store/slices/userSlice';
 
 const layoutStyle = {
 	overflow: 'hidden',
@@ -12,6 +15,15 @@ const layoutStyle = {
 };
 
 const App: FC = memo(() => {
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		const user = localStorage.getItem(USER_LOCALSTORAGE_KEY);
+		if (user) {
+			dispatch(userActions.initAuthData(user));
+		}
+	}, [dispatch]);
+
 	return (
 		<Layout style={layoutStyle}>
 			<Sider />

@@ -1,20 +1,33 @@
-import { FC, memo } from 'react';
+import { FC, memo, useCallback } from 'react';
 import { Button, Flex, Form, Input } from 'antd';
 import { emailRules, loginRules, passwordRules } from 'constants/rules';
+import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
+import { selectUserIsLoading } from 'store/selectors/userSelectors';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { registerUser } from 'store/actions/userActions';
 
 export const RegisterForm: FC = memo(() => {
 	const [form] = Form.useForm();
+	const dispatch = useAppDispatch();
+	const isLoading = useAppSelector(selectUserIsLoading);
 
-	const onSubmit = () => {
-		const email = form.getFieldValue('email');
-		const password = form.getFieldValue('password');
-		const login = form.getFieldValue('login');
-		console.log(email, password, login);
-	};
+	const onSubmit = useCallback(async () => {
+		const data = {
+			email: form.getFieldValue('email'),
+			password: form.getFieldValue('password'),
+			login: form.getFieldValue('login'),
+		};
 
-	const onReset = () => {
+		const { payload, meta } = await dispatch(registerUser(data));
+
+		if (meta.requestStatus === 'fulfilled') {
+			localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(payload));
+		}
+	}, [dispatch]);
+
+	const onReset = useCallback(() => {
 		form.resetFields();
-	};
+	}, []);
 
 	return (
 		<Form
@@ -29,14 +42,14 @@ export const RegisterForm: FC = memo(() => {
 				rules={emailRules}
 				tooltip='This field is required'
 			>
-				<Input />
+				<Input type='email' disabled={isLoading}/>
 			</Form.Item>
 			<Form.Item
 				label='Login'
 				name='login'
 				rules={loginRules}
 			>
-				<Input />
+				<Input type='text' disabled={isLoading}/>
 			</Form.Item>
 			<Form.Item
 				label='Password'
@@ -45,17 +58,22 @@ export const RegisterForm: FC = memo(() => {
 				required
 				tooltip='This field is required'
 			>
-				<Input type='password' />
+				<Input type='password' disabled={isLoading}/>
 			</Form.Item>
 			<Form.Item>
 				<Flex justify='end' gap='8px'>
-					<Button type='primary' htmlType='submit'>
+					<Button
+						type='primary'
+						htmlType='submit'
+						loading={isLoading}
+					>
 						Register
 					</Button>
 					<Button
 						type='primary'
 						htmlType='button'
 						onClick={onReset}
+						loading={isLoading}
 					>
 						Reset
 					</Button>

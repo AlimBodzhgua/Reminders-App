@@ -1,5 +1,5 @@
-import { CounterStateSchema } from 'store/slices/counterSlice';
+import { UserStateSchema } from 'store/slices/userSlice';
 
 export interface StateSchema {
-	counter: CounterStateSchema
+	user: UserStateSchema;
 }

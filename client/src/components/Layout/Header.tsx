@@ -1,6 +1,10 @@
-import { FC, CSSProperties, memo, useState } from 'react';
+import { FC, CSSProperties, memo, useState, useCallback } from 'react';
 import { Button, Flex, Layout, Space } from 'antd';
 import { LoginModal, RegisterModal } from 'components/Auth';
+import { selectUserAuthData } from 'store/selectors/userSelectors';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { userActions } from 'store/slices/userSlice';
+import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
 
 const headerStyle: CSSProperties = {
 	textAlign: 'center',
@@ -11,35 +15,37 @@ const headerStyle: CSSProperties = {
 };
 
 export const Header: FC = memo(() => {
-	const [isAuth, setIsAuth] = useState<boolean>(true);
+	const authData = useAppSelector(selectUserAuthData);
 	const [isLoginModal, setIsLoginModal] = useState<boolean>(false);
 	const [isRegisterModal, setIsRegisterModal] = useState<boolean>(false);
+	const dispatch = useAppDispatch();
 
-	const onLogout = () => {
-		setIsAuth(false);
-	};
-
-	const onOpenLogin = () => {
+	const onOpenLogin = useCallback(() => {
 		setIsLoginModal(true);
-	};
+	}, []);
 
-	const onOpenRegister = () => {
+	const onOpenRegister = useCallback(() => {
 		setIsRegisterModal(true);
-	};
+	}, []);
 
-	const onCloseRegister = () => {
+	const onCloseRegister = useCallback(() => {
 		setIsRegisterModal(false);
-	};
+	}, []);
 
-	const onCloseLogin = () => {
+	const onCloseLogin = useCallback(() => {
 		setIsLoginModal(false);
-	};
+	}, []);
+
+	const onLogout = useCallback(() => {
+		dispatch(userActions.logout());
+		localStorage.removeItem(USER_LOCALSTORAGE_KEY);
+	}, [dispatch]);
 
 
 	return (
 		<Layout.Header style={headerStyle}>
 			<Flex justify='end' align='center' style={{height: '100%'}}>
-				{isAuth 
+				{authData 
 					?   <Button onClick={onLogout}>Logout</Button>
 					:   <Space>
 						<Button onClick={onOpenLogin}>Login</Button>

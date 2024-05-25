@@ -14,7 +14,12 @@ export const LoginModal: FC<LoginModalProps> = memo((props) => {
 	} = props;
 
 	return (
-		<Modal title='Login' open={isOpen} onCancel={onClose}>
+		<Modal
+			title='Login'
+			open={isOpen}
+			onCancel={onClose}
+			footer={null}
+		>
 			<LoginForm />
 		</Modal>
 	)

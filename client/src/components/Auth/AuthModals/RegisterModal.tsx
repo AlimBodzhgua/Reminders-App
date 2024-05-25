@@ -14,7 +14,12 @@ export const RegisterModal: FC<RegisterModalProps> = memo((props) => {
 	} = props;
 
 	return (
-		<Modal title='Register' open={isOpen} onCancel={onClose}>
+		<Modal
+			title='Register'
+			open={isOpen}
+			onCancel={onClose}
+			footer={null}
+		>
 			<RegisterForm />
 		</Modal>
 	)

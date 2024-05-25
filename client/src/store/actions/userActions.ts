@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IUser } from 'types/user';
-import { IAuthUser } from 'types/user';
+import { IAuthUser } from 'types/auth';
 import appAxios from 'api/axios';
 
 export const registerUser = createAsyncThunk<

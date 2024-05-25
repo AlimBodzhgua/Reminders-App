@@ -73,11 +73,7 @@ export const register = async (req: Request, res: Response) => {
 
 		const { passwordHash, ...userData } = user._doc;
 
-		return res.json({
-			success: true,
-			message: 'User succesfully created',
-			user: {...userData, token},
-		});
+		return res.json({...userData, token});
 	} catch (err) {
 		return res.status(500).json({message: 'Failed to register new user'});
 	}

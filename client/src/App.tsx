@@ -5,7 +5,7 @@ import { Header } from 'components/Layout/Header';
 import { Content } from 'components/Layout/Content';
 import { useAppDispatch } from 'hooks/redux';
 import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
-import { userActions } from 'store/slices/userSlice';
+import { initUserAuth } from 'store/actions/userActions';
 
 const layoutStyle = {
 	overflow: 'hidden',
@@ -20,7 +20,8 @@ const App: FC = memo(() => {
 	useEffect(() => {
 		const user = localStorage.getItem(USER_LOCALSTORAGE_KEY);
 		if (user) {
-			dispatch(userActions.initAuthData(user));
+			//dispatch(userActions.initAuthData(user));
+			dispatch(initUserAuth(user));
 		}
 	}, [dispatch]);
 

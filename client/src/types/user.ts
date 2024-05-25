@@ -11,7 +11,7 @@ export interface IReminder {
 	details?: IReminderDetails;
 }
 
-export interface ListReminder {
+export interface IListReminder {
 	id: string;
 	name: string;
 	icon?: string;
@@ -22,7 +22,7 @@ export interface IUser {
 	id: string;
 	login?: string;
 	email: string;
-	password: string;
+	token: string;
 	avatarUrl?: string;
-	list?: Array<ListReminder>
+	list?: Array<IListReminder>
 }

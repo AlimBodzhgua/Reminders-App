@@ -5,6 +5,7 @@ import { selectUserIsLoading } from 'store/selectors/userSelectors';
 import { useAppSelector, useAppDispatch } from 'hooks/redux';
 import { loginUser } from 'store/actions/userActions';
 import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
+import { IUser } from 'types/user';
 
 export const LoginForm: FC = memo(() => {
 	const [form] = Form.useForm();
@@ -17,9 +18,10 @@ export const LoginForm: FC = memo(() => {
 			password: form.getFieldValue('password'),
 		}
 		const { meta, payload } = await dispatch(loginUser(data));
-		
+
 		if (meta.requestStatus === 'fulfilled') {
-			localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(payload));
+			const { token } = payload as IUser;
+			localStorage.setItem(USER_LOCALSTORAGE_KEY, token);
 		}
 	}, [dispatch]);
 

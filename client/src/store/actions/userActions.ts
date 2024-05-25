@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IUser } from 'types/user';
+import { IAuthUser } from 'types/user';
 import appAxios from 'api/axios';
 
 export const registerUser = createAsyncThunk<
 	IUser,
-	Pick<IUser, 'email' | 'login' | 'password'>,
+	IAuthUser,
 	{ rejectValue: string }
 >(
 	'register',
@@ -27,7 +28,7 @@ export const registerUser = createAsyncThunk<
 
 export const loginUser = createAsyncThunk<
 	IUser,
-	Pick<IUser, 'email' | 'password'>,
+	Omit<IAuthUser, 'login'>,
 	{ rejectValue: string }
 >(
 	'login',
@@ -39,6 +40,24 @@ export const loginUser = createAsyncThunk<
 
 		try {
 			const response = await appAxios.post('/users/auth/login', body);
+			return response.data;
+		} catch (err) {
+			return rejectWithValue(JSON.stringify(err));
+		}
+	}
+);
+
+export const initUserAuth = createAsyncThunk<
+	IUser,
+	string,
+	{ rejectValue: string }
+>(
+	'initUserAuth',
+	async (token, { rejectWithValue }) => {
+		const headers = { 'Authorization': `Bearer ${token}`};
+		try {
+			//appAxios.defaults.headers.common['Authorization'] = `Bearer ${token}` 
+			const response = await appAxios.get('users/auth/me', {headers: headers});
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));

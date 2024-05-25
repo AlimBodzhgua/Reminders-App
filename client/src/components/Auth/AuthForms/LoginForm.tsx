@@ -8,7 +8,8 @@ export const LoginForm: FC = memo(() => {
 	const onSubmit = () => {
 		const email = form.getFieldValue('email');
 		const password = form.getFieldValue('password');
-	}
+		console.log(email, password);
+	};
 
 	return (
 		<Form
@@ -37,7 +38,7 @@ export const LoginForm: FC = memo(() => {
 				<Button type='primary' htmlType='submit'>
 					Login
 				</Button>
-		    </Form.Item>
+			</Form.Item>
 		</Form>
-	)
+	);
 });

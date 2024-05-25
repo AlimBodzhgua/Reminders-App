@@ -22,5 +22,5 @@ export const RegisterModal: FC<RegisterModalProps> = memo((props) => {
 		>
 			<RegisterForm />
 		</Modal>
-	)
+	);
 });

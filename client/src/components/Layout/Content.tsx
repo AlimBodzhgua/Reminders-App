@@ -12,5 +12,5 @@ const contentStyle: CSSProperties = {
 export const Content: FC = memo(() => {
 	return (
 		<Layout.Content style={contentStyle}>Content</Layout.Content>
-	)
+	);
 });

@@ -22,5 +22,5 @@ export const LoginModal: FC<LoginModalProps> = memo((props) => {
 		>
 			<LoginForm />
 		</Modal>
-	)
+	);
 });

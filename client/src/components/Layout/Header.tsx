@@ -17,23 +17,23 @@ export const Header: FC = memo(() => {
 
 	const onLogout = () => {
 		setIsAuth(false);
-	}
+	};
 
 	const onOpenLogin = () => {
 		setIsLoginModal(true);
-	}
+	};
 
 	const onOpenRegister = () => {
 		setIsRegisterModal(true);
-	}
+	};
 
 	const onCloseRegister = () => {
 		setIsRegisterModal(false);
-	}
+	};
 
 	const onCloseLogin = () => {
 		setIsLoginModal(false);
-	}
+	};
 
 
 	return (
@@ -42,19 +42,19 @@ export const Header: FC = memo(() => {
 				{isAuth 
 					?   <Button onClick={onLogout}>Logout</Button>
 					:   <Space>
-							<Button onClick={onOpenLogin}>Login</Button>
-							<Button onClick={onOpenRegister}>Regiser</Button>
-							<LoginModal
-								isOpen={isLoginModal}
-								onClose={onCloseLogin}
-							/>
-							<RegisterModal
-								isOpen={isRegisterModal}
-								onClose={onCloseRegister}
-							/>
-						</Space>
+						<Button onClick={onOpenLogin}>Login</Button>
+						<Button onClick={onOpenRegister}>Regiser</Button>
+						<LoginModal
+							isOpen={isLoginModal}
+							onClose={onCloseLogin}
+						/>
+						<RegisterModal
+							isOpen={isRegisterModal}
+							onClose={onCloseRegister}
+						/>
+					</Space>
 				}
 			</Flex>
 		</Layout.Header>
-	)
+	);
 });

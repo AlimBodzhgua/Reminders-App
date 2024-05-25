@@ -2,16 +2,9 @@ import { CSSProperties, FC, memo, useState, useCallback } from 'react';
 import { Input, Radio, Flex, Divider, Form, RadioChangeEvent } from 'antd';
 import { colorList } from 'constants/colorList';
 
-
-const radioButtonStyle: CSSProperties = {
-	borderRadius: '50%',
-	border: 'none',
-	textAlign: 'center'
-}
-
 const dividerStyle: CSSProperties = {
 	height: '45px'
-}
+};
 
 export const AddListForm: FC = memo(() => {
 	const [color, setColor] = useState<string>('');
@@ -62,5 +55,5 @@ export const AddListForm: FC = memo(() => {
 				</Form.Item>
 			</Flex>
 		</Form>
-	)
+	);
 });

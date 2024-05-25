@@ -10,11 +10,11 @@ export const RegisterForm: FC = memo(() => {
 		const password = form.getFieldValue('password');
 		const login = form.getFieldValue('login');
 		console.log(email, password, login);
-	}
+	};
 
 	const onReset = () => {
 		form.resetFields();
-	}
+	};
 
 	return (
 		<Form
@@ -60,7 +60,7 @@ export const RegisterForm: FC = memo(() => {
 						Reset
 					</Button>
 				</Flex>
-		    </Form.Item>
+			</Form.Item>
 		</Form>
-	)
+	);
 });

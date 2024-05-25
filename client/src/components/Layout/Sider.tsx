@@ -2,7 +2,6 @@ import { FC, CSSProperties, memo, useState } from 'react';
 import { SearchOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Layout, Input, Button, Modal } from 'antd';
 import { AddListForm } from 'components/AddListForm';
-import { colorList } from 'constants/colorList';
 
 const siderStyle: CSSProperties = {
 	textAlign: 'center',
@@ -17,15 +16,15 @@ export const Sider: FC = memo(() => {
 
 	const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(e.target.value);
-	}
+	};
 
 	const onOpenModal = () => {
 		setIsOpen(true);
-	}
+	};
 
 	const onCloseModal = () => {
 		setIsOpen(false);
-	}
+	};
 
 	return (
 		<Layout.Sider width='25%' style={siderStyle}>

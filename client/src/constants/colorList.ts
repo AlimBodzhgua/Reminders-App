@@ -11,4 +11,4 @@ export const colorList: string[] = [
 	'#bf8040', //brown
 	'#c2c2a3', //grey
 	'#ffcc99',
-]
+];

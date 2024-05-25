@@ -4,7 +4,7 @@ import appAxios from 'api/axios';
 
 export const registerUser = createAsyncThunk<
 	IUser,
-	Omit<IUser, 'list' | 'id'>,
+	Pick<IUser, 'email' | 'login' | 'password'>,
 	{ rejectValue: string }
 >(
 	'register',
@@ -26,14 +26,20 @@ export const registerUser = createAsyncThunk<
 
 
 export const loginUser = createAsyncThunk<
-	void,
-	Omit<IUser, 'list' | 'login'>,
+	IUser,
+	Pick<IUser, 'email' | 'password'>,
 	{ rejectValue: string }
 >(
 	'login',
 	async (user, { rejectWithValue }) => {
+		const body = {
+			email: user.email,
+			password: user.password,
+		};
+
 		try {
-			console.log(user);
+			const response = await appAxios.post('/users/auth/login', body);
+			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
 		}

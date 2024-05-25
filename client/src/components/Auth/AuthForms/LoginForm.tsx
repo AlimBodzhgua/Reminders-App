@@ -1,15 +1,27 @@
-import { FC, memo } from 'react';
+import { FC, memo, useCallback } from 'react';
 import { Form, Input, Button } from 'antd';
 import { emailRules, passwordRules } from 'constants/rules';
+import { selectUserIsLoading } from 'store/selectors/userSelectors';
+import { useAppSelector, useAppDispatch } from 'hooks/redux';
+import { loginUser } from 'store/actions/userActions';
+import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
 
 export const LoginForm: FC = memo(() => {
 	const [form] = Form.useForm();
+	const dispatch = useAppDispatch();
+	const isLoading = useAppSelector(selectUserIsLoading);
 
-	const onSubmit = () => {
-		const email = form.getFieldValue('email');
-		const password = form.getFieldValue('password');
-		console.log(email, password);
-	};
+	const onSubmit = useCallback(async () => {
+		const data = {
+			email: form.getFieldValue('email'),
+			password: form.getFieldValue('password'),
+		}
+		const { meta, payload } = await dispatch(loginUser(data));
+		
+		if (meta.requestStatus === 'fulfilled') {
+			localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(payload));
+		}
+	}, [dispatch]);
 
 	return (
 		<Form
@@ -24,7 +36,7 @@ export const LoginForm: FC = memo(() => {
 				rules={emailRules}
 				tooltip='This field is required.'
 			>
-				<Input />
+				<Input type='email' disabled={isLoading}/>
 			</Form.Item>
 			<Form.Item
 				label='Password'
@@ -32,10 +44,14 @@ export const LoginForm: FC = memo(() => {
 				rules={passwordRules}
 				tooltip='This field is required.'
 			>
-				<Input type='password' />
+				<Input type='password' disabled={isLoading}/>
 			</Form.Item>
 			<Form.Item>
-				<Button type='primary' htmlType='submit'>
+				<Button
+					type='primary'
+					htmlType='submit'
+					loading={isLoading}
+				>
 					Login
 				</Button>
 			</Form.Item>

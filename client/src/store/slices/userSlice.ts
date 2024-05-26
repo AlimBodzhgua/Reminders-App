@@ -13,7 +13,7 @@ const initialState: UserStateSchema = {
 	authData: null,
 	isLoading: false,
 	error: undefined,
-}
+};
 
 const userSlice = createSlice({
 	name: 'userSlice',
@@ -65,9 +65,9 @@ const userSlice = createSlice({
 			.addCase(initUserAuth.rejected, (state, action) => {
 				state.isLoading = false;
 				state.error = action.payload;
-			})
+			});
 	}
-})
+});
 
 export const { reducer: userReducer } = userSlice;
 export const { actions: userActions } = userSlice;

@@ -20,7 +20,6 @@ const App: FC = memo(() => {
 	useEffect(() => {
 		const user = localStorage.getItem(USER_LOCALSTORAGE_KEY);
 		if (user) {
-			//dispatch(userActions.initAuthData(user));
 			dispatch(initUserAuth(user));
 		}
 	}, [dispatch]);

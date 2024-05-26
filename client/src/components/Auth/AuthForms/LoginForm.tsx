@@ -16,7 +16,7 @@ export const LoginForm: FC = memo(() => {
 		const data = {
 			email: form.getFieldValue('email'),
 			password: form.getFieldValue('password'),
-		}
+		};
 		const { meta, payload } = await dispatch(loginUser(data));
 
 		if (meta.requestStatus === 'fulfilled') {

@@ -20,7 +20,7 @@ const headerStyle: CSSProperties = {
 const iconStyle: CSSProperties = {
 	fontSize: '26px',
 	color: '#fff'
-}
+};
 
 export const Header: FC = memo(() => {
 	const authData = useAppSelector(selectUserAuthData);
@@ -59,34 +59,34 @@ export const Header: FC = memo(() => {
 			key: '2',
 			label: <Button onClick={onLogout}>Logout</Button>
 		},
-	], [])
+	], []);
 
 	return (
 		<Layout.Header style={headerStyle}>
 			<Flex justify='end' align='center' style={{height: '100%'}}>
 				{authData 
 					?   <Space size='small'>
-							<Dropdown menu={{ items }} placement='bottom'>
-								<Button type='text'>
-							    	<UserOutlined style={iconStyle}/>
-								</Button>
-							</Dropdown>
+						<Dropdown menu={{ items }} placement='bottom'>
 							<Button type='text'>
-								<PlusSquareOutlined style={iconStyle}/>
+								<UserOutlined style={iconStyle}/>
 							</Button>
-						</Space>
+						</Dropdown>
+						<Button type='text'>
+							<PlusSquareOutlined style={iconStyle}/>
+						</Button>
+					</Space>
 					:   <Space>
-							<Button onClick={onOpenLogin}>Login</Button>
-							<Button onClick={onOpenRegister}>Regiser</Button>
-							<LoginModal
-								isOpen={isLoginModal}
-								onClose={onCloseLogin}
-							/>
-							<RegisterModal
-								isOpen={isRegisterModal}
-								onClose={onCloseRegister}
-							/>
-						</Space>
+						<Button onClick={onOpenLogin}>Login</Button>
+						<Button onClick={onOpenRegister}>Regiser</Button>
+						<LoginModal
+							isOpen={isLoginModal}
+							onClose={onCloseLogin}
+						/>
+						<RegisterModal
+							isOpen={isRegisterModal}
+							onClose={onCloseRegister}
+						/>
+					</Space>
 				}
 			</Flex>
 		</Layout.Header>

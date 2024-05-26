@@ -1,6 +1,7 @@
 import { CSSProperties, FC, memo, useState, useCallback } from 'react';
-import { Input, Radio, Flex, Divider, Form, RadioChangeEvent } from 'antd';
-import { colorList } from 'constants/colorList';
+import { Input, Flex, Divider, Form, RadioChangeEvent } from 'antd';
+import { IconPicker } from './IconPicker';
+import { AppColorPicker } from './AppColorPicker';
 
 const dividerStyle: CSSProperties = {
 	height: '45px'
@@ -13,23 +14,6 @@ export const AddListForm: FC = memo(() => {
 		setColor(e.target.value);
 	}, []);
 
-	const renderColorlist = useCallback(() => (
-		colorList.map(color => (
-			<Radio.Button
-				key={color}
-				value={color}
-				style={{
-					backgroundColor: color,
-					fontSize: '2px',
-					color: color
-				}}
-			>
-				{color}
-			</Radio.Button>
-		))
-	), [colorList]);
-	
-
 	return (
 		<Form>
 			<Form.Item label='Name:'>
@@ -37,21 +21,13 @@ export const AddListForm: FC = memo(() => {
 			</Form.Item>
 			<Flex align='center'>
 				<Form.Item label='Color:'>
-					<Radio.Group
-						size='small'
-						onChange={onChangeColor}
-						value={color}
-					>
-						<Flex wrap gap='small' style={{width: '50%'}}>
-							{renderColorlist()}
-						</Flex>
-					</Radio.Group>
+					<AppColorPicker color={color} onChange={onChangeColor}/>
 				</Form.Item>
 
 				<Divider type='vertical' style={dividerStyle}/>
 
 				<Form.Item label='Icon:'>
-					
+					<IconPicker color={color}/>
 				</Form.Item>
 			</Flex>
 		</Form>

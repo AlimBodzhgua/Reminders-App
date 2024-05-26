@@ -2,6 +2,7 @@
     "compilerOptions": {
         "module": "esnext",
         "target": "es2016",
+        "outDir": "./dist",
         "allowJs": true,
         "jsx": "react-jsx",
         "moduleResolution": "node",
@@ -13,6 +14,10 @@
         "baseUrl": ".",
         "paths": {
             "*": ["./src/*"]
-        }
-    }
+        },
+    },
+    "exclude": [
+        "node_modules",
+        "./dist/**/*"
+    ]
 }

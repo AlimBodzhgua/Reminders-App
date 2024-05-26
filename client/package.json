@@ -4,6 +4,7 @@
     "main": "index.js",
     "scripts": {
         "start": "vite --port 3000 --open",
+        "build:dev": "tsc && vite build",
         "lint:ts": "npx eslint",
         "lint:ts:fix": "npm run lint:ts -- --fix"
     },

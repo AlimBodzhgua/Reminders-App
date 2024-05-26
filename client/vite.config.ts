@@ -8,7 +8,7 @@ export default defineConfig({
 		react(),
 		tsconfigPaths(),
 		checker({
-			typescript: true
-		})
+			typescript: true,
+		}),
 	],
 });

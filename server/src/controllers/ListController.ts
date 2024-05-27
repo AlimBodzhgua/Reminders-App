@@ -31,7 +31,7 @@ export const create = async (req: Request, res: Response) => {
 		await user.save();
 		const { passwordHash, ...userData } = user._doc;
 
-		return res.json(userData);
+		return res.json(doc)
 	} catch (err) {
 		return res.status(500).send({error: err});
 	}

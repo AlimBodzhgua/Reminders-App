@@ -1,5 +1,5 @@
 import { FC, CSSProperties, memo, useState, useCallback, useMemo } from 'react';
-import { Button, Dropdown, Flex, Layout, Space } from 'antd';
+import { Button, Dropdown, Flex, Layout, Space, Avatar } from 'antd';
 import { LoginModal, RegisterModal } from 'components/Auth';
 import { selectUserAuthData } from 'store/selectors/userSelectors';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
@@ -15,11 +15,6 @@ const headerStyle: CSSProperties = {
 	height: 65,
 	paddingInline: 48,
 	backgroundColor: '#282B2B',
-};
-
-const iconStyle: CSSProperties = {
-	fontSize: '26px',
-	color: '#fff'
 };
 
 export const Header: FC = memo(() => {
@@ -65,16 +60,21 @@ export const Header: FC = memo(() => {
 		<Layout.Header style={headerStyle}>
 			<Flex justify='end' align='center' style={{height: '100%'}}>
 				{authData 
-					?   <Space size='small'>
-						<Dropdown menu={{ items }} placement='bottom'>
+					?   <Flex gap='10px'>
 							<Button type='text'>
-								<UserOutlined style={iconStyle}/>
+								<PlusSquareOutlined
+									style={{fontSize: '28px',color: '#fff'}}
+								/>
 							</Button>
-						</Dropdown>
-						<Button type='text'>
-							<PlusSquareOutlined style={iconStyle}/>
-						</Button>
-					</Space>
+							<Dropdown menu={{ items }} placement='bottom'>
+								<Avatar
+									icon={<UserOutlined/>}
+									size='large'
+									alt='user avatar'
+									style={{backgroundColor: '#4B4E54', cursor: 'pointer'}}
+								/>
+							</Dropdown>
+						</Flex>
 					:   <Space>
 						<Button onClick={onOpenLogin}>Login</Button>
 						<Button onClick={onOpenRegister}>Regiser</Button>

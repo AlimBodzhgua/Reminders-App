@@ -1,7 +1,8 @@
 import { FC, CSSProperties, memo, useState } from 'react';
 import { SearchOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { Layout, Input, Button, Modal } from 'antd';
+import { Layout, Input, Button, Modal, Flex } from 'antd';
 import { AddListForm } from 'components/AddListForm';
+import { MyLists } from 'components/MyLists';
 
 const siderStyle: CSSProperties = {
 	textAlign: 'center',
@@ -34,6 +35,7 @@ export const Sider: FC = memo(() => {
 				value={searchValue}
 				onChange={onSearch}
 			/>
+			<MyLists />
 			<Button
 				type='text'
 				icon={<PlusCircleOutlined />}
@@ -43,6 +45,7 @@ export const Sider: FC = memo(() => {
 				title='New list'
 				open={isOpen}
 				onCancel={onCloseModal}
+				footer={null}
 			>
 				<AddListForm />
 			</Modal>

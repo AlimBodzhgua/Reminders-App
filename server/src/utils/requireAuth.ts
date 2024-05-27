@@ -10,6 +10,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const decoded = jwt.verify(token, process.env.JWT_SECRET!) as DecodePayloadType;
 			res.locals.userId = decoded._id;
+			res.locals.token = token;
 
 			next()
 		} catch (err) {

@@ -85,7 +85,7 @@ export const getMe = async (req: Request, res: Response) => {
 
 		const { passwordHash, ...userData } = user._doc;
 
-		return res.json({userData})
+		return res.json({...userData, token: res.locals.token});
 	} catch (err) {
 		return res.status(500).json({error: err});
 	}

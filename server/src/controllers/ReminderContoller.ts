@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import { reminderCreateValidation, reminderUpdateValidation } from '../validations/validations';
 import ReminderModel from '../models/Reminder';
-import UserModal from '../models/User';
+import UserModel from '../models/User';
 
-export const create = async (req: Request, res: Response) => {
+/*export const create = async (req: Request, res: Response) => {
 	try {
 		const errors = validationResult(reminderCreateValidation);
 
@@ -22,7 +22,7 @@ export const create = async (req: Request, res: Response) => {
 			}
 		})
 
-		const userDoc = await UserModal.findById(res.locals.userId);
+		const userDoc = await UserModel.findById(res.locals.userId);
 		userDoc!.reminders.push(doc);
 		await userDoc!.save();
 
@@ -34,7 +34,7 @@ export const create = async (req: Request, res: Response) => {
 
 export const getOne = async (req: Request, res: Response) => {
 	try {
-		const user = await UserModal.findById(res.locals.userId);
+		const user = await UserModel.findById(res.locals.userId);
 
 		if (!user) {
 			return res.status(400).send({error: 'User not found'});
@@ -56,7 +56,7 @@ export const getOne = async (req: Request, res: Response) => {
 
 export const getAll = async (req: Request, res: Response) => {
 	try {
-		const user = await UserModal.findById(res.locals.userId);
+		const user = await UserModel.findById(res.locals.userId);
 
 		if (!user) {
 			return res.status(400).send({error: 'User not found'});
@@ -71,7 +71,7 @@ export const getAll = async (req: Request, res: Response) => {
 
 export const remove = async (req: Request, res: Response) => {
 	try {
-		const user = await UserModal.findById(res.locals.userId);
+		const user = await UserModel.findById(res.locals.userId);
 
 		if (!user) {
 			return res.status(400).send({error: 'User not found'});
@@ -97,7 +97,7 @@ export const update = async (req: Request, res: Response) => {
 			return res.status(400).json({error: errors});
 		}
 
-		const user = await UserModal.findById(res.locals.userId);
+		const user = await UserModel.findById(res.locals.userId);
 
 		if (!user) {
 			return res.status(404).send({error: 'User not found'});
@@ -128,4 +128,4 @@ export const update = async (req: Request, res: Response) => {
 	} catch (err) {
 		return res.status(500).send({error: err});
 	}
-}
+}*/

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { IUser } from '../types/types';
-import { ReminderSchema } from './Reminder';
+import { ListSchema } from './List';
+import { initialLists } from '../constants/lists';
 
 const UserSchema = new mongoose.Schema<IUser>({
 	login: {
@@ -17,8 +18,9 @@ const UserSchema = new mongoose.Schema<IUser>({
 		required: true,
 	},
 	avatarUrl: String,
-	reminders: {
-		type: [ReminderSchema],
+	lists: {
+		type: [ListSchema],
+		default: initialLists,
 	}
 })
 

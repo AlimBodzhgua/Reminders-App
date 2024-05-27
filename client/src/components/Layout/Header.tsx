@@ -44,38 +44,44 @@ export const Header: FC = memo(() => {
 		localStorage.removeItem(USER_LOCALSTORAGE_KEY);
 	}, [dispatch]);
 
-
-	const items: MenuProps['items'] = useMemo(() => [
-		{
-			key: '1',
-			label: <Button>Profile</Button>
-		},
-		{
-			key: '2',
-			label: <Button onClick={onLogout}>Logout</Button>
-		},
-	], []);
+	const items: MenuProps['items'] = useMemo(
+		() => [
+			{
+				key: '1',
+				label: <Button>Profile</Button>,
+			},
+			{
+				key: '2',
+				label: <Button onClick={onLogout}>Logout</Button>,
+			},
+		],
+		[],
+	);
 
 	return (
 		<Layout.Header style={headerStyle}>
-			<Flex justify='end' align='center' style={{height: '100%'}}>
-				{authData 
-					?   <Flex gap='10px'>
-							<Button type='text'>
-								<PlusSquareOutlined
-									style={{fontSize: '28px',color: '#fff'}}
-								/>
-							</Button>
-							<Dropdown menu={{ items }} placement='bottom'>
-								<Avatar
-									icon={<UserOutlined/>}
-									size='large'
-									alt='user avatar'
-									style={{backgroundColor: '#4B4E54', cursor: 'pointer'}}
-								/>
-							</Dropdown>
-						</Flex>
-					:   <Space>
+			<Flex justify='end' align='center' style={{ height: '100%' }}>
+				{authData ? (
+					<Flex gap='10px'>
+						<Button type='text'>
+							<PlusSquareOutlined
+								style={{ fontSize: '28px', color: '#fff' }}
+							/>
+						</Button>
+						<Dropdown menu={{ items }} placement='bottom'>
+							<Avatar
+								icon={<UserOutlined />}
+								size='large'
+								alt='user avatar'
+								style={{
+									backgroundColor: '#4B4E54',
+									cursor: 'pointer',
+								}}
+							/>
+						</Dropdown>
+					</Flex>
+				) : (
+					<Space>
 						<Button onClick={onOpenLogin}>Login</Button>
 						<Button onClick={onOpenRegister}>Regiser</Button>
 						<LoginModal
@@ -87,7 +93,7 @@ export const Header: FC = memo(() => {
 							onClose={onCloseRegister}
 						/>
 					</Space>
-				}
+				)}
 			</Flex>
 		</Layout.Header>
 	);

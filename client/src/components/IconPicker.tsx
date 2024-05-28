@@ -1,72 +1,68 @@
-import { FC, memo, useCallback } from 'react';
-import { Flex, Radio } from 'antd';
-import {
-	UnorderedListOutlined,
-	CarOutlined,
-	GiftOutlined,
-	HomeOutlined,
-	MobileOutlined,
-	ShoppingCartOutlined,
-	MoonOutlined,
-	StarOutlined,
-	CreditCardOutlined,
-	BankOutlined,
-	BookOutlined,
-	HeartOutlined,
-	FundProjectionScreenOutlined,
-	DatabaseOutlined,
-	MessageOutlined,
-} from '@ant-design/icons';
-
-const iconsList = [
-	<UnorderedListOutlined/>,
-	<GiftOutlined/>,
-	<CarOutlined/>,
-	<HomeOutlined/>,
-	<MobileOutlined />,
-	<ShoppingCartOutlined />,
-	<MoonOutlined />,
-	<StarOutlined />,
-	<CreditCardOutlined />,
-	<BankOutlined />,
-	<BookOutlined />,
-	<HeartOutlined />,
-	<FundProjectionScreenOutlined />,
-	<DatabaseOutlined />,
-	<MessageOutlined />
-
-];
+import { FC, memo, useCallback, useState } from 'react';
+import { Button, Flex, Popover, Radio, RadioChangeEvent } from 'antd';
+import { mapListToIcon } from 'constants/iconsList';
+import { ListsIconType } from 'types/list';
 
 interface IconPickerColor {
 	color: string;
+	icon: ListsIconType;
+	onChange: (icon: ListsIconType) => void;
 }
 
-export const IconPicker: FC<IconPickerColor> = memo(({color}) => {
+export const IconPicker: FC<IconPickerColor> = memo((props) => {
+	const {
+		color,
+		icon,
+		onChange,
+	} = props;
+	const [isOpen, setIsOpen] = useState<boolean>(false);
 
-	const onChange = () => {
-		console.log('change');
+	const onToggleShow = useCallback(() => {
+		setIsOpen(prev => !prev);
+	}, []);
+
+	const onChangeIcon = (e: RadioChangeEvent) => {
+		onChange(e.target.value);
+		setIsOpen(false);
 	};
 
 	const renderIconslist = useCallback(() => (
-		iconsList.map((icon, index) => (
+		Object.keys(mapListToIcon).map((icon, index) => (
 			<Radio.Button
 				key={index}
 				value={icon}
-				style={{color: color}}
 			>
-				{icon}
+				{mapListToIcon[icon as ListsIconType]}
 			</Radio.Button>
 		))
-	), [iconsList, color]);
+	), [mapListToIcon, color]);
 
-	return (
+
+	const content = (
 		<Radio.Group
 			size='small'
-			onChange={onChange}
+			onChange={onChangeIcon}
 		>
-			<Flex wrap gap='small' style={{width: '50%'}}>
+			<Flex wrap gap='small' style={{width: '145px'}}>
 				{renderIconslist()}
 			</Flex>
-		</Radio.Group>   
+		</Radio.Group>
+	);
+
+	return (
+		<Popover
+			open={isOpen}
+			content={content}
+			onOpenChange={onToggleShow}
+			trigger='click'
+			placement='right'
+		>
+			<Button
+				size='large'
+				shape='circle'
+				icon={mapListToIcon[icon as ListsIconType]}
+				style={{backgroundColor: color, color: 'white'}}
+			/>
+		</Popover>
 	);
 });

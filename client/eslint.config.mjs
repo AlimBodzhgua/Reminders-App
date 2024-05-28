@@ -23,6 +23,7 @@ export default [
 		plugins: {
 			react,
 		},
+		ignores: ['dist', 'node_modules'],
 		rules: {
 			'linebreak-style': 'off',
 			'no-console': 'warn',

@@ -35,7 +35,7 @@ export const AppColorPicker: FC<AppColorPickerProps> = memo((props) => {
 			onChange={onChange}
 			value={color}
 		>
-			<Flex wrap gap='small' style={{width: '50%'}}>
+			<Flex wrap gap='small' style={{width: '100%'}}>
 				{renderColorlist()}
 			</Flex>
 		</Radio.Group>

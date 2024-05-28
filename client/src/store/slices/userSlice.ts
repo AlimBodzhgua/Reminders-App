@@ -1,6 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { IUser } from 'types/user';
-import { initUserAuth, loginUser, registerUser } from '../actions/userActions';
+import {
+	initUserAuth,
+	loginUser,
+	registerUser,
+	addList,
+} from '../actions/userActions';
 
 export interface UserStateSchema {
 	authData: IUser | null;
@@ -63,6 +68,21 @@ const userSlice = createSlice({
 				state.authData = action.payload;
 			})
 			.addCase(initUserAuth.rejected, (state, action) => {
+				state.isLoading = false;
+				state.error = action.payload;
+			})
+			// addList
+			.addCase(addList.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(addList.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.error = undefined;
+				if (state.authData) {
+					state.authData.lists = [...state.authData.lists, action.payload];
+				}
+			})
+			.addCase(addList.rejected, (state, action) => {
 				state.isLoading = false;
 				state.error = action.payload;
 			});

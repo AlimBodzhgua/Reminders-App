@@ -15,3 +15,9 @@ export const passwordRules: Rule[] = [
 	{ required: true, message: 'Password is required field.' },
 	{ min: 6, message: 'Password must be at least 6 char long.' },
 ];
+
+
+export const listRules: Rule[] = [
+	{ required: true, message: 'Name is required.' },
+	{ min: 2, message: 'Name must be at least 2 char long.' },
+];

@@ -4,25 +4,25 @@ import ListModel from '../models/List';
 const today = new ListModel({
 	name: 'Today',
 	color: 'blue',
-	icon: 'qwe',
+	icon: 'DatabaseOutlined',
 	pinned: true,
 	reminders: [],
-})
+});
 
 const scheduled = new ListModel({
 	name: 'Scheduled',
 	color: 'red',
-	icon: 'asd',
+	icon: 'CalendarOutlined',
 	pinned: true,
 	reminders: [],
-})
+});
 
 const all = new ListModel({
 	name: 'All',
 	color: 'grey',
-	icon: 'zxc',
+	icon: 'UnorderedListOutlined',
 	pinned: true,
 	reminders: [],
-})
+});
 
 export const initialLists: IList[] = [today, scheduled, all];

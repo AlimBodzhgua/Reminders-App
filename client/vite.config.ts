@@ -5,6 +5,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
+	build: {
+		outDir: './build',
+	},
 	plugins: [
 		react(),
 		tsconfigPaths(),

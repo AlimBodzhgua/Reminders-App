@@ -12,6 +12,6 @@ root.render(
 	<ErrorBoundary>
 		<Provider store={store}>
 			<App />
-		</Provider>,
+		</Provider>
 	</ErrorBoundary>
 );

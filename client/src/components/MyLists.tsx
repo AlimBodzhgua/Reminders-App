@@ -18,7 +18,7 @@ export const MyLists: FC = memo(() => {
 					extra={<div>{list.reminders.length}</div>}
 					key={list._id}
 				>
-					<Flex gap='10px'>
+					<Flex gap='10px' align='center'>
 						<Avatar
 							icon={mapListToIcon[list.icon]}
 							style={{backgroundColor: list.color}}

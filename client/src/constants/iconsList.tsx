@@ -17,9 +17,9 @@ import {
 	CalendarOutlined,
 	FlagOutlined,
 } from '@ant-design/icons';
-import BallIcon from 'assets/icons/ball.svg';
-import FishIcon from 'assets/icons/fish.svg';
-import AirPlaneIcon from 'assets/icons/airplane.svg';
+import BallOutlined from 'assets/icons/ball.svg';
+import FishOutlined from 'assets/icons/fish.svg';
+import AirPlaneOutlined from 'assets/icons/airplane.svg';
 
 export const mapListToIcon = {
 	UnorderedListOutlined: <UnorderedListOutlined/>,
@@ -39,7 +39,7 @@ export const mapListToIcon = {
 	MessageOutlined: <MessageOutlined />,
 	CalendarOutlined: <CalendarOutlined />,
 	FlagOutlined: <FlagOutlined />,
-	BallIcon: <BallIcon />,
-	FishIcon: <FishIcon />,
-	AirPlaneIcon: <AirPlaneIcon />
+	BallOutlined: <BallOutlined />,
+	FishOutlined: <FishOutlined />,
+	AirPlaneOutlined: <AirPlaneOutlined />
 } as const;

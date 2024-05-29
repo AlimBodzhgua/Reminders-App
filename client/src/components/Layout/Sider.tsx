@@ -29,13 +29,15 @@ export const Sider: FC = memo(() => {
 
 	return (
 		<Layout.Sider width='25%' style={siderStyle}>
-			<Input
-				addonBefore={<SearchOutlined />}
-				placeholder='Search'
-				value={searchValue}
-				onChange={onSearch}
-			/>
-			<MyLists />
+			<Flex vertical>
+				<Input
+					addonBefore={<SearchOutlined />}
+					placeholder='Search'
+					value={searchValue}
+					onChange={onSearch}
+				/>
+				<MyLists />
+			</Flex>
 			<Button
 				type='text'
 				icon={<PlusCircleOutlined />}

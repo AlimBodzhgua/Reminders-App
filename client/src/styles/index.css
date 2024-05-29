@@ -11,3 +11,9 @@
 #root {
 	font-family: 'SF Pro Rounded';
 }
+
+.ant-layout-sider-children {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}

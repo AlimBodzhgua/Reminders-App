@@ -2,11 +2,11 @@ import { FC, CSSProperties, memo, useState } from 'react';
 import { SearchOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Layout, Input, Button, Modal, Flex } from 'antd';
 import { AddListForm } from 'components/AddListForm';
-import { MyLists } from 'components/MyLists';
+import { MyLists } from 'components/MyLists/MyLists';
 
 const siderStyle: CSSProperties = {
 	textAlign: 'center',
-	color: '#fff',
+	color: '#E9E9E9',
 	backgroundColor: '#F5F6F7',
 	padding: '35px 12px'
 };

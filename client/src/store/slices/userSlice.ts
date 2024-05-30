@@ -5,6 +5,7 @@ import {
 	loginUser,
 	registerUser,
 	addList,
+	removeList,
 } from '../actions/userActions';
 
 export interface UserStateSchema {
@@ -83,6 +84,23 @@ const userSlice = createSlice({
 				}
 			})
 			.addCase(addList.rejected, (state, action) => {
+				state.isLoading = false;
+				state.error = action.payload;
+			})
+			// removeList
+			.addCase(removeList.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(removeList.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.error = undefined;
+				if (state.authData) {
+					state.authData.lists = state.authData.lists.filter((list) => (
+						list._id !== action.payload
+					));
+				}
+			})
+			.addCase(removeList.rejected, (state, action) => {
 				state.isLoading = false;
 				state.error = action.payload;
 			});

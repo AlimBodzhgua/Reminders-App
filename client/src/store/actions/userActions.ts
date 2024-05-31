@@ -103,3 +103,24 @@ export const removeList = createAsyncThunk<
 		}
 	}
 );
+
+type UpdateListData = Pick<IList, '_id'> & Partial<Omit<IList, '_id'>>;
+
+export const updateList = createAsyncThunk<
+	UpdateListData,
+	UpdateListData,
+	{ rejectValue: string }
+>(
+	'updateList',
+	async (data, { rejectWithValue }) => {
+		try {
+			console.log(data);
+			const response = await appAxios.patch(`/lists/:${data._id}`, data);
+			console.log(response);
+			return data;
+		} catch (err) {
+			return rejectWithValue(JSON.stringify(err));
+		}
+	}
+);
+

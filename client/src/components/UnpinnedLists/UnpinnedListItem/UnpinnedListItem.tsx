@@ -11,28 +11,27 @@ import {
 	DashOutlined,
 	PushpinOutlined,
 	DeleteOutlined,
-	CheckOutlined,
 } from '@ant-design/icons';
-import { Flex, Avatar, List, Input, Dropdown } from 'antd';
+import { Flex, Avatar, List, Input, Dropdown, Typography } from 'antd';
 import { useAppDispatch } from 'hooks/redux';
-import { removeList } from 'store/actions/userActions';
+import { removeList, updateList } from 'store/actions/userActions';
 import { mapListToIcon } from 'constants/iconsList';
 import { IList } from 'types/list';
 import { useHover } from 'hooks/useHover';
 
 import type { InputRef, MenuProps } from 'antd';
-import './MyListItem.css';
-
-const listItemHoverStyle: CSSProperties = {
-	backgroundColor: '#E9E9E9',
-	borderRadius: '10px',
-}
 
 interface MyListsItemProps {
 	list: IList;
 }
 
-export const MyListsItem: FC<MyListsItemProps> = ({ list }) => {
+const listItemStyle: CSSProperties = {
+	padding: '8px 12px',
+	borderRadius: '8px',
+	color: '#515151',
+}
+
+export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 	const dispatch = useAppDispatch();
 	const [isHover, hoverProps] = useHover();
 	const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -50,9 +49,9 @@ export const MyListsItem: FC<MyListsItemProps> = ({ list }) => {
 		dispatch(removeList(list._id));
 	}, [dispatch])
 
-	const onPin = () => useCallback(() => {
-		console.log('pin')
-	}, [])
+	const onPin = useCallback(() => {
+		dispatch(updateList({_id: list._id, pinned: true}));
+	}, [dispatch])
 
 	const onEdit = useCallback(() => {
 		setIsEdit(true);
@@ -78,7 +77,7 @@ export const MyListsItem: FC<MyListsItemProps> = ({ list }) => {
 		<List.Item
 			actions={[isHover && hoverExtraContent]}
 			extra={list.reminders.length}
-			style={isHover ? listItemHoverStyle : {}}
+			style={{...listItemStyle, backgroundColor: isHover ? '#E9E9E9' : ''}}
 			onDoubleClick={onEdit}
 			{...hoverProps}
 		>
@@ -100,7 +99,6 @@ export const MyListsItem: FC<MyListsItemProps> = ({ list }) => {
 								ref={inputRef}
 								onBlur={onBlurInput}
 								autoFocus
-								//addonAfter={<CheckOutlined />}
 							/>
 						:   <div>{list.name}</div>
 					}

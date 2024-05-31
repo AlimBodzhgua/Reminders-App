@@ -2,7 +2,8 @@ import { FC, CSSProperties, memo, useState } from 'react';
 import { SearchOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Layout, Input, Button, Modal, Flex } from 'antd';
 import { AddListForm } from 'components/AddListForm';
-import { MyLists } from 'components/MyLists/MyLists';
+import { PinnedLists } from 'components/PinnedLists/PinnedLists';
+import { UnpinnedLists } from 'components/UnpinnedLists/UnpinnedLists';
 
 const siderStyle: CSSProperties = {
 	textAlign: 'center',
@@ -28,15 +29,16 @@ export const Sider: FC = memo(() => {
 	};
 
 	return (
-		<Layout.Sider width='25%' style={siderStyle}>
-			<Flex vertical>
+		<Layout.Sider width={315} style={siderStyle}>
+			<Flex vertical gap='5px'>
 				<Input
 					addonBefore={<SearchOutlined />}
 					placeholder='Search'
 					value={searchValue}
 					onChange={onSearch}
 				/>
-				<MyLists />
+				<PinnedLists />
+				<UnpinnedLists />
 			</Flex>
 			<Button
 				type='text'

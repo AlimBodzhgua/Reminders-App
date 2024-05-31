@@ -18,3 +18,20 @@
 	flex-direction: column;
 	justify-content: space-between;
 }
+
+.ant-list .ant-list-item .ant-list-item-action {
+	margin-inline-start: 0;
+}
+
+.ant-list-split .ant-list-item {
+	border-block-end: none;
+}
+
+.ant-list-header {
+	padding-block: 6px;
+	text-align: left;
+}
+
+.ant-list-split .ant-list-header {
+	border-block-end: none;
+}

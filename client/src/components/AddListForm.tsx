@@ -1,15 +1,33 @@
 import { FC, memo, useState, useCallback } from 'react';
-import { Input, Flex, Form, RadioChangeEvent, Button, Row, Col, Divider } from 'antd';
-import { AppColorPicker } from './AppColorPicker';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { addList } from 'store/actions/userActions';
 import { selectUserIsLoading } from 'store/selectors/userSelectors';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { AppColorPicker } from 'components/AppColorPicker';
+import { addList } from 'store/actions/userActions';
+import { IconPicker } from 'components/IconPicker';
 import { ListsIconType } from 'types/list';
-import { IconPicker } from './IconPicker';
 import { listRules } from 'constants/rules';
-// import EmojiPicker from 'emoji-picker-react';
+import {
+	Input,
+	Flex,
+	Form,
+	RadioChangeEvent,
+	Button,
+	Row,
+	Col,
+	Divider,
+} from 'antd';
 
-export const AddListForm: FC = memo(() => {
+
+interface AddListFormProps {
+	onSuccess?: () => void;
+	onCancel?: () => void;
+}
+
+export const AddListForm: FC<AddListFormProps> = memo((props) => {
+	const {
+		onSuccess,
+		onCancel,
+	} = props;
 	const [form] = Form.useForm()
 	const [color, setColor] = useState<string>('#0033cc');
 	const [icon, setIcon] = useState<ListsIconType>('UnorderedListOutlined');
@@ -30,7 +48,10 @@ export const AddListForm: FC = memo(() => {
 			color: color,
 			icon: icon,
 		}));
-	}, [dispatch, color, icon]);
+
+		if (onSuccess) onSuccess();
+
+	}, [dispatch, color, icon, onSuccess]);
 
 	return (
 		<Form requiredMark={false} onFinish={onAddList} form={form}>
@@ -62,6 +83,7 @@ export const AddListForm: FC = memo(() => {
 						type='default'
 						htmlType='button'
 						loading={isLoading}
+						onClick={onCancel}
 					>
 						cancel
 					</Button>

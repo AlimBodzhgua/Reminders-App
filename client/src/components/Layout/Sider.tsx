@@ -1,9 +1,9 @@
-import { FC, CSSProperties, memo, useState } from 'react';
+import { FC, CSSProperties, memo, useState, useCallback } from 'react';
 import { SearchOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { Layout, Input, Button, Modal, Flex } from 'antd';
-import { AddListForm } from 'components/AddListForm';
+import { Layout, Input, Button, Flex } from 'antd';
 import { PinnedLists } from 'components/PinnedLists/PinnedLists';
 import { UnpinnedLists } from 'components/UnpinnedLists/UnpinnedLists';
+import { AddListModal } from 'components/AddListModal';
 
 const siderStyle: CSSProperties = {
 	textAlign: 'center',
@@ -24,9 +24,9 @@ export const Sider: FC = memo(() => {
 		setIsOpen(true);
 	};
 
-	const onCloseModal = () => {
+	const onCloseModal = useCallback(() => {
 		setIsOpen(false);
-	};
+	}, []);
 
 	return (
 		<Layout.Sider width={315} style={siderStyle}>
@@ -44,15 +44,10 @@ export const Sider: FC = memo(() => {
 				type='text'
 				icon={<PlusCircleOutlined />}
 				onClick={onOpenModal}
-			>Add List</Button>
-			<Modal
-				title='New list'
-				open={isOpen}
-				onCancel={onCloseModal}
-				footer={null}
 			>
-				<AddListForm />
-			</Modal>
+				Add List
+			</Button>
+			<AddListModal isOpen={isOpen} onClose={onCloseModal} />
 		</Layout.Sider>
 	);
 });

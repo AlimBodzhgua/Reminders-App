@@ -7,7 +7,12 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { registerUser } from 'store/actions/userActions';
 import { IUser } from 'types/user';
 
-export const RegisterForm: FC = memo(() => {
+interface RegisterFormProps {
+	onSuccess?: () => void; 
+}
+
+export const RegisterForm: FC<RegisterFormProps> = memo((props) => {
+	const { onSuccess } = props;
 	const [form] = Form.useForm();
 	const dispatch = useAppDispatch();
 	const isLoading = useAppSelector(selectUserIsLoading);
@@ -24,6 +29,8 @@ export const RegisterForm: FC = memo(() => {
 		if (meta.requestStatus === 'fulfilled') {
 			const { token } = payload as IUser;
 			localStorage.setItem(USER_LOCALSTORAGE_KEY, token);
+
+			if (onSuccess) onSuccess();
 		}
 	}, [dispatch]);
 

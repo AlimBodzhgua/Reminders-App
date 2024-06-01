@@ -7,7 +7,12 @@ import { loginUser } from 'store/actions/userActions';
 import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
 import { IUser } from 'types/user';
 
-export const LoginForm: FC = memo(() => {
+interface LoginFormProps {
+	onSuccess?: () => void;
+}
+
+export const LoginForm: FC<LoginFormProps> = memo((props) => {
+	const { onSuccess } = props;
 	const [form] = Form.useForm();
 	const dispatch = useAppDispatch();
 	const isLoading = useAppSelector(selectUserIsLoading);
@@ -22,6 +27,8 @@ export const LoginForm: FC = memo(() => {
 		if (meta.requestStatus === 'fulfilled') {
 			const { token } = payload as IUser;
 			localStorage.setItem(USER_LOCALSTORAGE_KEY, token);
+
+			if (onSuccess) onSuccess();
 		}
 	}, [dispatch]);
 

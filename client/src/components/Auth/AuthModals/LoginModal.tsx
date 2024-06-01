@@ -20,7 +20,7 @@ export const LoginModal: FC<LoginModalProps> = memo((props) => {
 			onCancel={onClose}
 			footer={null}
 		>
-			<LoginForm />
+			<LoginForm onSuccess={onClose} />
 		</Modal>
 	);
 });

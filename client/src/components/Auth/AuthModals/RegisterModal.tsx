@@ -20,7 +20,7 @@ export const RegisterModal: FC<RegisterModalProps> = memo((props) => {
 			onCancel={onClose}
 			footer={null}
 		>
-			<RegisterForm />
+			<RegisterForm onSuccess={onClose} />
 		</Modal>
 	);
 });

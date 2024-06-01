@@ -1,17 +1,10 @@
 import { Request, Response} from 'express';
 import { validationResult } from 'express-validator';
-import { Types } from 'mongoose';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 import { loginValidation, registerValidation } from '../validations/validations';
 import UserModel from '../models/User';
-
-const signToken = (userId: Types.ObjectId) => jwt.sign(
-	{_id: userId},
-	process.env.JWT_SECRET!,
-	{expiresIn: '7d'}
-)
+import { TokenService } from '../services/TokenService';
 
 export const login = async (req: Request, res: Response) => {
 	try {
@@ -33,7 +26,7 @@ export const login = async (req: Request, res: Response) => {
 			return res.status(404).json({ message: 'Wrong password or email' });
 		};
 
-		const token = signToken(user._id);
+		const token = TokenService.generateToken(user._id);
 
 		const { passwordHash, ...userData } = user._doc;
 
@@ -70,7 +63,7 @@ export const register = async (req: Request, res: Response) => {
 		});
 
 		const user = await doc.save();
-		const token = signToken(user._id);
+		const token = TokenService.generateToken(user._id);
 
 		const { passwordHash, ...userData } = user._doc;
 

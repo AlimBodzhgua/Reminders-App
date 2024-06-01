@@ -1,8 +1,11 @@
+import { JwtPayload } from 'jsonwebtoken';
 import { Types } from 'mongoose';
 
 interface DocResult<T> {
 	_doc: T;
 }
+
+export type DecodePayloadType = JwtPayload & { _id: string };
 
 export interface IUser extends DocResult<IUser> {
 	_id: Types.ObjectId;

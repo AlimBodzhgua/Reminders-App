@@ -1,22 +1,28 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt, { JwtPayload } from 'jsonwebtoken';
-
-type DecodePayloadType = JwtPayload & { _id: string };
+import { TokenService } from '../services/TokenService';
 
 export default (req: Request, res: Response, next: NextFunction) => {
-	const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
+	try {
+		const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            return res.status(403).json({message: 'No access'});
+        }
 
-	if (token) {
-		try {
-			const decoded = jwt.verify(token, process.env.JWT_SECRET!) as DecodePayloadType;
-			res.locals.userId = decoded._id;
-			res.locals.token = token;
+        const token = authHeader.replace(/Bearer\s?/, '');
+        if (!token) {
+            return res.status(403).json({message: 'No access'});
+        }
 
-			next()
-		} catch (err) {
-			return res.status(403).json({error: err})
+		const decodedToken = TokenService.validateToken(token);
+		if (!decodedToken) {
+			return res.status(403).json({message: 'No access'});
 		}
-	} else {
-		return res.status(403).json({message: 'No access'})
+		
+		res.locals.userId = decodedToken._id;
+		res.locals.token = decodedToken;
+
+		next()
+	} catch (err) {
+		return res.status(403).json({error: err})
 	}
 }

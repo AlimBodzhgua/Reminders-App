@@ -29,7 +29,6 @@ export const create = async (req: Request, res: Response) => {
 
 		user.lists.push(doc);
 		await user.save();
-		const { passwordHash, ...userData } = user._doc;
 
 		return res.json(doc)
 	} catch (err) {
@@ -98,10 +97,7 @@ export const update = async (req: Request, res: Response) => {
 		const errors = validationResult(listUpdateValidation);
 
 		if (!errors.isEmpty()) {
-			return res.status(400).json({
-				zxc: 'zxc',
-				error: errors
-			});
+			return res.status(400).send({error: errors});
 		}
 
 		const user = await UserModel.findById(res.locals.userId);

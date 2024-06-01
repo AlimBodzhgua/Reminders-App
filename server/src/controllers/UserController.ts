@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import { loginValidation, registerValidation } from '../validations/validations';
-import UserModal from '../models/User';
+import UserModel from '../models/User';
 
 const signToken = (userId: Types.ObjectId) => jwt.sign(
 	{_id: userId},
@@ -21,7 +21,7 @@ export const login = async (req: Request, res: Response) => {
 			return res.status(400).json({errors: errors});
 		};
 
-		const user = await UserModal.findOne({ email: req.body.email });
+		const user = await UserModel.findOne({ email: req.body.email });
 
 		if (!user) {
 			return res.status(404).json({ message: 'Wrong password or email' });
@@ -52,11 +52,17 @@ export const register = async (req: Request, res: Response) => {
 			return res.status(400).json({'errors': errors.array()});
 		};
 
+		const candidate = await UserModel.findOne({email: req.body.email});
+
+		if (candidate) {
+			return res.status(400).json({'error', })
+		}
+
 		const password = req.body.password;
 		const salt = await bcrypt.genSalt(10);
 		const hash = await bcrypt.hash(password, salt);
 
-		const doc = new UserModal({
+		const doc = new UserModel({
 			login: req.body.login,
 			email: req.body.email,
 			passwordHash: hash,
@@ -77,7 +83,7 @@ export const register = async (req: Request, res: Response) => {
 
 export const getMe = async (req: Request, res: Response) => {
 	try {
-		const user = await UserModal.findById(res.locals.userId);
+		const user = await UserModel.findById(res.locals.userId);
 
 		if (!user) {
 			return res.status(400).json({message: 'Such user does not exist'});
@@ -93,7 +99,7 @@ export const getMe = async (req: Request, res: Response) => {
 
 export const update = async (req: Request, res: Response) => {
 	try {
-		const user = await UserModal.findById(res.locals.userId);
+		const user = await UserModel.findById(res.locals.userId);
 
 		if (!user) {
 			return res.status(400).json({message: 'Such user does not exist'});

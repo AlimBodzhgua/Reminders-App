@@ -55,7 +55,7 @@ export const register = async (req: Request, res: Response) => {
 		const candidate = await UserModel.findOne({email: req.body.email});
 
 		if (candidate) {
-			return res.status(400).json({'error', })
+			return res.status(400).json({error: 'User with such email already registered'});
 		}
 
 		const password = req.body.password;

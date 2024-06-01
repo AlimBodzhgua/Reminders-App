@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { reminderCreateValidation, reminderUpdateValidation } from '../validations/validations';
 import * as ReminderContoller from '../controllers/ReminderContoller';
-import requireAuth from '../utils/requireAuth';
+import requireAuth from '../middleware/requireAuth';
 
 const router = Router();
 

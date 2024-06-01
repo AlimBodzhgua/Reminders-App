@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { listCreateValidation, listUpdateValidation } from '../validations/validations';
 import * as ListController from '../controllers/ListController';
-import requireAuth from '../utils/requireAuth';
+import requireAuth from '../middleware/requireAuth';
 
 const router = Router();
 

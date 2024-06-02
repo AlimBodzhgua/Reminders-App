@@ -22,7 +22,6 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 		})
 
 		const user = await UserModel.findById(res.locals.userId);
-
 		if (!user) {
 			return next(ApiError.BadRequest('User not found'));
 		}
@@ -74,13 +73,11 @@ const getOne = async (req: Request, res: Response, next: NextFunction) => {
 const remove = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const user = await UserModel.findById(res.locals.userId);
-
 		if (!user) {
 			return next(ApiError.BadRequest('User not found'));
 		}
 
 		const index = user.lists.findIndex(list => String(list._id) === req.params.id);
-
 		if (index === -1) {
 			return next(ApiError.BadRequest('List with such id does not exist'));
 		}
@@ -103,13 +100,11 @@ const update = async (req: Request, res: Response, next: NextFunction) => {
 		}
 
 		const user = await UserModel.findById(res.locals.userId);
-
 		if (!user) {
 			return next(ApiError.BadRequest('User not found'));
 		}
 
 		const index = user.lists.findIndex(list => String(list._id) === req.params.id);
-
 		if (index === -1) {
 			return next(ApiError.BadRequest('List with such id does not exist'));
 		}

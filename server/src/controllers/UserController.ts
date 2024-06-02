@@ -1,54 +1,23 @@
-import { Request, Response} from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 
-import { loginValidation, registerValidation } from '../validations/validations';
-import UserModel from '../models/User';
 import { TokenService } from '../services/TokenService';
+import { ApiError } from '../exceptions/ApiError';
+import UserModel from '../models/User';
 
-export const login = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const errors = validationResult(loginValidation);
+		const errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
-			return res.status(400).json({errors: errors});
-		};
-
-		const user = await UserModel.findOne({ email: req.body.email });
-
-		if (!user) {
-			return res.status(404).json({ message: 'Wrong password or email' });
-		};
-
-		const isValidPassword = await bcrypt.compare(req.body.password, user._doc.passwordHash);
-
-		if (!isValidPassword) {
-			return res.status(404).json({ message: 'Wrong password or email' });
-		};
-
-		const token = TokenService.generateToken(user._id);
-
-		const { passwordHash, ...userData } = user._doc;
-
-		return res.json({...userData, token});
-	} catch (err) {
-		return res.status(500).json({message: 'Failed to login user'});
-	}
-};
-
-
-export const register = async (req: Request, res: Response) => {
-	try {
-		const errors = validationResult(registerValidation);
-
-		if (!errors.isEmpty()) {
-			return res.status(400).json({'errors': errors.array()});
+			return next(ApiError.ValidationError(errors.array())); 
 		};
 
 		const candidate = await UserModel.findOne({email: req.body.email});
 
 		if (candidate) {
-			return res.status(400).json({error: 'User with such email already registered'});
+			return next(ApiError.BadRequest('User with such email already registered'));
 		}
 
 		const password = req.body.password;
@@ -69,36 +38,65 @@ export const register = async (req: Request, res: Response) => {
 
 		return res.json({...userData, token});
 	} catch (err) {
-		return res.status(500).json({message: 'Failed to register new user'});
+		next(err);
 	}
 };
 
+export const login = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const errors = validationResult(req);
 
-export const getMe = async (req: Request, res: Response) => {
+		if (!errors.isEmpty()) {
+			return next(ApiError.ValidationError(errors.array()));
+		};
+
+		const user = await UserModel.findOne({ email: req.body.email });
+
+		if (!user) {
+			return next(ApiError.BadRequest('Wrong password or email'));
+		};
+
+		const isValidPassword = await bcrypt.compare(req.body.password, user._doc.passwordHash);
+
+		if (!isValidPassword) {
+			return next(ApiError.BadRequest('Wrong password or email'));
+		};
+
+		const token = TokenService.generateToken(user._id);
+
+		const { passwordHash, ...userData } = user._doc;
+
+		return res.json({...userData, token});
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const getMe = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const user = await UserModel.findById(res.locals.userId);
 
 		if (!user) {
-			return res.status(400).json({message: 'Such user does not exist'});
+			return next(ApiError.BadRequest('Such user does not exist'));
 		};
 
 		const { passwordHash, ...userData } = user._doc;
 
 		return res.json({...userData, token: res.locals.token});
 	} catch (err) {
-		return res.status(500).json({error: err});
+		next(err)
 	}
 };
 
-export const update = async (req: Request, res: Response) => {
+export const update = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const user = await UserModel.findById(res.locals.userId);
 
 		if (!user) {
-			return res.status(400).json({message: 'Such user does not exist'});
+			return next(ApiError.BadRequest('Such user does not exist'));
 		};
 
 	} catch (err) {
-		return res.status(500).json({error: err});
+		next(err);
 	}
 };

@@ -96,7 +96,7 @@ export const removeList = createAsyncThunk<
 	'removeList',
 	async (id, { rejectWithValue }) => {
 		try {
-			await appAxios.delete(`/lists/:${id}`);
+			await appAxios.delete(`/lists/${id}`);
 			return id;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -114,10 +114,8 @@ export const updateList = createAsyncThunk<
 	'updateList',
 	async (data, { rejectWithValue }) => {
 		try {
-			console.log(data);
-			const response = await appAxios.patch(`/lists/:${data._id}`, data);
-			console.log(response);
-			return data;
+			const response = await appAxios.patch(`/lists/${data._id}`, data);
+			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
 		}

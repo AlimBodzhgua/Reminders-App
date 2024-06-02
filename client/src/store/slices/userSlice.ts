@@ -114,7 +114,7 @@ const userSlice = createSlice({
 				state.error = undefined;
 				if (state.authData) {
 					state.authData.lists = state.authData.lists.map((list) => {
-						if (list._id !== action.payload._id) {
+						if (list._id === action.payload._id) {
 							return {...list, ...action.payload}
 						}
 						return list;

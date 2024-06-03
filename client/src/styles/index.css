@@ -35,3 +35,8 @@
 .ant-list-split .ant-list-header {
 	border-block-end: none;
 }
+
+.ant-list .ant-list-item .ant-list-item-action>li {
+	display: flex;	
+}
+

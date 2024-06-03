@@ -6,11 +6,13 @@ import {
 	useEffect,
 	CSSProperties,
 	useCallback,
+    ChangeEvent,
 } from 'react';
 import {
 	DashOutlined,
 	PushpinOutlined,
 	DeleteOutlined,
+    EnterOutlined,
 } from '@ant-design/icons';
 import { Flex, Avatar, List, Input, Dropdown, Typography } from 'antd';
 import { useAppDispatch } from 'hooks/redux';
@@ -18,6 +20,7 @@ import { removeList, updateList } from 'store/actions/userActions';
 import { mapListToIcon } from 'constants/iconsList';
 import { IList } from 'types/list';
 import { useHover } from 'hooks/useHover';
+import DotesIcon from 'assets/icons/dotes.svg';
 
 import type { InputRef, MenuProps } from 'antd';
 
@@ -31,27 +34,35 @@ const listItemStyle: CSSProperties = {
 	color: '#515151',
 }
 
+const extraItemStyle: CSSProperties = {
+	fontWeight: 600,
+	fontSize: '18px',
+	color: '#8c8c8c',
+	lineHeight: 1.4,
+}
+
 export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 	const dispatch = useAppDispatch();
+	const [value, setValue] = useState<string>(list.name);
 	const [isHover, hoverProps] = useHover();
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const inputRef = useRef<InputRef>(null);
-
-	useEffect(() => {
-		window.addEventListener('keydown', (e) => {
-			if (e.code === 'Escape' && isEdit) {
-				setIsEdit(false);
-			}
-		})
-	}, [isEdit])
 
 	const onRemove = useCallback(() => {
 		dispatch(removeList(list._id));
 	}, [dispatch])
 
 	const onPin = useCallback(() => {
-		dispatch(updateList({_id: list._id, pinned: true}));
+		dispatch(updateList({ _id: list._id, pinned: true }));
 	}, [dispatch])
+
+	const onSave = useCallback(async () => {
+		const { meta } = await dispatch(updateList({_id: list._id, name: value}));
+
+		if (meta.requestStatus === 'fulfilled') {
+			setIsEdit(false);
+		}
+	}, [dispatch, value])
 
 	const onEdit = useCallback(() => {
 		setIsEdit(true);
@@ -59,6 +70,23 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 
 	const onBlurInput = useCallback(() => {
 		setIsEdit(false);
+		setValue(list.name);
+	}, [])
+
+	const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+		setValue(e.target.value);
+	}
+
+	const onEscaprePress = useCallback((e: KeyboardEvent) => {
+		if (e.code === 'Escape') {
+			onBlurInput()
+		}
+	}, [onBlurInput])
+
+	useEffect(() => {
+		window.addEventListener('keydown', onEscaprePress);
+
+		return () => window.removeEventListener('keydown', onEscaprePress);
 	}, [])
 
 
@@ -69,14 +97,14 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 
 	const hoverExtraContent = (
 		<Dropdown menu={{ items }} placement='bottom'>
-			<DashOutlined rotate={90} style={{ cursor: 'pointer' }}/>
+			<DotesIcon style={{ cursor: 'pointer' }} />
 		</Dropdown>
 	)
 
 	return (
 		<List.Item
 			actions={[isHover && hoverExtraContent]}
-			extra={list.reminders.length}
+			extra={<div style={extraItemStyle}>{list.reminders.length}</div>}
 			style={{...listItemStyle, backgroundColor: isHover ? '#E9E9E9' : ''}}
 			onDoubleClick={onEdit}
 			{...hoverProps}
@@ -85,7 +113,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 				gap='10px'
 				align='center'
 				justify='space-between'
-				style={{ width: '90%' }}
+				style={{ width: '85%' }}
 			>
 				<Flex align='center' gap='10px'>
 					<Avatar
@@ -94,10 +122,14 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 					/>
 					{isEdit 
 						? 	<Input
-								defaultValue={list.name}
-								style={{ width: '75%' }}
+								style={{ width: '78%' }}
 								ref={inputRef}
 								onBlur={onBlurInput}
+								value={value}
+								onChange={onChangeInput}
+								suffix={<EnterOutlined />}
+								size='small'
+								onPressEnter={onSave}
 								autoFocus
 							/>
 						:   <div>{list.name}</div>

@@ -17,7 +17,6 @@ import {
 	Divider,
 } from 'antd';
 
-
 interface AddListFormProps {
 	onSuccess?: () => void;
 	onCancel?: () => void;
@@ -28,7 +27,7 @@ export const AddListForm: FC<AddListFormProps> = memo((props) => {
 		onSuccess,
 		onCancel,
 	} = props;
-	const [form] = Form.useForm()
+	const [form] = Form.useForm();
 	const [color, setColor] = useState<string>('#0033cc');
 	const [icon, setIcon] = useState<ListsIconType>('UnorderedListOutlined');
 	const dispatch = useAppDispatch();

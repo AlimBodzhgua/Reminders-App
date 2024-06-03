@@ -16,5 +16,5 @@ export const PinnedLists: FC = memo(() => {
 				))}
 			</Flex>
 		</List>
-	)
+	);
 });

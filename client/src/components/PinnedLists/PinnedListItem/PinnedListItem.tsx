@@ -12,7 +12,7 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 
 	const onEdit = useCallback(() => {
 		setIsEdit(true);
-	}, [])
+	}, []);
 
 	return (
 		<List.Item style={{width: '49%', padding: '4px 0'}}>
@@ -43,5 +43,5 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 				</Typography.Title>
 			</Card>
 		</List.Item>
-	)
+	);
 });

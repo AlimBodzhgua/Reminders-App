@@ -20,5 +20,5 @@ export const UnpinnedLists: FC = memo(() => {
 				<UnpinnedListItem list={list} key={list._id}/>
 			))}
 		</List>
-	)
-})
+	);
+});

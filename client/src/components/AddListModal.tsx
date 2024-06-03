@@ -22,5 +22,5 @@ export const AddListModal: FC<AddListModalProps> = memo((props) => {
 				onCancel={onClose}
 			/>
 		</Modal>
-	)
+	);
 });

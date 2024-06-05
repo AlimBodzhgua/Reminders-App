@@ -7,6 +7,7 @@ import {
 	CSSProperties,
 	useCallback,
 	ChangeEvent,
+	MouseEvent,
 } from 'react';
 import {
 	PushpinOutlined,
@@ -19,6 +20,7 @@ import { removeList, updateList } from 'store/actions/userActions';
 import { mapListToIcon } from 'constants/iconsList';
 import { IList } from 'types/list';
 import { useHover } from 'hooks/useHover';
+import { activeListActions } from 'store/slices/activeListSlice';
 import DotesIcon from 'assets/icons/dotes.svg';
 
 import type { InputRef, MenuProps } from 'antd';
@@ -47,6 +49,12 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const inputRef = useRef<InputRef>(null);
 
+	useEffect(() => {
+		window.addEventListener('keydown', onEscaprePress);
+
+		return () => window.removeEventListener('keydown', onEscaprePress);
+	}, []);
+
 	const onRemove = useCallback(() => {
 		dispatch(removeList(list._id));
 	}, [dispatch]);
@@ -54,6 +62,11 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 	const onPin = useCallback(() => {
 		dispatch(updateList({ _id: list._id, pinned: true }));
 	}, [dispatch]);
+
+	const onSelectList = useCallback((e: MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
+		dispatch(activeListActions.setActiveList(list));
+	}, [dispatch])
 
 	const onSave = useCallback(async () => {
 		const { meta } = await dispatch(updateList({_id: list._id, name: value}));
@@ -82,11 +95,6 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 		}
 	}, [onBlurInput]);
 
-	useEffect(() => {
-		window.addEventListener('keydown', onEscaprePress);
-
-		return () => window.removeEventListener('keydown', onEscaprePress);
-	}, []);
 
 
 	const items: MenuProps['items'] = useMemo(() => [
@@ -106,6 +114,8 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 			extra={<div style={extraItemStyle}>{list.reminders.length}</div>}
 			style={{ ...listItemStyle, backgroundColor: isHover ? '#E9E9E9' : '' }}
 			onDoubleClick={onEdit}
+			onClick={onSelectList}
+			role='button'
 			{...hoverProps}
 		>
 			<Flex

@@ -40,3 +40,19 @@
 	display: flex;	
 }
 
+.ant-picker .ant-picker-input {
+	display: flex;
+	flex-direction: row-reverse;
+	gap: 8px;
+}
+
+.ant-picker .ant-picker-clear {
+	opacity: 1;
+}
+.ant-picker .ant-picker-suffix {
+	opacity: 1;
+}
+
+.ant-picker .ant-picker-suffix:hover {
+	opacity: 1;
+}

@@ -5,7 +5,7 @@ import { selectUserAuthData } from 'store/selectors/userSelectors';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { userActions } from 'store/slices/userSlice';
 import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
-import { UserOutlined, PlusSquareOutlined } from '@ant-design/icons';
+import { UserOutlined, PlusOutlined } from '@ant-design/icons';
 
 import type { MenuProps } from 'antd';
 
@@ -64,7 +64,7 @@ export const Header: FC = memo(() => {
 				{authData ? (
 					<Flex gap='10px'>
 						<Button type='text'>
-							<PlusSquareOutlined
+							<PlusOutlined
 								style={{ fontSize: '28px', color: '#fff' }}
 							/>
 						</Button>

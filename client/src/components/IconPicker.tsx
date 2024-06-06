@@ -1,7 +1,8 @@
 import { FC, memo, useCallback, useState } from 'react';
-import { Button, Flex, Popover, Radio, RadioChangeEvent } from 'antd';
+import { Flex, Popover, Radio, RadioChangeEvent } from 'antd';
 import { mapListToIcon } from 'constants/iconsList';
 import { ListsIconType } from 'types/list';
+import { StyledButton } from 'Styled/Button.styles';
 
 interface IconPickerColor {
 	color: string;
@@ -57,7 +58,7 @@ export const IconPicker: FC<IconPickerColor> = memo((props) => {
 			trigger='click'
 			placement='right'
 		>
-			<Button
+			<StyledButton
 				size='large'
 				shape='circle'
 				icon={mapListToIcon[icon as ListsIconType]}

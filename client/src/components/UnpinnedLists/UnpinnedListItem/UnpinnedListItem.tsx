@@ -4,7 +4,6 @@ import {
 	useMemo,
 	useState,
 	useEffect,
-	CSSProperties,
 	useCallback,
 	ChangeEvent,
 	MouseEvent,
@@ -14,13 +13,15 @@ import {
 	DeleteOutlined,
 	EnterOutlined,
 } from '@ant-design/icons';
-import { Flex, Avatar, List, Input, Dropdown } from 'antd';
+import { Flex, Input, Dropdown } from 'antd';
 import { useAppDispatch } from 'hooks/redux';
 import { removeList, updateList } from 'store/actions/userActions';
 import { mapListToIcon } from 'constants/iconsList';
 import { IList } from 'types/list';
 import { useHover } from 'hooks/useHover';
 import { activeListActions } from 'store/slices/activeListSlice';
+import { StyledListItem, StyledExtraItem } from './UnpinnedListItem.styles';
+import { StyledAvatar } from 'Styled/Avatar.styles';
 import DotesIcon from 'assets/icons/dotes.svg';
 
 import type { InputRef, MenuProps } from 'antd';
@@ -28,19 +29,6 @@ import type { InputRef, MenuProps } from 'antd';
 interface MyListsItemProps {
 	list: IList;
 }
-
-const listItemStyle: CSSProperties = {
-	padding: '8px 12px',
-	borderRadius: '8px',
-	color: '#515151',
-};
-
-const extraItemStyle: CSSProperties = {
-	fontWeight: 600,
-	fontSize: '18px',
-	color: '#8c8c8c',
-	lineHeight: 1.4,
-};
 
 export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 	const dispatch = useAppDispatch();
@@ -96,7 +84,6 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 	}, [onBlurInput]);
 
 
-
 	const items: MenuProps['items'] = useMemo(() => [
 		{ key: '1', label: <PushpinOutlined onClick={onPin} /> },
 		{ key: '2', label: <DeleteOutlined onClick={onRemove} /> },
@@ -109,10 +96,10 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 	);
 
 	return (
-		<List.Item
+		<StyledListItem
 			actions={[isHover && hoverExtraContent]}
-			extra={<div style={extraItemStyle}>{list.reminders.length}</div>}
-			style={{ ...listItemStyle, backgroundColor: isHover ? '#E9E9E9' : '' }}
+			extra={<StyledExtraItem>{list.reminders.length}</StyledExtraItem >}
+			bgColor={isHover ? '#E9E9E9' : ''}
 			onDoubleClick={onEdit}
 			onClick={onSelectList}
 			role='button'
@@ -125,9 +112,9 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 				style={{ width: '85%' }}
 			>
 				<Flex align='center' gap='10px'>
-					<Avatar
+					<StyledAvatar
 						icon={mapListToIcon[list.icon]}
-						style={{ backgroundColor: list.color }}
+						backgroundColor={list.color}
 					/>
 					{isEdit ? (
 						<Input
@@ -146,6 +133,6 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 					)}
 				</Flex>
 			</Flex>
-		</List.Item>
+		</StyledListItem>
 	);
 };

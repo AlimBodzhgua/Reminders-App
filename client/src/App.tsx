@@ -1,8 +1,6 @@
 import { FC, memo, useCallback, useEffect } from 'react';
 import { Layout } from 'antd';
-import { Sider } from 'components/Layout/Sider';
-import { Header } from 'components/Layout/Header';
-import { Content } from 'components/Layout/Content';
+import { Header, Sider, Content } from 'components/Layout';
 import { useAppDispatch } from 'hooks/redux';
 import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
 import { initUserAuth } from 'store/actions/userActions';

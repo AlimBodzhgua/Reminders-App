@@ -1,21 +1,15 @@
-import { FC, CSSProperties, memo, useState, useCallback, useMemo } from 'react';
-import { Button, Dropdown, Flex, Layout, Space, Avatar } from 'antd';
+import { FC, memo, useState, useCallback, useMemo } from 'react';
+import { Button, Dropdown, Flex, Space } from 'antd';
 import { LoginModal, RegisterModal } from 'components/Auth';
 import { selectUserAuthData } from 'store/selectors/userSelectors';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { userActions } from 'store/slices/userSlice';
 import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
 import { UserOutlined, PlusOutlined } from '@ant-design/icons';
+import { StyledHeader } from './Header.styles';
+import { StyledAvatar } from 'Styled/Avatar.styles';
 
 import type { MenuProps } from 'antd';
-
-const headerStyle: CSSProperties = {
-	textAlign: 'center',
-	color: '#fff',
-	height: 65,
-	paddingInline: 48,
-	backgroundColor: '#282B2B',
-};
 
 export const Header: FC = memo(() => {
 	const authData = useAppSelector(selectUserAuthData);
@@ -44,22 +38,13 @@ export const Header: FC = memo(() => {
 		localStorage.removeItem(USER_LOCALSTORAGE_KEY);
 	}, [dispatch]);
 
-	const items: MenuProps['items'] = useMemo(
-		() => [
-			{
-				key: '1',
-				label: <Button>Profile</Button>,
-			},
-			{
-				key: '2',
-				label: <Button onClick={onLogout}>Logout</Button>,
-			},
-		],
-		[],
-	);
+	const items: MenuProps['items'] = useMemo(() => [
+		{ key: '1', label: <Button>Profile</Button> },
+		{ key: '2', label: <Button onClick={onLogout}>Logout</Button> },
+	], []);
 
 	return (
-		<Layout.Header style={headerStyle}>
+		<StyledHeader>
 			<Flex justify='end' align='center' style={{ height: '100%' }}>
 				{authData ? (
 					<Flex gap='10px'>
@@ -69,14 +54,10 @@ export const Header: FC = memo(() => {
 							/>
 						</Button>
 						<Dropdown menu={{ items }} placement='bottom'>
-							<Avatar
+							<StyledAvatar 
 								icon={<UserOutlined />}
 								size='large'
 								alt='user avatar'
-								style={{
-									backgroundColor: '#4B4E54',
-									cursor: 'pointer',
-								}}
 							/>
 						</Dropdown>
 					</Flex>
@@ -95,6 +76,6 @@ export const Header: FC = memo(() => {
 					</Space>
 				)}
 			</Flex>
-		</Layout.Header>
+		</StyledHeader>
 	);
 });

@@ -1,7 +1,7 @@
 import { FC, memo, useState, useCallback } from 'react';
 import { selectUserIsLoading } from 'store/selectors/userSelectors';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { AppColorPicker } from 'components/AppColorPicker';
+import { AppColorPicker } from 'components/AppColorPicker/AppColorPicker';
 import { addList } from 'store/actions/userActions';
 import { IconPicker } from 'components/IconPicker';
 import { ListsIconType } from 'types/list';

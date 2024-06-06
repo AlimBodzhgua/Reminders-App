@@ -1,21 +1,12 @@
-import { CSSProperties, FC, MouseEvent, memo, useState } from 'react';
-import {
-	Form,
-	Space,
-	Input,
-	DatePicker,
-	TimePicker,
-	DatePickerProps,
-	TimePickerProps,
-} from 'antd';
+import { FC, MouseEvent, memo, useState } from 'react';
+import { Form, Space, Input, DatePickerProps, TimePickerProps } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import dayjs, { Dayjs } from 'dayjs';
-
-
-const formStyle: CSSProperties = {
-	borderBottom: '2px solid #CFCFCF',
-	padding: '4px 0 8px 0',
-}
+import {
+	StyledForm,
+	StyledDatePicker,
+	StyledTimePicker,
+} from './AddReminderForm.styles';
 
 interface AddReminderFormProps {
 	onSuccess?: () => void;
@@ -31,7 +22,7 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 		e.stopPropagation();
 	}
 
-	const onChangeDate: DatePickerProps['onChange'] = (_, dateString) => {
+	const onChangeDate: DatePickerProps['onChange'] = (date, dateString) => {
 		if (dateString.length) {
 			setDate(dateString as string)
 		}
@@ -47,11 +38,7 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 	}
 
 	return (
-		<Form
-			style={formStyle}
-			form={form}
-			onClick={onContentClick}
-		>
+		<StyledForm form={form} onClick={onContentClick}>
 			<Form.Item>
 				<Input
 					name='title'
@@ -68,10 +55,9 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 				/>
 			</Form.Item>
 			<Space>
-				<DatePicker
+				<StyledDatePicker
 					placeholder='Add Date'
 					variant='filled'
-					style={{borderRadius: 0, width: '144px'}}
 					onChange={onChangeDate}
 					value={date !== null ? dayjs(date) : date}
 					allowClear={{
@@ -79,10 +65,9 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 					}}
 				/>
 				{date &&
-					<TimePicker
+					<StyledTimePicker
 						placeholder='Add Time'
 						variant='filled'
-						style={{borderRadius: 0, width: '144px'}}
 						onChange={onChangeTime}
 						value={time}
 						allowClear={{
@@ -91,6 +76,6 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 					/>
 				}
 			</Space>
-		</Form>
+		</StyledForm>
 	)
 });

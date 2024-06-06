@@ -1,16 +1,9 @@
-import { FC, CSSProperties, memo, useState, MouseEvent } from 'react';
-import { Button, Flex, Layout, Space, Typography } from 'antd';
+import { FC, memo, useState } from 'react';
+import { Button, Flex, Space } from 'antd';
 import { useAppSelector } from 'hooks/redux';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
-import { AddReminderForm } from 'components/AddReminderForm';
-import { PlusOutlined } from '@ant-design/icons';
-
-
-const contentStyle: CSSProperties = {
-	padding: '15px 30px',
-	color: '#fff',
-	backgroundColor: '#ffff',
-};
+import { AddReminderForm } from 'components/AddReminderForm/AddReminderForm';
+import { StyledPlusOutlined, StyledContent, StyledTitle } from './Content.styles';
 
 export const Content: FC = memo(() => {
 	const activeList = useAppSelector(selectActiveList);
@@ -26,39 +19,39 @@ export const Content: FC = memo(() => {
 	}
 
 	return (
-		<Layout.Content style={contentStyle} onClick={onToggleShowForm}>
+		<StyledContent onClick={onToggleShowForm}>
 			<Flex justify='space-between' align='center'>
 				<Space>
-					<Typography.Title
-						style={{ color: activeList?.color, fontWeight: 700 }}
+					<StyledTitle
+						color={activeList?.color}
 						editable={{
 							triggerType: ['text'],
 							enterIcon: '',
 						}}
 					>
 						{activeList?.name}
-					</Typography.Title>
+					</StyledTitle>
 					<Button
 						type='text'
-						icon={<PlusOutlined style={{color: '#000', fontSize: '28px'}}/>}
+						icon={<StyledPlusOutlined />}
 						style={{marginBottom: '1em'}}
 						onClick={onShowForm}
 					/>
 				</Space>
-					<Typography.Title style={{ color: activeList?.color, marginTop: 0 }}>
-						{activeList?.reminders.length}
-					</Typography.Title>
-					
+				<StyledTitle color={activeList?.color} weight={500}>
+					{activeList?.reminders.length}
+				</StyledTitle>
 			</Flex>
+			
 			{showForm && <AddReminderForm />}
 
 			{showEmptyTitle &&
 				<Flex justify='center' align='center' style={{ height: '80%' }}>
-					<Typography.Title level={1} style={{color: '#D0D0D0'}}>
+					<StyledTitle color='#D0D0D0' weight={500}>
 						No reminders
-					</Typography.Title>
+					</StyledTitle>
 				</Flex>
 			}
-		</Layout.Content>
+		</StyledContent>
 	);
 });

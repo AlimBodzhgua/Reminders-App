@@ -6,7 +6,9 @@
         "start": "vite --port 3000 --open",
         "build:dev": "tsc && vite build",
         "lint:ts": "npx eslint --ignore-pattern build",
-        "lint:ts:fix": "npm run lint:ts -- --fix"
+        "lint:ts:fix": "npm run lint:ts -- --fix",
+        "lint:css": "npx stylelint \"**/*.tsx\"",
+        "lint:css:fix": "npm run lint:css --fix"
     },
     "keywords": [],
     "author": "",
@@ -34,6 +36,9 @@
         "eslint": "^9.3.0",
         "eslint-plugin-react": "^7.34.1",
         "globals": "^15.3.0",
+        "postcss-styled-syntax": "^0.6.4",
+        "stylelint": "^16.6.1",
+        "stylelint-config-standard": "^36.0.0",
         "typescript": "^5.4.5",
         "typescript-eslint": "^7.10.0",
         "vite-plugin-checker": "^0.6.4",

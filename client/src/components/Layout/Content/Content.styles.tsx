@@ -21,6 +21,6 @@ interface StyledTitleProps {
 export const StyledTitle = styled(Typography.Title)<StyledTitleProps>`
 	&&& {
 		font-weight: ${props => props.$weight || 700};
-		color: ${props => props.$color || '#000'};
+		color: ${props => props.$color};
 	}
 `

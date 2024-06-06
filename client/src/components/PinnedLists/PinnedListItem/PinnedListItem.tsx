@@ -57,6 +57,7 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 					$margin='5px 0 0 0'
 					$align='left'
 					$isActive={isActive}
+					$weight={500}
 				>
 					{list.name}
 				</StyledTitle>

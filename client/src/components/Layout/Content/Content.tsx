@@ -23,7 +23,7 @@ export const Content: FC = memo(() => {
 			<Flex justify='space-between' align='center'>
 				<Space>
 					<StyledTitle
-						color={activeList?.color}
+						$color={activeList?.color}
 						editable={{
 							triggerType: ['text'],
 							enterIcon: '',

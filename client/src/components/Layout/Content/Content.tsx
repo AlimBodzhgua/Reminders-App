@@ -38,7 +38,7 @@ export const Content: FC = memo(() => {
 						onClick={onShowForm}
 					/>
 				</Space>
-				<StyledTitle color={activeList?.color} weight={500}>
+				<StyledTitle $color={activeList?.color} $weight={500}>
 					{activeList?.reminders.length}
 				</StyledTitle>
 			</Flex>
@@ -47,7 +47,7 @@ export const Content: FC = memo(() => {
 
 			{showEmptyTitle &&
 				<Flex justify='center' align='center' style={{ height: '80%' }}>
-					<StyledTitle color='#D0D0D0' weight={500}>
+					<StyledTitle $color='#D0D0D0' $weight={500}>
 						No reminders
 					</StyledTitle>
 				</Flex>

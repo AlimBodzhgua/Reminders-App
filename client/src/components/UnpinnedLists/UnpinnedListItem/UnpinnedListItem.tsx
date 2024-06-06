@@ -99,7 +99,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 		<StyledListItem
 			actions={[isHover && hoverExtraContent]}
 			extra={<StyledExtraItem>{list.reminders.length}</StyledExtraItem >}
-			bgColor={isHover ? '#E9E9E9' : ''}
+			$bgColor={isHover ? '#E9E9E9' : ''}
 			onDoubleClick={onEdit}
 			onClick={onSelectList}
 			role='button'
@@ -114,7 +114,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 				<Flex align='center' gap='10px'>
 					<StyledAvatar
 						icon={mapListToIcon[list.icon]}
-						backgroundColor={list.color}
+						$bgColor={list.color}
 					/>
 					{isEdit ? (
 						<Input

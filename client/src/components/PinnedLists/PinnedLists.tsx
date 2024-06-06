@@ -10,7 +10,7 @@ export const PinnedLists: FC = memo(() => {
 
 	return (
 		<List>
-			<Flex wrap align='center' style={{columnGap: '5px'}}>
+			<Flex wrap align='center' gap='5px'>
 				{authData && pinnedLists.map((list) => (
 					<PinnedListItem key={list._id} list={list} />
 				))}

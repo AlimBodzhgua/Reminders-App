@@ -17,8 +17,8 @@ export const AppColorPicker: FC<AppColorPickerProps> = memo((props) => {
 			<StyledRadioButton
 				key={color}
 				value={color}
-				backgroundColor={color}
-				color={color}
+				$bgColor={color}
+				$color={color}
 			>
 				{color}
 			</StyledRadioButton>

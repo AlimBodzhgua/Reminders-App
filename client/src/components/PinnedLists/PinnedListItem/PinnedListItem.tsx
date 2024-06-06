@@ -34,29 +34,29 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 		<StyledListItem onClick={onSelectList}>
 			<StyledCard
 				type='inner'
-				backgroundColor={isActive ? activeList.color : '#D0D0D0'}
+				$bgColor={isActive ? activeList.color : '#D0D0D0'}
 				size='small'
 			>
 				<Flex align='center' justify='space-between'>
 					<StyledAvatar
 						icon={mapListToIcon[list.icon]}
-						backgroundColor={isActive ? '#fff' : list.color}
-						color={isActive ? list.color : '#fff'}
+						$bgColor={isActive ? '#fff' : list.color}
+						$color={isActive ? list.color : '#fff'}
 						size={28}
 					/>
 					<StyledTitle
 						level={4}
-						margin='0'
-						isActive={isActive}
+						$margin='0'
+						$isActive={isActive}
 					>
 						{list.reminders.length}
 					</StyledTitle>
 				</Flex>
 				<StyledTitle
 					level={5}
-					margin='5px 0 0 0'
-					align='left'
-					isActive={isActive}
+					$margin='5px 0 0 0'
+					$align='left'
+					$isActive={isActive}
 				>
 					{list.name}
 				</StyledTitle>

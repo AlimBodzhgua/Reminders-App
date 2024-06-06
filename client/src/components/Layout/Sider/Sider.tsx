@@ -2,10 +2,9 @@ import { FC, memo, useState, useCallback } from 'react';
 import { SearchOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Input, Button, Flex } from 'antd';
 import { PinnedLists } from 'components/PinnedLists/PinnedLists';
-import { UnpinnedLists } from 'components/UnpinnedLists/UnpinnedLists';
+import { UnpinnedLists } from 'components/UnpinnedLists';
 import { AddListModal } from 'components/AddListModal';
 import { StyledSider } from './Sider.styles'
-
 
 export const Sider: FC = memo(() => {
 	const [searchValue, setSearchValue] = useState<string>('');
@@ -25,24 +24,26 @@ export const Sider: FC = memo(() => {
 
 	return (
 		<StyledSider width={315}>
-			<Flex vertical gap='5px'>
-				<Input
-					addonBefore={<SearchOutlined />}
-					placeholder='Search'
-					value={searchValue}
-					onChange={onSearch}
-				/>
-				<PinnedLists />
-				<UnpinnedLists />
+			<Flex justify='space-between' vertical style={{ height: '100%' }}>
+				<Flex vertical gap='5px'>
+					<Input
+						addonBefore={<SearchOutlined />}
+						placeholder='Search'
+						value={searchValue}
+						onChange={onSearch}
+					/>
+					<PinnedLists />
+					<UnpinnedLists />
+				</Flex>
+				<Button
+					type='text'
+					icon={<PlusCircleOutlined />}
+					onClick={onOpenModal}
+				>
+					Add List
+				</Button>
+				<AddListModal isOpen={isOpen} onClose={onCloseModal} />
 			</Flex>
-			<Button
-				type='text'
-				icon={<PlusCircleOutlined />}
-				onClick={onOpenModal}
-			>
-				Add List
-			</Button>
-			<AddListModal isOpen={isOpen} onClose={onCloseModal} />
 		</StyledSider>
 	);
 });

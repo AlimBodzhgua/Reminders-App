@@ -3,6 +3,7 @@ import { createReduxStore } from 'store/config/store';
 import { Provider } from 'react-redux';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import App from './App';
+import GlobalStyle from 'Styled/GlobalStyle';
 import 'styles/index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
@@ -12,6 +13,7 @@ root.render(
 	<ErrorBoundary>
 		<Provider store={store}>
 			<App />
+			<GlobalStyle />
 		</Provider>
 	</ErrorBoundary>
 );

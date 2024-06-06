@@ -62,7 +62,8 @@ export const IconPicker: FC<IconPickerColor> = memo((props) => {
 				size='large'
 				shape='circle'
 				icon={mapListToIcon[icon as ListsIconType]}
-				style={{backgroundColor: color, color: 'white'}}
+				$bgColor={color}
+				$color='white'
 			/>
 		</Popover>
 	);

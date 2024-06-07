@@ -5,7 +5,6 @@ import {
 	useEffect,
 	useCallback,
 	ChangeEvent,
-	MouseEvent,
 } from 'react';
 import {
 	PushpinOutlined,
@@ -13,26 +12,25 @@ import {
 	EnterOutlined,
 } from '@ant-design/icons';
 import { Flex, Input, Dropdown } from 'antd';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { removeList, updateList } from 'store/actions/userActions';
-import { activeListActions } from 'store/slices/activeListSlice';
+import {  useAppSelector } from 'hooks/redux';
 import { mapListToIcon } from 'constants/iconsList';
-import { IList } from 'types/list';
 import { useHover } from 'hooks/useHover';
 import { StyledAvatar } from 'Styled/Avatar.styles';
-import DotesIcon from 'assets/icons/dotes.svg';
+import { selectActiveList } from 'store/selectors/activeListSelectors';
+import { useListActions } from 'hooks/useList';
+import { StyledDotesIcon } from 'styled/DotesIcon.styles';
 
+import type { IList } from 'types/list';
 import type { MenuProps } from 'antd';
 
 import { StyledListItem, StyledExtraItem, StyledName } from './UnpinnedListItem.styles';
-import { selectActiveList } from 'store/selectors/activeListSelectors';
 
 interface MyListsItemProps {
 	list: IList;
 }
 
 export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
-	const dispatch = useAppDispatch();
+	const { onRemove, onUpdate, onPin, onSelectList} = useListActions(list)
 	const [value, setValue] = useState<string>(list.name);
 	const [isHover, hoverProps] = useHover();
 	const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -45,31 +43,9 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 		return () => window.removeEventListener('keydown', onEscapePress);
 	}, []);
 
-	const onRemove = useCallback((e: MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		dispatch(removeList(list._id));
-	}, [dispatch]);
-
-	const onPin = useCallback((e: MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		dispatch(updateList({ _id: list._id, pinned: true }));
-	}, [dispatch]);
-
-	const onSelectList = useCallback((e: MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		dispatch(activeListActions.setActiveList(list));
-	}, [dispatch])
-
-	const onSave = useCallback(async () => {
-		const { meta } = await dispatch(updateList({_id: list._id, name: value}));
-
-		if (meta.requestStatus === 'fulfilled') {
-			setIsEdit(false);
-		}
-	}, [dispatch, value]);
 
 	const onEdit = useCallback(() => {
-		setIsEdit(true);
+		setIsEdit(prev => !prev);
 	}, []);
 
 	const onBlurInput = useCallback(() => {
@@ -80,6 +56,10 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 	const onChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
 	}, []);
+
+	const onSave = () => {
+		onUpdate(value, onEdit);
+	}
 
 	const onEscapePress = useCallback((e: KeyboardEvent) => {
 		if (e.code === 'Escape') {
@@ -95,7 +75,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 
 	const hoverExtraContent = (
 		<Dropdown menu={{ items }} placement='bottom'>
-			<DotesIcon style={{ cursor: 'pointer', color: '#1677ff' }}/>
+			<StyledDotesIcon />
 		</Dropdown>
 	);
 

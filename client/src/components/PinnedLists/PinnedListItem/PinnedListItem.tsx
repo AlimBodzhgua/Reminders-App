@@ -5,14 +5,11 @@ import {
 	memo,
 	useCallback,
 	ChangeEvent,
-	MouseEvent,
 	useEffect,
 } from 'react';
-import { Flex, Input, Dropdown, MenuProps } from 'antd';
-import { IList } from 'types/list';
+import { Flex, Input, Dropdown } from 'antd';
 import { mapListToIcon } from 'constants/iconsList';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { activeListActions } from 'store/slices/activeListSlice';
+import { useAppSelector } from 'hooks/redux';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import {
 	StyledListItem,
@@ -21,10 +18,13 @@ import {
 } from './PinnedListItem.styles'
 import { StyledAvatar } from 'Styled/Avatar.styles';
 import { useHover } from 'hooks/useHover';
-import { removeList, updateList } from 'store/actions/userActions';
-import { EnterOutlined, DeleteOutlined, DashOutlined, InfoOutlined } from '@ant-design/icons';
-import DotesIcon from 'assets/icons/dotes.svg';
+import { EnterOutlined, DeleteOutlined } from '@ant-design/icons';
+import { useListActions } from 'hooks/useListActions';
+import { StyledDotesIcon } from 'styled/DotesIcon.styles';
 import UnpinIcon from 'assets/icons/unpin.svg';
+
+import type { MenuProps } from 'antd';
+import type { IList } from 'types/list';
 
 interface PinnedListItemProps {
 	list: IList;
@@ -35,7 +35,7 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 	const [value, setValue] = useState<string>(list.name);
 	const [isHover, hoverProps] = useHover();
 	const activeList = useAppSelector(selectActiveList);
-	const dispatch = useAppDispatch()
+	const { onRemove, onUpdate, onUnpin, onSelectList} = useListActions(list);
 	const isActive = activeList?._id === list._id;
 
 	useEffect(() => {
@@ -45,7 +45,7 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 	}, []);
 
 	const onEdit = useCallback(() => {
-		setIsEdit(true);
+		setIsEdit(prev => !prev);
 	}, []);
 
 	const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -56,26 +56,9 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 		setIsEdit(false);
 	}, [])
 
-	const onSave = useCallback(async () => {
-		const { meta } = await dispatch(updateList({_id: list._id, name: value}));
 
-		if (meta.requestStatus === 'fulfilled') {
-			setIsEdit(false);
-		}
-	}, [dispatch, value]);
-
-	const onSelectList = () => {
-		dispatch(activeListActions.setActiveList(list));
-	}
-
-	const onUnpin = (e: MouseEvent<SVGElement>) => {
-		e.stopPropagation();
-		dispatch(updateList({ _id: list._id, pinned: false }));
-	}
-
-	const onRemove = (e: MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		dispatch(removeList(list._id));
+	const onSave = () => {
+		onUpdate(value, onEdit);
 	}
 
 	const onEscapePress = useCallback((e: KeyboardEvent) => {
@@ -91,7 +74,7 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 
 	const hoverExtraContent = (
 		<Dropdown menu={{ items }} placement='bottom'>
-			<DotesIcon style={{ cursor: 'pointer', color: isActive ? '#fff' : '#1677ff' }}/>
+			<StyledDotesIcon $color={isActive ? '#fff' : '#1677ff'}/>
 		</Dropdown>
 	);
 

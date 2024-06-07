@@ -12,7 +12,9 @@ export const StyledList = styled(List)`
 
 	.ant-list-header {
 		padding-block: 6px;
+		padding-left: 6px;
 		text-align: left;
+		color: #949090;
 	}
 
 	.ant-list-header {

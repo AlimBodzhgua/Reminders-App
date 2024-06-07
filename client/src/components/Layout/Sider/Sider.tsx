@@ -5,10 +5,13 @@ import { PinnedLists } from 'components/PinnedLists/PinnedLists';
 import { UnpinnedLists } from 'components/UnpinnedLists';
 import { AddListModal } from 'components/AddListModal';
 import { StyledSider } from './Sider.styles'
+import { selectUserAuthData } from 'store/selectors/userSelectors';
+import { useAppSelector } from 'hooks/redux';
 
 export const Sider: FC = memo(() => {
 	const [searchValue, setSearchValue] = useState<string>('');
 	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const authData = useAppSelector(selectUserAuthData);
 
 	const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(e.target.value);
@@ -35,14 +38,21 @@ export const Sider: FC = memo(() => {
 					<PinnedLists />
 					<UnpinnedLists />
 				</Flex>
-				<Button
-					type='text'
-					icon={<PlusCircleOutlined />}
-					onClick={onOpenModal}
-				>
-					Add List
-				</Button>
-				<AddListModal isOpen={isOpen} onClose={onCloseModal} />
+				{authData && 
+					<>
+						<Button
+							type='text'
+							icon={<PlusCircleOutlined />}
+							onClick={onOpenModal}
+						>
+							Add List
+						</Button>
+						<AddListModal
+							isOpen={isOpen}
+							onClose={onCloseModal}
+						/>
+					</>
+				}
 			</Flex>
 		</StyledSider>
 	);

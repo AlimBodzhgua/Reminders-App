@@ -1,1 +1,2 @@
-npx lint-staged --config ./.lintstagedrc.json
+npm run lint:ts
+npm run lint:css

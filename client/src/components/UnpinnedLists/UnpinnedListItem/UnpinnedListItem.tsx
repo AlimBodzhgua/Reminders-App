@@ -23,7 +23,7 @@ import { useHover } from 'hooks/useHover';
 import { StyledAvatar } from 'Styled/Avatar.styles';
 import DotesIcon from 'assets/icons/dotes.svg';
 
-import type { InputRef, MenuProps } from 'antd';
+import type { MenuProps } from 'antd';
 
 import { StyledListItem, StyledExtraItem, StyledName } from './UnpinnedListItem.styles';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
@@ -39,12 +39,11 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const activeList = useAppSelector(selectActiveList);
 	const isActive = activeList?._id === list._id;
-	const inputRef = useRef<InputRef>(null);
 
 	useEffect(() => {
-		window.addEventListener('keydown', onEscaprePress);
+		window.addEventListener('keydown', onEscapePress);
 
-		return () => window.removeEventListener('keydown', onEscaprePress);
+		return () => window.removeEventListener('keydown', onEscapePress);
 	}, []);
 
 	const onRemove = useCallback((e: MouseEvent<HTMLDivElement>) => {
@@ -52,7 +51,8 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 		dispatch(removeList(list._id));
 	}, [dispatch]);
 
-	const onPin = useCallback(() => {
+	const onPin = useCallback((e: MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
 		dispatch(updateList({ _id: list._id, pinned: true }));
 	}, [dispatch]);
 
@@ -82,7 +82,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 		setValue(e.target.value);
 	}, []);
 
-	const onEscaprePress = useCallback((e: KeyboardEvent) => {
+	const onEscapePress = useCallback((e: KeyboardEvent) => {
 		if (e.code === 'Escape') {
 			onBlurInput();
 		}
@@ -96,7 +96,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 
 	const hoverExtraContent = (
 		<Dropdown menu={{ items }} placement='bottom'>
-			<DotesIcon style={{ cursor: 'pointer' }} />
+			<DotesIcon style={{ cursor: 'pointer', color: '#1677ff' }}/>
 		</Dropdown>
 	);
 
@@ -124,7 +124,6 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 					{isEdit ? (
 						<Input
 							style={{ width: '78%' }}
-							ref={inputRef}
 							onBlur={onBlurInput}
 							value={value}
 							onChange={onChangeInput}

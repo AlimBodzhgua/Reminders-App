@@ -12,7 +12,7 @@ import {
 	EnterOutlined,
 } from '@ant-design/icons';
 import { Flex, Input, Dropdown } from 'antd';
-import {  useAppSelector } from 'hooks/redux';
+import { useAppSelector } from 'hooks/redux';
 import { mapListToIcon } from 'constants/iconsList';
 import { useHover } from 'hooks/useHover';
 import { StyledAvatar } from 'Styled/Avatar.styles';

@@ -20,14 +20,14 @@ export const StyledListItem = styled(List.Item)<StyledListItemProps>`
 		background-color: #E9E9E9;
 	}
 
-`
+`;
 
 export const StyledExtraItem = styled.div`
 	font-weight: 600;
 	font-size: 18px;
 	color: #8c8c8c;
 	line-height: 1.4;
-`
+`;
 
 interface StyledNameProps {
 	$color?: string;
@@ -39,4 +39,4 @@ export const StyledName = styled.div<StyledNameProps>`
 	&:hover {
 		cursor: text;
 	}
-`
+`;

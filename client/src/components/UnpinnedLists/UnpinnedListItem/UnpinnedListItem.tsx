@@ -55,7 +55,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 
 	const onSave = () => {
 		onUpdate(value, onEdit);
-	}
+	};
 
 	const items: MenuProps['items'] = useMemo(() => [
 		{ key: '1', label: <PushpinOutlined onClick={onTogglePin} /> },

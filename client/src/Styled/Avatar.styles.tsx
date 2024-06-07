@@ -13,4 +13,4 @@ export const StyledAvatar = styled(Avatar)<StyledAvatarProps>`
 		cursor: pointer;
 		transition: background-color .3s, color .3s;
 	}
-`
+`;

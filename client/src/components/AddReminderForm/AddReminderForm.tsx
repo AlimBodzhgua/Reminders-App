@@ -20,22 +20,22 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 
 	const onContentClick = (e: MouseEvent<HTMLFormElement>) => {
 		e.stopPropagation();
-	}
+	};
 
 	const onChangeDate: DatePickerProps['onChange'] = (date, dateString) => {
 		if (dateString.length) {
-			setDate(dateString as string)
+			setDate(dateString as string);
 		}
-	}
+	};
 
-	const onChangeTime: TimePickerProps['onChange'] = (time, timeString) => {
-		setTime(time)
-	}
+	const onChangeTime: TimePickerProps['onChange'] = (time) => {
+		setTime(time);
+	};
 
 	const onAddReminder = () => {
 		console.log('add reminder');
 		if (onSuccess) onSuccess();
-	}
+	};
 
 	return (
 		<StyledForm form={form} onClick={onContentClick}>
@@ -77,5 +77,5 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 				}
 			</Space>
 		</StyledForm>
-	)
+	);
 });

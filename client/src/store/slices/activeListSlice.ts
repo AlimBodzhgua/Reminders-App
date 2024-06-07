@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IList } from "types/list";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { IList } from 'types/list';
 
 export interface ActiveListStateSchema {
 	list?: IList | undefined;
@@ -7,7 +7,7 @@ export interface ActiveListStateSchema {
 
 const initialState: ActiveListStateSchema = {
 	list: undefined,
-}
+};
 
 export const activeListSlice = createSlice({
 	name: 'activeListSlice',
@@ -18,7 +18,7 @@ export const activeListSlice = createSlice({
 		}
 	}
 
-})
+});
 
 export const { reducer: activeListReducer } = activeListSlice;
 export const { actions: activeListActions } = activeListSlice;

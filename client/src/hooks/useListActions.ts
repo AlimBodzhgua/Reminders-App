@@ -38,7 +38,7 @@ export const useListActions = ({ list, onEscape }: UseListActionsProps) => {
 	const onSelectList = useCallback((e: MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		dispatch(activeListActions.setActiveList(list));
-	}, [dispatch])
+	}, [dispatch]);
 
 	const onUpdate = useCallback(async (value: string, onSuccess?: () => void) => {
 		const { meta } = await dispatch(updateList({_id: list._id, name: value}));
@@ -48,5 +48,5 @@ export const useListActions = ({ list, onEscape }: UseListActionsProps) => {
 		}
 	}, [dispatch]);
 
-	return { onRemove, onUpdate, onTogglePin, onSelectList }
-}
+	return { onRemove, onUpdate, onTogglePin, onSelectList };
+};

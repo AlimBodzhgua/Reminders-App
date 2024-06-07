@@ -25,7 +25,7 @@ import {
 	StyledCard,
 	StyledTitle,
 	StyledInput
-} from './PinnedListItem.styles'
+} from './PinnedListItem.styles';
 
 interface PinnedListItemProps {
 	list: IList;
@@ -55,11 +55,11 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 
 	const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);
-	}
+	};
 
 	const onSave = () => {
 		onUpdate(value, onEdit);
-	}
+	};
 
 	const items: MenuProps['items'] = useMemo(() => [
 		{ key: '1', label: <UnpinIcon onClick={onTogglePin} /> },

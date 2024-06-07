@@ -17,4 +17,4 @@ export const StyledList = styled(List)`
 		color: #949090;
 		border-block-end: none;
 	}
-`
+`;

@@ -11,4 +11,4 @@ export const StyledDotesIcon = styled(DotesIcon)<StyledDotesIconProps>`
 	&:hover {
 		cursor: pointer;
 	}
-`
+`;

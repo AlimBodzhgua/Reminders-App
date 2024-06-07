@@ -7,4 +7,4 @@ export const StyledHeader = styled(Layout.Header)`
 	height: 65px;
 	padding-inline: 48;
 	background-color: #282B2B;
-`
+`;

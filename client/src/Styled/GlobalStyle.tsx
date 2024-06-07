@@ -10,6 +10,6 @@ const GlobalStyle = createGlobalStyle`
 		font-family: Lato, sans-serif;
 		font-weight: 600;
 	}	
-`
+`;
 
 export default GlobalStyle;

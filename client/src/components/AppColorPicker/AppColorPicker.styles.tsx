@@ -12,4 +12,4 @@ export const StyledRadioButton = styled(Radio.Button)<StyledRadioButtonProps>`
 		background-color: ${props => props.$bgColor};
 		font-size: 2px;
 	}
-`
+`;

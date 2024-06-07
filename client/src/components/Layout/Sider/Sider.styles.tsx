@@ -8,4 +8,4 @@ export const StyledSider = styled(Layout.Sider)`
 		background-color: #F5F6F7!important;
 		padding: 35px 12px;
 	}
-`
+`;

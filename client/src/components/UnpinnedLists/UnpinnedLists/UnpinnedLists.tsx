@@ -15,7 +15,7 @@ export const UnpinnedLists: FC = memo(() => {
 			<div>My lists</div> 
 			<Spin spinning={isLoading} size='small'/>
 		</Flex>
-	)
+	);
 
 	return (
 		<StyledList

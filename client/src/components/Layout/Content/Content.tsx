@@ -14,11 +14,11 @@ export const Content: FC = memo(() => {
 
 	const onShowForm = () => {
 		setShowForm(true);
-	}
+	};
 
 	const onToggleShowForm = () => {
 		setShowForm(prev => !prev);
-	}
+	};
 
 	if (!authData) {
 		return (
@@ -29,7 +29,7 @@ export const Content: FC = memo(() => {
 					</StyledTitle>
 				</Flex>
 			</StyledContent>
-		)
+		);
 	}
 
 	return (

@@ -4,7 +4,7 @@ import { Input, Button, Flex } from 'antd';
 import { PinnedLists } from 'components/PinnedLists/PinnedLists';
 import { UnpinnedLists } from 'components/UnpinnedLists';
 import { AddListModal } from 'components/AddListModal';
-import { StyledSider } from './Sider.styles'
+import { StyledSider } from './Sider.styles';
 import { selectUserAuthData } from 'store/selectors/userSelectors';
 import { useAppSelector } from 'hooks/redux';
 

@@ -24,7 +24,7 @@ const App: FC = memo(() => {
 			const user = payload as IUser;
 			dispatch(activeListActions.setActiveList(user.lists[0]));
 		}
-	}, [dispatch])
+	}, [dispatch]);
 
 	useEffect(() => {
 		const user = localStorage.getItem(USER_LOCALSTORAGE_KEY);

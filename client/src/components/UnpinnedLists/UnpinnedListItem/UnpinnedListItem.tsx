@@ -17,7 +17,7 @@ import { mapListToIcon } from 'constants/iconsList';
 import { useHover } from 'hooks/useHover';
 import { StyledAvatar } from 'Styled/Avatar.styles';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
-import { useListActions } from 'hooks/useList';
+import { useListActions } from 'hooks/useListActions';
 import { StyledDotesIcon } from 'styled/DotesIcon.styles';
 
 import type { IList } from 'types/list';

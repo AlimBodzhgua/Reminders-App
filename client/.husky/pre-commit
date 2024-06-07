@@ -1,3 +1,2 @@
-npm run build:dev
 npm run lint:ts
 npm run lint:css

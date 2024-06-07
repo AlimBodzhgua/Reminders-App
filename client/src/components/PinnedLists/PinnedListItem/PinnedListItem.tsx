@@ -5,7 +5,6 @@ import {
 	memo,
 	useCallback,
 	ChangeEvent,
-	useEffect,
 } from 'react';
 import { Flex, Dropdown } from 'antd';
 import { mapListToIcon } from 'constants/iconsList';
@@ -26,7 +25,6 @@ import {
 	StyledCard,
 	StyledTitle,
 	StyledInput
-
 } from './PinnedListItem.styles'
 
 interface PinnedListItemProps {
@@ -38,14 +36,18 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 	const [value, setValue] = useState<string>(list.name);
 	const [isHover, hoverProps] = useHover();
 	const activeList = useAppSelector(selectActiveList);
-	const { onRemove, onUpdate, onUnpin, onSelectList} = useListActions(list);
 	const isActive = activeList?._id === list._id;
+	const {
+		onRemove,
+		onUpdate,
+		onTogglePin,
+		onSelectList,
+	} = useListActions({list, onEscape: onBlurInput});
 
-	useEffect(() => {
-		window.addEventListener('keydown', onEscapePress);
-
-		return () => window.removeEventListener('keydown', onEscapePress);
-	}, []);
+	function onBlurInput() {
+		setIsEdit(false);
+		setValue(list.name);
+	}
 
 	const onEdit = useCallback(() => {
 		setIsEdit(prev => !prev);
@@ -55,23 +57,12 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 		setValue(e.target.value);
 	}
 
-	const onBlurInput = useCallback(() => {
-		setIsEdit(false);
-	}, [])
-
-
 	const onSave = () => {
 		onUpdate(value, onEdit);
 	}
 
-	const onEscapePress = useCallback((e: KeyboardEvent) => {
-		if (e.code === 'Escape') {
-			onBlurInput();
-		}
-	}, [onBlurInput]);
-
 	const items: MenuProps['items'] = useMemo(() => [
-		{ key: '1', label: <UnpinIcon onClick={onUnpin} /> },
+		{ key: '1', label: <UnpinIcon onClick={onTogglePin} /> },
 		{ key: '2', label: <DeleteOutlined onClick={onRemove} /> },
 	], []);
 

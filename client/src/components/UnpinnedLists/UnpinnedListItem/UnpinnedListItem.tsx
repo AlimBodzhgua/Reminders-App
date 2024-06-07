@@ -2,7 +2,6 @@ import {
 	FC,
 	useMemo,
 	useState,
-	useEffect,
 	useCallback,
 	ChangeEvent,
 } from 'react';
@@ -29,27 +28,25 @@ interface MyListsItemProps {
 }
 
 export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
-	const { onRemove, onUpdate, onPin, onSelectList} = useListActions(list)
+	const {
+		onRemove,
+		onUpdate,
+		onTogglePin,
+		onSelectList,
+	} = useListActions({ list, onEscape: onBlurInput });
 	const [value, setValue] = useState<string>(list.name);
 	const [isHover, hoverProps] = useHover();
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const activeList = useAppSelector(selectActiveList);
 	const isActive = activeList?._id === list._id;
 
-	useEffect(() => {
-		window.addEventListener('keydown', onEscapePress);
-
-		return () => window.removeEventListener('keydown', onEscapePress);
-	}, []);
-
+	function onBlurInput() {
+		setIsEdit(false);
+		setValue(list.name);
+	}
 
 	const onEdit = useCallback(() => {
 		setIsEdit(prev => !prev);
-	}, []);
-
-	const onBlurInput = useCallback(() => {
-		setIsEdit(false);
-		setValue(list.name);
 	}, []);
 
 	const onChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -60,15 +57,8 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 		onUpdate(value, onEdit);
 	}
 
-	const onEscapePress = useCallback((e: KeyboardEvent) => {
-		if (e.code === 'Escape') {
-			onBlurInput();
-		}
-	}, [onBlurInput]);
-
-
 	const items: MenuProps['items'] = useMemo(() => [
-		{ key: '1', label: <PushpinOutlined onClick={onPin} /> },
+		{ key: '1', label: <PushpinOutlined onClick={onTogglePin} /> },
 		{ key: '2', label: <DeleteOutlined onClick={onRemove} /> },
 	], []);
 

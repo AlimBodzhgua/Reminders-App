@@ -4,8 +4,9 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { AppColorPicker } from 'components/AppColorPicker/AppColorPicker';
 import { addList } from 'store/actions/userActions';
 import { IconPicker } from 'components/IconPicker';
-import { ListsIconType } from 'types/list';
+import { IList, ListsIconType } from 'types/list';
 import { listRules } from 'constants/rules';
+import { activeListActions } from 'store/slices/activeListSlice';
 import {
 	Input,
 	Flex,
@@ -41,15 +42,18 @@ export const AddListForm: FC<AddListFormProps> = memo((props) => {
 		setIcon(icon);
 	}, []);
 
-	const onAddList = useCallback(() => {
-		dispatch(addList({
+	const onAddList = useCallback(async () => {
+		const { meta, payload } = await dispatch(addList({
 			name: form.getFieldValue('name'),
 			color: color,
 			icon: icon,
 		}));
 
-		if (onSuccess) onSuccess();
+		if (meta.requestStatus === 'fulfilled') {
+			dispatch(activeListActions.setActiveList(payload as IList));
 
+			if (onSuccess) onSuccess();
+		}
 	}, [dispatch, color, icon, onSuccess]);
 
 	return (

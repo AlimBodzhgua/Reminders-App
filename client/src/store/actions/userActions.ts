@@ -18,7 +18,7 @@ export const registerUser = createAsyncThunk<
 		};
 
 		try {
-			const response = await appAxios.post('/users/auth/register', body);
+			const response = await appAxios.post<IUser>('/users/auth/register', body);
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -40,7 +40,7 @@ export const loginUser = createAsyncThunk<
 		};
 
 		try {
-			const response = await appAxios.post('/users/auth/login', body);
+			const response = await appAxios.post<IUser>('/users/auth/login', body);
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -56,7 +56,7 @@ export const initUserAuth = createAsyncThunk<
 	'initUserAuth',
 	async (_, { rejectWithValue }) => {
 		try {
-			const response = await appAxios.get('users/auth/me');
+			const response = await appAxios.get<IUser>('users/auth/me');
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -79,7 +79,7 @@ export const addList = createAsyncThunk<
 		};
 		
 		try {
-			const response = await appAxios.post('/lists', body);
+			const response = await appAxios.post<IList>('/lists', body);
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -114,7 +114,7 @@ export const updateList = createAsyncThunk<
 	'updateList',
 	async (data, { rejectWithValue }) => {
 		try {
-			const response = await appAxios.patch(`/lists/${data._id}`, data);
+			const response = await appAxios.patch<UpdateListData>(`/lists/${data._id}`, data);
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));

@@ -1,4 +1,4 @@
-import { Typography, Card, List } from 'antd';
+import { Typography, Card, List, Input } from 'antd';
 import styled from 'styled-components';
 
 export const StyledListItem = styled(List.Item)`
@@ -34,4 +34,11 @@ export const StyledTitle = styled(Typography.Title)<StyledTitleProps>`
 		margin: ${props => props.$margin};
 		transition: color .3s;
 	}
+`
+
+export const StyledInput = styled(Input)`
+	margin-top: 6px;
+	padding: 0 2px;
+	border-radius: 0;
+	border: none;
 `

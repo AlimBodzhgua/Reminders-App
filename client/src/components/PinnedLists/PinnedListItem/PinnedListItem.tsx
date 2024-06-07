@@ -7,31 +7,34 @@ import {
 	ChangeEvent,
 	useEffect,
 } from 'react';
-import { Flex, Input, Dropdown } from 'antd';
+import { Flex, Dropdown } from 'antd';
 import { mapListToIcon } from 'constants/iconsList';
 import { useAppSelector } from 'hooks/redux';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
-import {
-	StyledListItem,
-	StyledCard,
-	StyledTitle,
-} from './PinnedListItem.styles'
 import { StyledAvatar } from 'styled/Avatar.styles';
+import { StyledDotesIcon } from 'styled/DotesIcon.styles';
 import { useHover } from 'hooks/useHover';
 import { EnterOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useListActions } from 'hooks/useListActions';
-import { StyledDotesIcon } from 'styled/DotesIcon.styles';
 import UnpinIcon from 'assets/icons/unpin.svg';
 
 import type { MenuProps } from 'antd';
 import type { IList } from 'types/list';
+
+import {
+	StyledListItem,
+	StyledCard,
+	StyledTitle,
+	StyledInput
+
+} from './PinnedListItem.styles'
 
 interface PinnedListItemProps {
 	list: IList;
 }
 
 export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
-	const [isEdit, setIsEdit] = useState<boolean>(true);
+	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const [value, setValue] = useState<string>(list.name);
 	const [isHover, hoverProps] = useHover();
 	const activeList = useAppSelector(selectActiveList);
@@ -105,13 +108,12 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 				</Flex>
 				{isEdit 
 					? (
-						<Input
+						<StyledInput
 							value={value}
 							onChange={onChangeInput}
 							onBlur={onBlurInput}
 							size='small'
 							suffix={<EnterOutlined />}
-							style={{marginTop: '5px', padding: '0 2px'}}
 							autoFocus
 							onPressEnter={onSave}
 						/>

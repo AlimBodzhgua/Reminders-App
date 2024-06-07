@@ -15,15 +15,14 @@ import { Flex, Input, Dropdown } from 'antd';
 import { useAppSelector } from 'hooks/redux';
 import { mapListToIcon } from 'constants/iconsList';
 import { useHover } from 'hooks/useHover';
-import { StyledAvatar } from 'Styled/Avatar.styles';
+import { StyledAvatar } from 'styled/Avatar.styles';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { useListActions } from 'hooks/useListActions';
-import { StyledDotesIcon } from 'styled/DotesIcon.styles';
-
 import type { IList } from 'types/list';
 import type { MenuProps } from 'antd';
 
 import { StyledListItem, StyledExtraItem, StyledName } from './UnpinnedListItem.styles';
+import { StyledDotesIcon } from 'styled/DotesIcon.styles';
 
 interface MyListsItemProps {
 	list: IList;

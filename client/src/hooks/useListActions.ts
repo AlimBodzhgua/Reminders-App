@@ -17,7 +17,7 @@ export const useListActions = (list: IList) => {
 		dispatch(updateList({ _id: list._id, pinned: true }));
 	}, [dispatch]);
 
-	const onUnpin = useCallback((e: MouseEvent<HTMLDivElement>) => {
+	const onUnpin = useCallback((e: MouseEvent<SVGElement>) => {
 		e.stopPropagation();
 		dispatch(updateList({ _id: list._id, pinned: false }));
 	}, [dispatch]);

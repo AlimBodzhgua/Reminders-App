@@ -2,7 +2,7 @@ import { FC, memo, useCallback, useState } from 'react';
 import { Flex, Popover, Radio, RadioChangeEvent } from 'antd';
 import { mapListToIcon } from 'constants/iconsList';
 import { ListsIconType } from 'types/list';
-import { StyledButton } from 'Styled/Button.styles';
+import { StyledButton } from 'styled/Button.styles';
 
 interface IconPickerColor {
 	color: string;

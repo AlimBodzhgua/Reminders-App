@@ -16,7 +16,7 @@ import {
 	StyledCard,
 	StyledTitle,
 } from './PinnedListItem.styles'
-import { StyledAvatar } from 'Styled/Avatar.styles';
+import { StyledAvatar } from 'styled/Avatar.styles';
 import { useHover } from 'hooks/useHover';
 import { EnterOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useListActions } from 'hooks/useListActions';

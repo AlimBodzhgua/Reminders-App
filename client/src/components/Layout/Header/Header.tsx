@@ -6,8 +6,8 @@ import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { userActions } from 'store/slices/userSlice';
 import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
 import { UserOutlined, PlusOutlined } from '@ant-design/icons';
+import { StyledAvatar } from 'styled/Avatar.styles';
 import { StyledHeader } from './Header.styles';
-import { StyledAvatar } from 'Styled/Avatar.styles';
 
 import type { MenuProps } from 'antd';
 

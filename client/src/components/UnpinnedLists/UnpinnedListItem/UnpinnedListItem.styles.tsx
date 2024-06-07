@@ -35,6 +35,7 @@ interface StyledNameProps {
 
 export const StyledName = styled.div<StyledNameProps>`
 	color: ${props => props.$color};
+	
 	&:hover {
 		cursor: text;
 	}

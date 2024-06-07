@@ -15,9 +15,6 @@ export const StyledList = styled(List)`
 		padding: 4px 8px;
 		text-align: left;
 		color: #949090;
-	}
-
-	.ant-list-header {
 		border-block-end: none;
 	}
 `

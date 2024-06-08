@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 export const StyledListItem = styled(List.Item)`
 	&&& {
-		width: 49%;
 		padding: 2px 0;
 		border-block-end: none;
 	}

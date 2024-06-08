@@ -1,2 +1,5 @@
-npm run lint:ts
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npm lint:ts
 npm run lint:css

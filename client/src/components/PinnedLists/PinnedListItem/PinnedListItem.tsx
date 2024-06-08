@@ -15,6 +15,7 @@ import { StyledDotesIcon } from 'styled/DotesIcon.styles';
 import { useHover } from 'hooks/useHover';
 import { EnterOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useListActions } from 'hooks/useListActions';
+import { SortableItem } from 'lib/components/SortableItem';
 import UnpinIcon from 'assets/icons/unpin.svg';
 
 import type { MenuProps } from 'antd';
@@ -73,56 +74,60 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 	);
 
 	return (
-		<StyledListItem onClick={onSelectList} {...hoverProps}>
-			<StyledCard
-				type='inner'
-				$bgColor={isActive ? activeList.color : '#D0D0D0'}
-				size='small'
+		<SortableItem id={list._id} wrapperWidth='49%'>
+			<StyledListItem
+				onClick={onSelectList}
+				{...hoverProps}
 			>
-				<Flex align='center' justify='space-between'>
-					<StyledAvatar
-						icon={mapListToIcon[list.icon]}
-						$bgColor={isActive ? '#fff' : list.color}
-						$color={isActive ? list.color : '#fff'}
-						size={28}
-					/>
-					<Flex align='center' gap='5px'>
-						{isHover && hoverExtraContent}
-						<StyledTitle
-							level={4}
-							$margin='0'
-							$isActive={isActive}
-						>
-							{list.reminders.length}
-						</StyledTitle>
-					</Flex>
-				</Flex>
-				{isEdit 
-					? (
-						<StyledInput
-							value={value}
-							onChange={onChangeInput}
-							onBlur={onBlurInput}
-							size='small'
-							suffix={<EnterOutlined />}
-							autoFocus
-							onPressEnter={onSave}
+				<StyledCard
+					type='inner'
+					$bgColor={isActive ? activeList.color : '#D0D0D0'}
+					size='small'
+				>
+					<Flex align='center' justify='space-between'>
+						<StyledAvatar
+							icon={mapListToIcon[list.icon]}
+							$bgColor={isActive ? '#fff' : list.color}
+							$color={isActive ? list.color : '#fff'}
+							size={28}
 						/>
-					) : (
-						<StyledTitle
-							level={5}
-							onDoubleClick={onEdit}
-							$margin='5px 0 0 0'
-							$align='left'
-							$isActive={isActive}
-							$weight={500}
-						>
-							{list.name}
-						</StyledTitle>
-					)
-
-				}
-			</StyledCard>
-		</StyledListItem>
+						<Flex align='center' gap='5px'>
+							{isHover && hoverExtraContent}
+							<StyledTitle
+								level={4}
+								$margin='0'
+								$isActive={isActive}
+							>
+								{list.reminders.length}
+							</StyledTitle>
+						</Flex>
+					</Flex>
+					{isEdit 
+						? (
+							<StyledInput
+								value={value}
+								onChange={onChangeInput}
+								onBlur={onBlurInput}
+								size='small'
+								suffix={<EnterOutlined />}
+								autoFocus
+								onPressEnter={onSave}
+							/>
+						) : (
+							<StyledTitle
+								level={5}
+								onDoubleClick={onEdit}
+								$margin='5px 0 0 0'
+								$align='left'
+								$isActive={isActive}
+								$weight={500}
+							>
+								{list.name}
+							</StyledTitle>
+						)
+					}
+				</StyledCard>
+			</StyledListItem>
+		</SortableItem>
 	);
 });

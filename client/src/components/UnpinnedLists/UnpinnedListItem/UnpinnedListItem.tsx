@@ -23,6 +23,8 @@ import type { MenuProps } from 'antd';
 import { StyledListItem, StyledExtraItem, StyledName } from './UnpinnedListItem.styles';
 import { StyledDotesIcon } from 'styled/DotesIcon.styles';
 
+import { SortableItem } from 'lib/components/SortableItem';
+
 interface MyListsItemProps {
 	list: IList;
 }
@@ -69,42 +71,44 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 	);
 
 	return (
-		<StyledListItem
-			actions={[isHover && hoverExtraContent]}
-			extra={<StyledExtraItem>{list.reminders.length}</StyledExtraItem >}
-			onDoubleClick={onEdit}
-			onClick={onSelectList}
-			role='button'
-			$bgColor={isActive ? '#d9d9d9' : ''}
-			{...hoverProps}
-		>
-			<Flex
-				gap='10px'
-				align='center'
-				justify='space-between'
-				style={{ width: '85%' }}
+		<SortableItem id={list._id}>
+			<StyledListItem
+				actions={[isHover && hoverExtraContent]}
+				extra={<StyledExtraItem>{list.reminders.length}</StyledExtraItem >}
+				onDoubleClick={onEdit}
+				onClick={onSelectList}
+				role='button'
+				$bgColor={isActive ? '#d9d9d9' : ''}
+				{...hoverProps}
 			>
-				<Flex align='center' gap='10px'>
-					<StyledAvatar
-						icon={mapListToIcon[list.icon]}
-						$bgColor={list.color}
-					/>
-					{isEdit ? (
-						<Input
-							style={{ width: '78%' }}
-							onBlur={onBlurInput}
-							value={value}
-							onChange={onChangeInput}
-							suffix={<EnterOutlined />}
-							size='small'
-							onPressEnter={onSave}
-							autoFocus
+				<Flex
+					gap='10px'
+					align='center'
+					justify='space-between'
+					style={{ width: '85%' }}
+				>
+					<Flex align='center' gap='10px'>
+						<StyledAvatar
+							icon={mapListToIcon[list.icon]}
+							$bgColor={list.color}
 						/>
-					) : (
-						<StyledName>{list.name}</StyledName>
-					)}
+						{isEdit ? (
+							<Input
+								style={{ width: '78%' }}
+								onBlur={onBlurInput}
+								value={value}
+								onChange={onChangeInput}
+								suffix={<EnterOutlined />}
+								size='small'
+								onPressEnter={onSave}
+								autoFocus
+							/>
+						) : (
+							<StyledName>{list.name}</StyledName>
+						)}
+					</Flex>
 				</Flex>
-			</Flex>
-		</StyledListItem>
+			</StyledListItem>
+		</SortableItem>
 	);
 };

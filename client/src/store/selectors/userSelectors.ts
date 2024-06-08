@@ -11,7 +11,7 @@ export const selectPinnedLists = createSelector(
 	(authData) => authData?.lists.filter(list => list.pinned === true) || []
 );
 
-export const selectNotPinnedLists = createSelector(
+export const selectUnpinnedLists = createSelector(
 	selectUserAuthData,
 	(authData) => authData?.lists.filter(list => list.pinned === false) || []
 );

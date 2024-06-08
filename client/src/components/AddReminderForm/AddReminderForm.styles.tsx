@@ -1,10 +1,11 @@
-import { Form, DatePicker, TimePicker, DatePickerProps } from 'antd';
+import {
+	DatePicker,
+	TimePicker,
+	DatePickerProps,
+	Checkbox,
+	Flex,
+} from 'antd';
 import styled, { IStyledComponent, css } from 'styled-components';
-
-export const StyledForm = styled(Form)`
-	border-bottom: 2px solid #CFCFCF;
-	padding: 4px 0 8px;
-`;
 
 const modifiedPickerStyles = css`
 	& .ant-picker-input {
@@ -38,4 +39,20 @@ export const StyledTimePicker = styled(TimePicker)`
 	width: 144px;
 
 	${modifiedPickerStyles}
+`;
+
+export const StyledFlex = styled(Flex)`
+	border-bottom: 2px solid #CFCFCF;
+	width: 100%;
+	padding: 4px 0 8px;
+`;
+
+export const StyledCheckbox = styled(Checkbox)`
+	transform: scale(1.6);
+	margin-top: 10px;
+	margin-right: 10px;
+
+	& .ant-checkbox-inner {
+		border-radius: 50%;
+	}
 `;

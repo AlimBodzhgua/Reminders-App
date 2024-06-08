@@ -2,7 +2,7 @@ import { FC, memo } from 'react';
 import { useAppSelector } from 'hooks/redux';
 import { useSortableLists } from 'hooks/useSortableLists';
 import {
-	selectNotPinnedLists,
+	selectUnpinnedLists,
 	selectUserAuthData,
 	selectUserIsLoading,
 } from 'store/selectors/userSelectors';
@@ -15,7 +15,7 @@ import { StyledList } from './UnpinnedLists.styles';
 import { UnpinnedListItem } from '../UnpinnedListItem/UnpinnedListItem';
 
 export const UnpinnedLists: FC = memo(() => {
-	const notPinnedLists = useAppSelector(selectNotPinnedLists);
+	const unpinnedLists = useAppSelector(selectUnpinnedLists);
 	const authData = useAppSelector(selectUserAuthData);
 	const isLoading = useAppSelector(selectUserIsLoading);
 	const { onDragEnd, sensors } = useSortableLists();
@@ -34,11 +34,11 @@ export const UnpinnedLists: FC = memo(() => {
 			modifiers={[restrictToParentElement]}
 		>
 			<SortableContext
-				items={notPinnedLists.map((list) => list._id)}
+				items={unpinnedLists.map((list) => list._id)}
 				strategy={verticalListSortingStrategy}
 			>
 				<StyledList header={header} size='small'>
-					{authData && notPinnedLists.map((list) => (
+					{authData && unpinnedLists.map((list) => (
 						<UnpinnedListItem list={list} key={list._id}/>
 					))}
 				</StyledList>

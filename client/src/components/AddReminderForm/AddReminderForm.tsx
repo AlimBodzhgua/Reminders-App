@@ -1,11 +1,19 @@
 import { FC, MouseEvent, memo, useState } from 'react';
-import { Form, Space, Input, DatePickerProps, TimePickerProps } from 'antd';
+import {
+	Form,
+	Space,
+	Input,
+	DatePickerProps,
+	TimePickerProps,
+	Flex,
+} from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import dayjs, { Dayjs } from 'dayjs';
 import {
-	StyledForm,
 	StyledDatePicker,
 	StyledTimePicker,
+	StyledCheckbox,
+	StyledFlex,
 } from './AddReminderForm.styles';
 
 interface AddReminderFormProps {
@@ -38,44 +46,49 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 	};
 
 	return (
-		<StyledForm form={form} onClick={onContentClick}>
-			<Form.Item>
-				<Input
-					name='title'
-					placeholder='Title'
-					variant='borderless'
-					autoFocus
-				/>
-			</Form.Item>
-			<Form.Item>
-				<Input
-					name='notes'
-					placeholder='Notes'
-					variant='borderless'
-				/>
-			</Form.Item>
-			<Space>
-				<StyledDatePicker
-					placeholder='Add Date'
-					variant='filled'
-					onChange={onChangeDate}
-					value={date !== null ? dayjs(date) : date}
-					allowClear={{
-						clearIcon: <CloseOutlined />,
-					}}
-				/>
-				{date &&
-					<StyledTimePicker
-						placeholder='Add Time'
-						variant='filled'
-						onChange={onChangeTime}
-						value={time}
-						allowClear={{
-							clearIcon: <CloseOutlined />,
-						}}
-					/>
-				}
-			</Space>
-		</StyledForm>
+		<Form form={form} onClick={onContentClick}>
+			<Flex align='start'>
+				<StyledCheckbox />
+				<StyledFlex vertical>
+					<Form.Item>
+						<Input
+							name='title'
+							placeholder='Title'
+							variant='borderless'
+							autoFocus
+						/>
+					</Form.Item>
+					<Form.Item>
+						<Input
+							name='notes'
+							placeholder='Notes'
+							variant='borderless'
+						/>
+					</Form.Item>
+					<Space>
+						<StyledDatePicker
+							placeholder='Add Date'
+							variant='filled'
+							onChange={onChangeDate}
+							value={date !== null ? dayjs(date) : date}
+							allowClear={{
+								clearIcon: <CloseOutlined />,
+							}}
+						/>
+						{date &&
+							<StyledTimePicker
+								placeholder='Add Time'
+								variant='filled'
+								onChange={onChangeTime}
+								value={time}
+								allowClear={{
+									clearIcon: <CloseOutlined />,
+								}}
+							/>
+						}
+					</Space>
+				</StyledFlex>
+			</Flex>
+		</Form>
 	);
 });

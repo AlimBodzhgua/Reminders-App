@@ -30,7 +30,7 @@ export const reminderCreateValidation = [
 	body('notes').optional().isLength({min: 2}).isString(),
 	body('date').optional().isString(),
 	body('time').optional().isString(),
-	body('location').optional(),
+	body('location').optional().isString(),
 ];
 
 export const reminderUpdateValidation = [

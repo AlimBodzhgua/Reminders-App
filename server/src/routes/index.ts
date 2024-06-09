@@ -6,7 +6,7 @@ import remindersRoutes from './reminders';
 const router = Router({strict: true});
 
 router.use('/users', userRoutes);
-router.use('/reminders', remindersRoutes);
 router.use('/lists', listsRoutes);
+router.use('/lists/:listId/reminders', remindersRoutes);
 
 export default router;

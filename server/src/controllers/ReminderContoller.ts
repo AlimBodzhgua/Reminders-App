@@ -1,38 +1,76 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 import { reminderCreateValidation, reminderUpdateValidation } from '../validations/validations';
 import ReminderModel from '../models/Reminder';
 import UserModel from '../models/User';
+import { ApiError } from '../exceptions/ApiError';
 
-/*export const create = async (req: Request, res: Response) => {
+
+const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const errors = validationResult(reminderCreateValidation);
+
+		const user = await UserModel.findById(res.locals.userId);
+
+		if (!user) {
+			return next(ApiError.BadRequest('User not found'));
+		}
+
+		const index = user.lists.findIndex((list) => String(list._id) === req.params.listId);
+
+		if (index === -1) {
+			return next(ApiError.BadRequest('List with such id not found'));
+		}
+
+		const errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
-			return res.status(400).send({error: errors});
+			return next(ApiError.ValidationError(errors.array()));
 		}
 
 		const doc = new ReminderModel({
 			title: req.body.title,
 			notes: req.body.notes,
+			isCompleted: false,
 			details: {
 				date: req.body.date,
-				time: req.body.location,
+				time: req.body.time,
 				location: req.body.location,
 			}
 		})
 
-		const userDoc = await UserModel.findById(res.locals.userId);
-		userDoc!.reminders.push(doc);
-		await userDoc!.save();
 
-		return res.send({user: userDoc});
+		user.lists[index].reminders.push(doc);
+		await user.save();
+
+		return res.json(doc);
 	} catch (err) {
-		return res.status(500).send({error: err});
+		next(err);
 	}
 }
 
-export const getOne = async (req: Request, res: Response) => {
+
+const getAll = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+
+		const user = await UserModel.findById(res.locals.userId);
+
+		if (!user) {
+			return next(ApiError.BadRequest('User not found'));
+		}
+		
+		const list = user.lists.find((list) => String(list._id) === req.params.listId);
+
+		if (!list) {
+			return next(ApiError.BadRequest('List with such id not found'));
+		}
+
+		return res.json(list.reminders);
+	} catch (err) {
+		next(err);
+	}
+}
+
+const getOne = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const user = await UserModel.findById(res.locals.userId);
 
@@ -40,7 +78,14 @@ export const getOne = async (req: Request, res: Response) => {
 			return res.status(400).send({error: 'User not found'});
 		}
 
-		const reminder = user.reminders.find(reminder => (
+
+		const index = user.lists.findIndex((list) => String(list._id) === req.params.listId);
+		
+		if (index === -1) {
+			return next(ApiError.BadRequest('List with such id not found'));
+		}
+
+		const reminder = user.lists[index].reminders.find((reminder) => (
 			String(reminder._id) === req.params.id
 		));
 
@@ -48,59 +93,51 @@ export const getOne = async (req: Request, res: Response) => {
 			return res.status(404).send({error: 'Reminder with such id not found'});
 		}
 
-		return res.send({reminder});
+		return res.json(reminder);
 	} catch (err) {
-		return res.status(500).send({error: err});
+		next(err);
 	}
 }
 
-export const getAll = async (req: Request, res: Response) => {
+
+const remove = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const user = await UserModel.findById(res.locals.userId);
 
 		if (!user) {
-			return res.status(400).send({error: 'User not found'});
+			return next(ApiError.BadRequest('User not found'));
 		}
+
+		const index = user.lists.findIndex((list) => String(list._id) === req.params.listId);
 		
-		return res.send({reminders: user.reminders});
-	} catch (err) {
-		return res.status(500).send({error: err});
-	}
-}
-
-
-export const remove = async (req: Request, res: Response) => {
-	try {
-		const user = await UserModel.findById(res.locals.userId);
-
-		if (!user) {
-			return res.status(400).send({error: 'User not found'});
+		if (index === -1) {
+			return next(ApiError.BadRequest('List with such id not found'));
 		}
 
-		user.reminders = user.reminders.filter(reminder => (
+		user.lists[index].reminders = user.lists[index].reminders.filter((reminder) => (
 			String(reminder._id) !== req.params.id
 		));
 
 		await user.save();
 
-		return res.send(user.reminders);
+		return res.status(204).send();
 	} catch (err) {
-		return res.status(500).send({error: err});
+		next(err);
 	}
 }
-
-export const update = async (req: Request, res: Response) => {
+/*
+const update = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const errors = validationResult(reminderUpdateValidation);
 
 		if (!errors.isEmpty()) {
-			return res.status(400).json({error: errors});
+			return next(ApiError.ValidationError(errors.array()));
 		}
 
 		const user = await UserModel.findById(res.locals.userId);
 
 		if (!user) {
-			return res.status(404).send({error: 'User not found'});
+			return next(ApiError.BadRequest('User not found'));
 		}
 
 		const index = user.reminders.findIndex(reminder => (
@@ -126,6 +163,14 @@ export const update = async (req: Request, res: Response) => {
 
 		return res.send({user});
 	} catch (err) {
-		return res.status(500).send({error: err});
+		next(err);
 	}
 }*/
+
+export {
+	create,
+	getAll,
+	getOne,
+	remove,
+	//update,
+}

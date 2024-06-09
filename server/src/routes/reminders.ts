@@ -3,13 +3,13 @@ import { reminderCreateValidation, reminderUpdateValidation } from '../validatio
 import * as ReminderContoller from '../controllers/ReminderContoller';
 import requireAuth from '../middleware/requireAuth';
 
-const router = Router();
+const router = Router({mergeParams: true});
 
 // /reminders
-/*router.post('/', requireAuth, reminderCreateValidation, ReminderContoller.create);
+router.post('/', requireAuth, reminderCreateValidation, ReminderContoller.create);
 router.get('/', requireAuth, ReminderContoller.getAll);
 router.get('/:id', requireAuth, ReminderContoller.getOne);
 router.delete('/:id', requireAuth, ReminderContoller.remove);
-router.patch('/:id', requireAuth, reminderUpdateValidation, ReminderContoller.update);
-*/
+//router.patch('/:id', requireAuth, reminderUpdateValidation, ReminderContoller.update);
+
 export default router;

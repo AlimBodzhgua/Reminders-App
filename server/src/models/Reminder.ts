@@ -7,6 +7,7 @@ export const ReminderSchema = new mongoose.Schema<IReminder>({
 		required: true
 	},
 	notes: String,
+	isCompleted: Boolean,
 	details: {
 		_id: false,
 		location: String,

@@ -26,6 +26,7 @@ export interface IReminder extends DocResult<IReminder> {
 	_id: Types.ObjectId;
 	title: string;
 	notes?: string;
+	isCompleted: boolean;
 	details?: IDetails;
 }
 

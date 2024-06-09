@@ -1,4 +1,4 @@
-import { List } from 'antd';
+import { List, Input } from 'antd';
 import styled from 'styled-components';
 
 interface StyledListItemProps {
@@ -40,3 +40,9 @@ export const StyledName = styled.div<StyledNameProps>`
 		cursor: text;
 	}
 `;
+
+export const StyledInput = styled(Input)`
+	width: 78%;
+	padding: 0 4px;
+	border-radius: 0;
+`

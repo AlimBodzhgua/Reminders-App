@@ -10,7 +10,7 @@ import {
 	DeleteOutlined,
 	EnterOutlined,
 } from '@ant-design/icons';
-import { Flex, Input, Dropdown } from 'antd';
+import { Flex, Dropdown } from 'antd';
 import { useAppSelector } from 'hooks/redux';
 import { mapListToIcon } from 'constants/iconsList';
 import { useHover } from 'hooks/useHover';
@@ -20,7 +20,12 @@ import { useListActions } from 'hooks/useListActions';
 import type { IList } from 'types/list';
 import type { MenuProps } from 'antd';
 
-import { StyledListItem, StyledExtraItem, StyledName } from './UnpinnedListItem.styles';
+import {
+	StyledListItem,
+	StyledExtraItem,
+	StyledName,
+	StyledInput,
+} from './UnpinnedListItem.styles';
 import { StyledDotesIcon } from 'styled/DotesIcon.styles';
 
 import { SortableItem } from 'lib/components/SortableItem';
@@ -93,8 +98,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 							$bgColor={list.color}
 						/>
 						{isEdit ? (
-							<Input
-								style={{ width: '78%' }}
+							<StyledInput
 								onBlur={onBlurInput}
 								value={value}
 								onChange={onChangeInput}

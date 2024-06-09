@@ -8,5 +8,6 @@ interface IReminderDetails {
 export interface IReminder {
 	title: string;
 	notes: string;
+	isCompleted: boolean;
 	details?: IReminderDetails;
 };

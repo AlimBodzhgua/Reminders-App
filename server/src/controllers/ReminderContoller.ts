@@ -125,6 +125,30 @@ const remove = async (req: Request, res: Response, next: NextFunction) => {
 		next(err);
 	}
 }
+
+const removeAll = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const user = await UserModel.findById(res.locals.userId);
+
+		if (!user) {
+			return next(ApiError.BadRequest('User not found'));
+		}
+
+		const index = user.lists.findIndex((list) => String(list._id) === req.params.listId);
+		
+		if (index === -1) {
+			return next(ApiError.BadRequest('List with such id not found'));
+		}
+
+		user.lists[index].reminders = [];
+
+		await user.save();
+
+		return res.status(204).send();
+	} catch (err) {
+		next(err);
+	}
+}
 /*
 const update = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -172,5 +196,6 @@ export {
 	getAll,
 	getOne,
 	remove,
+	removeAll,
 	//update,
 }

@@ -11,12 +11,13 @@ import { mapListToIcon } from 'constants/iconsList';
 import { useAppSelector } from 'hooks/redux';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { StyledAvatar } from 'styled/Avatar.styles';
-import { StyledDotesIcon } from 'styled/DotesIcon.styles';
+import { StyledButton } from 'styled/Button.styles';
 import { useHover } from 'hooks/useHover';
 import { EnterOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useListActions } from 'hooks/useListActions';
 import { SortableItem } from 'lib/components/SortableItem';
 import UnpinIcon from 'assets/icons/unpin.svg';
+import DotesIcon from 'assets/icons/dotes.svg';
 
 import type { MenuProps } from 'antd';
 import type { IList } from 'types/list';
@@ -69,7 +70,13 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 
 	const hoverExtraContent = (
 		<Dropdown menu={{ items }} placement='bottom'>
-			<StyledDotesIcon $color={isActive ? '#fff' : '#1677ff'}/>
+			<StyledButton
+				size='small'
+				type='text'
+				icon={<DotesIcon />}
+				$color={isActive ? '#fff' : '#1677ff'}
+				$hoverBgColor={'inherit'}
+			/>
 		</Dropdown>
 	);
 

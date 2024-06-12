@@ -17,8 +17,8 @@ import { useHover } from 'hooks/useHover';
 import { StyledAvatar } from 'styled/Avatar.styles';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { useListActions } from 'hooks/useListActions';
-import { StyledDotesIcon } from 'styled/DotesIcon.styles';
 import { SortableItem } from 'lib/components/SortableItem';
+import DotesIcon from 'assets/icons/dotes.svg';
 
 import type { IList } from 'types/list';
 import type { MenuProps } from 'antd';
@@ -29,6 +29,7 @@ import {
 	StyledName,
 	StyledInput,
 } from './UnpinnedListItem.styles';
+import { StyledButton } from 'styled/Button.styles';
 
 interface MyListsItemProps {
 	list: IList;
@@ -71,7 +72,11 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 
 	const hoverExtraContent = (
 		<Dropdown menu={{ items }} placement='bottom'>
-			<StyledDotesIcon />
+			<StyledButton
+				type='text'
+				icon={<DotesIcon />}
+				$color='#1677ff'
+			/>
 		</Dropdown>
 	);
 

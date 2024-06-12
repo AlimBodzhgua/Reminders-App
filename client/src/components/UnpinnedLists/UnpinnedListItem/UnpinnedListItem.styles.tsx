@@ -45,4 +45,4 @@ export const StyledInput = styled(Input)`
 	width: 78%;
 	padding: 0 4px;
 	border-radius: 0;
-`
+`;

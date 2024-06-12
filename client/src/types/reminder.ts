@@ -1,8 +1,8 @@
 
 interface IReminderDetails {
-	date: string;
-	time: string;
-	location: string;
+	date?: string;
+	time?: string;
+	location?: string;
 };
 
 export interface IReminder {

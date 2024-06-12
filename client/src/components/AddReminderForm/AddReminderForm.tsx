@@ -4,27 +4,43 @@ import {
 	Space,
 	Input,
 	DatePickerProps,
-	TimePickerProps,
 	Flex,
 } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
-import dayjs, { Dayjs } from 'dayjs';
+import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
+import { addReminder } from 'store/actions/userActions';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { createReminder } from 'utils/utils';
+import { selectActiveList } from 'store/selectors/activeListSelectors';
+
+import type { Dayjs } from 'dayjs';
+import type { FormProps } from 'antd';
+
 import {
 	StyledDatePicker,
 	StyledTimePicker,
 	StyledCheckbox,
+	StyledButton,
 	StyledFlex,
+	StyledForm,
 } from './AddReminderForm.styles';
 
 interface AddReminderFormProps {
 	onSuccess?: () => void;
 }
 
+export interface FormFields {
+	title: string;
+	notes: string;
+	date?: Dayjs;
+	time?: Dayjs;
+}
+
 export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 	const { onSuccess } = props;
 	const [form] = Form.useForm();
-	const [date, setDate] = useState<string | null>(null);
-	const [time, setTime] = useState<Dayjs | null>(null);
+	const [showTimePicker, setShowTimePicker] = useState<boolean>(false);
+	const activeList = useAppSelector(selectActiveList);
+	const dispatch = useAppDispatch();
 
 	const onContentClick = (e: MouseEvent<HTMLFormElement>) => {
 		e.stopPropagation();
@@ -32,63 +48,73 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 
 	const onChangeDate: DatePickerProps['onChange'] = (date, dateString) => {
 		if (dateString.length) {
-			setDate(dateString as string);
+			setShowTimePicker(true);
+		} else setShowTimePicker(false);
+	};
+
+	const onAddReminder: FormProps<FormFields>['onFinish'] = async (values) => {
+		const newReminder = createReminder(values);
+
+		const { meta } = await dispatch(addReminder(newReminder));
+
+		if (meta.requestStatus === 'fulfilled' && onSuccess) {
+			onSuccess();
 		}
 	};
 
-	const onChangeTime: TimePickerProps['onChange'] = (time) => {
-		setTime(time);
-	};
-
-	const onAddReminder = () => {
-		console.log('add reminder');
-		if (onSuccess) onSuccess();
-	};
-
 	return (
-		<Form form={form} onClick={onContentClick}>
+		<StyledForm
+			form={form}
+			onClick={onContentClick}
+			onFinish={onAddReminder}
+		>
 			<Flex align='start'>
-				<StyledCheckbox />
+				<StyledCheckbox $color={activeList?.color}/>
 				<StyledFlex vertical>
-					<Form.Item>
+					<Form.Item<FormFields> name='title'>
 						<Input
-							name='title'
 							placeholder='Title'
 							variant='borderless'
 							autoFocus
 						/>
 					</Form.Item>
-					<Form.Item>
+					<Form.Item<FormFields> name='notes'>
 						<Input
-							name='notes'
 							placeholder='Notes'
 							variant='borderless'
 						/>
 					</Form.Item>
 					<Space>
-						<StyledDatePicker
-							placeholder='Add Date'
-							variant='filled'
-							onChange={onChangeDate}
-							value={date !== null ? dayjs(date) : date}
-							allowClear={{
-								clearIcon: <CloseOutlined />,
-							}}
-						/>
-						{date &&
-							<StyledTimePicker
-								placeholder='Add Time'
+						<Form.Item<FormFields> name='date'>
+							<StyledDatePicker
+								placeholder='Add Date'
 								variant='filled'
-								onChange={onChangeTime}
-								value={time}
+								onChange={onChangeDate}
 								allowClear={{
 									clearIcon: <CloseOutlined />,
 								}}
 							/>
+						</Form.Item>
+						{showTimePicker && 
+							<Form.Item<FormFields> name='time'>
+								<StyledTimePicker
+									placeholder='Add Time'
+									variant='filled'
+									format={'HH:mm'}
+									allowClear={{
+										clearIcon: <CloseOutlined />,
+									}}
+								/>
+							</Form.Item>
 						}
+						<StyledButton
+							htmlType='submit'
+							icon={<CheckOutlined />}
+						>
+						</StyledButton>
 					</Space>
 				</StyledFlex>
 			</Flex>
-		</Form>
+		</StyledForm>
 	);
 });

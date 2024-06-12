@@ -7,6 +7,9 @@ import {
 	addList,
 	removeList,
 	updateList,
+	addReminder,
+	removeReminder,
+	clearReminders,
 } from '../actions/userActions';
 
 import { arrayMove } from '@dnd-kit/sortable';
@@ -41,7 +44,7 @@ const userSlice = createSlice({
 				const activeId = authData.lists.findIndex((list) => list._id === payload.activeId);
 				const overId = authData.lists.findIndex((list) => list._id === payload.overId);
 
-				state.authData.lists = arrayMove(authData.lists, activeId, overId)
+				state.authData.lists = arrayMove(authData.lists, activeId, overId);
 			}
 		}
 	},
@@ -136,6 +139,42 @@ const userSlice = createSlice({
 			.addCase(updateList.rejected, (state, action) => {
 				state.isLoading = false;
 				state.error = action.payload;
+			})
+			// addReminder
+			.addCase(addReminder.rejected, (state, action) => {
+				state.error = action.payload;
+			})
+			.addCase(addReminder.fulfilled, (state, { payload }) => {
+				if (state.authData) {
+					const index = state.authData.lists.findIndex((list) => list._id === payload.listId);
+					const newReminders = state.authData.lists[index].reminders.concat(payload.reminder);
+					state.authData.lists[index].reminders = newReminders;
+				}
+			})
+			// removeReminder
+			.addCase(removeReminder.rejected, (state, action) => {
+				state.error = action.payload;
+			})
+			.addCase(removeReminder.fulfilled, (state, { payload }) => {
+				if (state.authData) {
+					const index = state.authData.lists.findIndex((list) => list._id === payload.listId);
+					const filteredReminders = state.authData.lists[index].reminders.filter((reminder) => (
+						reminder._id !== payload.reminderId
+					));
+					state.authData.lists[index].reminders = filteredReminders;
+				}
+			})
+			// clearReminders
+			.addCase(clearReminders.rejected, (state, action) => {
+				state.isLoading = false;
+				state.error = action.payload;
+			})
+			.addCase(clearReminders.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				if (state.authData) {
+					const index = state.authData.lists.findIndex((list) => list._id === payload);
+					state.authData.lists[index].reminders = [];
+				}
 			});
 	}
 });

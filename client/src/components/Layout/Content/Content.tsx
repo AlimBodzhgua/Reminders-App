@@ -3,8 +3,9 @@ import { Button, Flex, Space } from 'antd';
 import { useAppSelector } from 'hooks/redux';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { AddReminderForm } from 'components/AddReminderForm/AddReminderForm';
-import { StyledPlusOutlined, StyledContent, StyledTitle } from './Content.styles';
+import { RemindersList } from 'components/RemindersList/RemindersList';
 import { selectUserAuthData } from 'store/selectors/userSelectors';
+import { StyledPlusOutlined, StyledContent, StyledTitle } from './Content.styles';
 
 export const Content: FC = memo(() => {
 	const activeList = useAppSelector(selectActiveList);
@@ -56,8 +57,8 @@ export const Content: FC = memo(() => {
 					{activeList?.reminders.length}
 				</StyledTitle>
 			</Flex>
-			
-			{showForm && <AddReminderForm />}
+			<RemindersList />
+			{showForm && <AddReminderForm onSuccess={onToggleShowForm}/>}
 
 			{showEmptyTitle &&
 				<Flex justify='center' align='center' style={{ height: '80%' }}>

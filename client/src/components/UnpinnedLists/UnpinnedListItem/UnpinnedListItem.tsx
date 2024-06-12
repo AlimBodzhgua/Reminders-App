@@ -17,6 +17,9 @@ import { useHover } from 'hooks/useHover';
 import { StyledAvatar } from 'styled/Avatar.styles';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { useListActions } from 'hooks/useListActions';
+import { StyledDotesIcon } from 'styled/DotesIcon.styles';
+import { SortableItem } from 'lib/components/SortableItem';
+
 import type { IList } from 'types/list';
 import type { MenuProps } from 'antd';
 
@@ -26,9 +29,6 @@ import {
 	StyledName,
 	StyledInput,
 } from './UnpinnedListItem.styles';
-import { StyledDotesIcon } from 'styled/DotesIcon.styles';
-
-import { SortableItem } from 'lib/components/SortableItem';
 
 interface MyListsItemProps {
 	list: IList;

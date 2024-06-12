@@ -1,58 +1,61 @@
 import {
 	DatePicker,
 	TimePicker,
-	DatePickerProps,
 	Checkbox,
 	Flex,
+	Form,
+	Button,
 } from 'antd';
-import styled, { IStyledComponent, css } from 'styled-components';
+import { basePicker, baseCheckbox } from 'styled/mixins';
+import styled, { IStyledComponent } from 'styled-components';
 
-const modifiedPickerStyles = css`
-	& .ant-picker-input {
-		display: flex;
-		flex-direction: row-reverse;
-		gap: 8px;
-	}
+import type { FormProps, DatePickerProps } from 'antd';
 
-	& .ant-picker-clear {
-		opacity: 1;
-	}
-
-	& .ant-picker-suffix {
-		opacity: 1;
-	}
-
-	& .ant-picker-suffix:hover {
-		opacity: 1;
+export const StyledForm: IStyledComponent<'web', FormProps> = styled(Form)`
+	& .ant-form-item  {
+		margin-bottom: 5px;
 	}
 `;
 
 export const StyledDatePicker: IStyledComponent<'web', DatePickerProps> = styled(DatePicker)`
-	border-radius: 0;
-	width: 144px;
+	${basePicker};
 
-	${modifiedPickerStyles}
+	border-radius: 0;
+	width: 140px;
 `;
 
 export const StyledTimePicker = styled(TimePicker)`
-	border-radius: 0;
-	width: 144px;
+	${basePicker};
 
-	${modifiedPickerStyles}
+	border-radius: 0;
+	width: 106px;
 `;
 
 export const StyledFlex = styled(Flex)`
 	border-bottom: 2px solid #CFCFCF;
 	width: 100%;
-	padding: 4px 0 8px;
+	padding: 4px 0 2px;
 `;
 
-export const StyledCheckbox = styled(Checkbox)`
-	transform: scale(1.6);
+interface StyledCheckboxProps {
+	$color?: string;
+}
+
+export const StyledCheckbox = styled(Checkbox)<StyledCheckboxProps>`
+	${baseCheckbox};
 	margin-top: 10px;
 	margin-right: 10px;
+	border-color: ${props => props.$color};
 
-	& .ant-checkbox-inner {
-		border-radius: 50%;
+	.ant-checkbox-inner::after {
+		background-color: ${props => props.$color};
 	}
+`;
+
+export const StyledButton = styled(Button)`
+	background: rgb(0 0 0 / 4%);
+	border-radius: 0;
+	height: 30px;
+	margin-bottom: 5px;
+	color: #949090;
 `;

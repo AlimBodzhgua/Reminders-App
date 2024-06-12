@@ -32,8 +32,9 @@ export const SortableItem: FC<SortableItemProps> = (props) => {
 	};
 
 	return (
-		<div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+		<div ref={setNodeRef} style={style} {...attributes}
+			{...listeners}>
 			{children}
 		</div>
-	)
-}
+	);
+};

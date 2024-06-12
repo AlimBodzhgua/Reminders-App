@@ -13,7 +13,7 @@ export const useSortableLists = () => {
 			dispatch(userActions.moveLists({
 				activeId: String(active.id),
 				overId: String(over!.id),
-			}))
+			}));
 		}
 	};
 
@@ -26,4 +26,4 @@ export const useSortableLists = () => {
 	);
 
 	return { onDragEnd, sensors };
-}
+};

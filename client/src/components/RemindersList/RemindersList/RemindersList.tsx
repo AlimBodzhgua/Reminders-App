@@ -2,7 +2,8 @@ import { FC, memo } from 'react';
 import { List } from 'antd';
 import { useAppSelector } from 'hooks/redux';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
-import { RemindersListItem } from './RemindersListItem/RemindersListItem';
+
+import { RemindersListItem } from '../RemindersListItem/RemindersListItem';
 import { RemindersListHeader } from './RemindersListHeader';
 
 export const RemindersList: FC = memo(() => {

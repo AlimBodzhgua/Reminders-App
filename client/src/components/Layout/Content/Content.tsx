@@ -3,7 +3,7 @@ import { Button, Flex, Space } from 'antd';
 import { useAppSelector } from 'hooks/redux';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { AddReminderForm } from 'components/AddReminderForm/AddReminderForm';
-import { RemindersList } from 'components/RemindersList/RemindersList';
+import { RemindersList } from 'components/RemindersList';
 import { selectUserAuthData } from 'store/selectors/userSelectors';
 import { StyledPlusOutlined, StyledContent, StyledTitle } from './Content.styles';
 

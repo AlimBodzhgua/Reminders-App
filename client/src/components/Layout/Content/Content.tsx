@@ -68,7 +68,7 @@ export const Content: FC = memo(() => {
 					{activeList?.reminders.length}
 				</StyledTitle>
 			</Flex>
-			<RemindersList />
+			{activeList?.reminders.length && <RemindersList />}
 			{showForm && <AddReminderForm onSuccess={onToggleShowForm}/>}
 
 			{showEmptyTitle &&

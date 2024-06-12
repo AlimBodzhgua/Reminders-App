@@ -25,7 +25,7 @@ export const SortableItem: FC<SortableItemProps> = (props) => {
 	} = useSortable({id});
 
 	const style = {
-		transform: CSS.Transform.toString(transform),
+		transform: CSS.Translate.toString(transform),
 		transition,
 		width: wrapperWidth,
 		height: wrapperHeight,

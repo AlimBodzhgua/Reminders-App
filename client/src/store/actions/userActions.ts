@@ -6,6 +6,7 @@ import appAxios from 'api/axios';
 import { IReminder } from 'types/reminder';
 import { StateSchema } from 'store/config/StateSchema';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
+import { selectUserLists } from 'store/selectors/userSelectors';
 
 export const registerUser = createAsyncThunk<
 	IUser,
@@ -125,6 +126,26 @@ export const updateList = createAsyncThunk<
 	}
 );
 
+export const updateAllLists = createAsyncThunk<
+	void,
+	void,
+	{
+		rejectValue: string,
+		state: StateSchema,
+	}
+>(
+	'updateAllList',
+	async (_, { rejectWithValue, getState }) => {
+		const lists = selectUserLists(getState());
+		const body = { lists: lists }
+		try {
+			appAxios.post('/lists/all', body);
+		} catch (err) {
+			return rejectWithValue(JSON.stringify(err));
+		}
+	}
+);
+
 
 export const addReminder = createAsyncThunk<
 	{ listId: string, reminder: IReminder },
@@ -191,6 +212,28 @@ export const clearReminders = createAsyncThunk<
 			return activeList!._id;
 		} catch (err) {
 			return (rejectWithValue(JSON.stringify(err)));
+		}
+	}
+);
+
+export const updateAllReminders = createAsyncThunk<
+	void,
+	void,
+	{
+		rejectValue: string,
+		state: StateSchema,
+	}
+>(
+	'updateAllReminders',
+	async (_, { rejectWithValue, getState }) => {
+		const lists = selectUserLists(getState());
+		const activeList = selectActiveList(getState());
+		const activeListIndex = lists.findIndex(list => list._id === activeList?._id);
+		const body = { reminders: lists[activeListIndex].reminders }
+		try {
+			appAxios.post(`/lists/${activeList!._id}/reminders/all`, body);
+		} catch (err) {
+			return rejectWithValue(JSON.stringify(err));
 		}
 	}
 );

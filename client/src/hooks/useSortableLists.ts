@@ -1,6 +1,7 @@
 import { useAppDispatch } from 'hooks/redux';
 import { useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
 import { userActions } from 'store/slices/userSlice';
+import { updateAllLists } from 'store/actions/userActions';
 
 import type { DragEndEvent } from '@dnd-kit/core';
 
@@ -14,6 +15,7 @@ export const useSortableLists = () => {
 				activeId: String(active.id),
 				overId: String(over!.id),
 			}));
+			dispatch(updateAllLists());
 		}
 	};
 

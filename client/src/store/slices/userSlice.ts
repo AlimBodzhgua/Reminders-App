@@ -10,6 +10,8 @@ import {
 	addReminder,
 	removeReminder,
 	clearReminders,
+	updateAllLists,
+	updateAllReminders,
 } from '../actions/userActions';
 
 import { arrayMove } from '@dnd-kit/sortable';
@@ -194,6 +196,15 @@ const userSlice = createSlice({
 					const index = state.authData.lists.findIndex((list) => list._id === payload);
 					state.authData.lists[index].reminders = [];
 				}
+			})
+			// updateAll Lists/Reminders
+			.addCase(updateAllLists.rejected, (state, action) => {
+				state.isLoading = false;
+				state.error = action.payload;
+			})
+			.addCase(updateAllReminders.rejected, (state, action) => {
+				state.isLoading = false;
+				state.error = action.payload;
 			});
 	}
 });

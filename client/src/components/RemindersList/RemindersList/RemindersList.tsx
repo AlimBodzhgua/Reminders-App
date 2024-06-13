@@ -6,25 +6,15 @@ import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
 import { useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
+import { userActions } from 'store/slices/userSlice';
+import { updateAllReminders } from 'store/actions/userActions';
 
 import { RemindersListItem } from '../RemindersListItem/RemindersListItem';
 import { RemindersListHeader } from './RemindersListHeader';
-import { userActions } from 'store/slices/userSlice';
 
 export const RemindersList: FC = memo(() => {
 	const activeList = useAppSelector(selectActiveList);
 	const dispatch = useAppDispatch();
-
-	const onDragEnd = (e: DragEndEvent) => {
-		const { active, over } = e;
-		if (active.id !== over!.id) {
-			dispatch(userActions.moveReminders({
-				activeListId: activeList!._id,
-				overId: String(e.over!.id),
-				activeId: String(e.active.id),
-			}))
-		}
-	}
 
 	const sensors = useSensors(
 		useSensor(PointerSensor, {
@@ -33,6 +23,18 @@ export const RemindersList: FC = memo(() => {
 			},
 		}),
 	);
+	
+	const onDragEnd = (e: DragEndEvent) => {
+		const { active, over } = e;
+		if (active.id !== over!.id) {
+			dispatch(userActions.moveReminders({
+				activeListId: activeList!._id,
+				overId: String(e.over!.id),
+				activeId: String(e.active.id),
+			}))
+			dispatch(updateAllReminders());
+		}
+	}
 
 	return (
 		<DndContext

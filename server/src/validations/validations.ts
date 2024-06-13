@@ -25,12 +25,18 @@ export const listUpdateValidation = [
 	body('pinned').optional().isBoolean(),
 ];
 
+export const allListsUpdateValidation = [
+	body('lists').notEmpty().isArray(),
+];
+
+export const allRemindersUpdateValidation = [
+	body('reminders').notEmpty().isArray(),
+];
+
 export const reminderCreateValidation = [
 	body('title').notEmpty().isLength({min: 2}).isString(),
 	body('notes').optional().isLength({min: 2}).isString(),
-	body('date').optional().isString(),
-	body('time').optional().isString(),
-	body('location').optional().isString(),
+	body('details').optional().isObject(),
 ];
 
 export const reminderUpdateValidation = [

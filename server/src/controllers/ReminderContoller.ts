@@ -31,11 +31,7 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 			title: req.body.title,
 			notes: req.body.notes,
 			isCompleted: false,
-			details: {
-				date: req.body.date,
-				time: req.body.time,
-				location: req.body.location,
-			}
+			details: req.body.details,
 		})
 
 
@@ -149,6 +145,37 @@ const removeAll = async (req: Request, res: Response, next: NextFunction) => {
 		next(err);
 	}
 }
+
+const updateAll = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			return next(ApiError.ValidationError(errors.array()));
+		}
+
+		const user = await UserModel.findById(res.locals.userId);
+
+		if (!user) {
+			return next(ApiError.BadRequest('User not found'));
+		}
+
+		const index = user.lists.findIndex((list) => String(list._id) === req.params.listId);
+		
+		if (index === -1) {
+			return next(ApiError.BadRequest('List with such id not found'));
+		}
+
+		const newReminders = req.body.reminders; 
+		user.lists[index].reminders = newReminders;
+		await user.save();
+
+		return res.json(newReminders);
+	} catch (err) {
+		next(err);
+	}
+}
+
 /*
 const update = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -197,5 +224,6 @@ export {
 	getOne,
 	remove,
 	removeAll,
+	updateAll,
 	//update,
 }

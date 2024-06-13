@@ -2,10 +2,9 @@ import { FC, memo, useCallback, useEffect } from 'react';
 import { Layout } from 'antd';
 import { Header, Sider, Content } from 'components/Layout';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
+import { ACTIVE_LIST_LOCALSTORAGE_KEY, USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
 import { initUserAuth } from 'store/actions/userActions';
 import { activeListActions } from 'store/slices/activeListSlice';
-import { IUser } from 'types/user';
 import { selectActiveListFromUser, selectUserLists } from 'store/selectors/userSelectors';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 
@@ -23,11 +22,13 @@ const App: FC = memo(() => {
 	const list = useAppSelector(selectActiveListFromUser);
 
 	const initApp = useCallback(async () => {
-		const { meta, payload } = await dispatch(initUserAuth());
+		const { meta } = await dispatch(initUserAuth());
 
 		if (meta.requestStatus === 'fulfilled') {
-			const user = payload as IUser;
-			dispatch(activeListActions.setActiveList(user.lists[0]));
+			const activeList = localStorage.getItem(ACTIVE_LIST_LOCALSTORAGE_KEY);
+			if (activeList) {
+				dispatch(activeListActions.setActiveList(JSON.parse(activeList)));
+			}
 		}
 	}, [dispatch]);
 

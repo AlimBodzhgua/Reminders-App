@@ -1,12 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { IUser } from 'types/user';
-import { IList } from 'types/list';
-import { IAuthUser } from 'types/auth';
-import appAxios from 'api/axios';
-import { IReminder } from 'types/reminder';
-import { StateSchema } from 'store/config/StateSchema';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { selectUserLists } from 'store/selectors/userSelectors';
+import appAxios from 'api/axios';
+
+import type { IUser } from 'types/user';
+import type { IList } from 'types/list';
+import type { IAuthUser } from 'types/auth';
+import type { IReminder } from 'types/reminder';
+import type { StateSchema } from 'store/config/StateSchema';
 
 export const registerUser = createAsyncThunk<
 	IUser,
@@ -229,7 +230,7 @@ export const updateAllReminders = createAsyncThunk<
 		const lists = selectUserLists(getState());
 		const activeList = selectActiveList(getState());
 		const activeListIndex = lists.findIndex(list => list._id === activeList?._id);
-		const body = { reminders: lists[activeListIndex].reminders }
+		const body = { reminders: lists[activeListIndex].reminders };
 		try {
 			appAxios.post(`/lists/${activeList!._id}/reminders/all`, body);
 		} catch (err) {

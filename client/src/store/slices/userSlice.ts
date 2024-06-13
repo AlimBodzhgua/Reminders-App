@@ -56,10 +56,16 @@ const userSlice = createSlice({
 		}>) => {
 			if (state.authData) {
 				const { authData } = state;
-				const index = authData.lists.findIndex((list) => list._id === payload.activeListId);
-				
-				const activeId = authData.lists[index].reminders.findIndex((list) => list._id === payload.activeId);
-				const overId = authData.lists[index].reminders.findIndex((list) => list._id === payload.overId);
+				const index = authData.lists.findIndex(
+					(list) => list._id === payload.activeListId,
+				);
+
+				const activeId = authData.lists[index].reminders.findIndex(
+					(list) => list._id === payload.activeId,
+				);
+				const overId = authData.lists[index].reminders.findIndex(
+					(list) => list._id === payload.overId,
+				);
 
 				state.authData.lists[index].reminders = arrayMove(
 					state.authData.lists[index].reminders,

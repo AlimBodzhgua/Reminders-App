@@ -1,8 +1,10 @@
 import { useCallback, MouseEvent, useEffect } from 'react';
-import { useAppDispatch } from 'hooks/redux';
-import { IList } from 'types/list';
 import { removeList, updateList } from 'store/actions/userActions';
 import { activeListActions } from 'store/slices/activeListSlice';
+import { ACTIVE_LIST_LOCALSTORAGE_KEY } from 'constants/localStorage';
+import { useAppDispatch } from 'hooks/redux';
+
+import type { IList } from 'types/list';
 
 interface UseListActionsProps {
 	list: IList;
@@ -38,6 +40,7 @@ export const useListActions = ({ list, onEscape }: UseListActionsProps) => {
 	const onSelectList = useCallback((e: MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		dispatch(activeListActions.setActiveList(list));
+		localStorage.setItem(ACTIVE_LIST_LOCALSTORAGE_KEY, JSON.stringify(list));
 	}, [dispatch]);
 
 	const onUpdate = useCallback(async (value: string, onSuccess?: () => void) => {

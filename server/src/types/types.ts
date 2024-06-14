@@ -22,10 +22,14 @@ export interface IDetails {
 	location?: string;
 }
 
+export type PriorityType = 'low' | 'medium' | 'high';
+
 export interface IReminder extends DocResult<IReminder> {
 	_id: Types.ObjectId;
 	title: string;
 	notes?: string;
+	url?: string;
+	priority?: PriorityType;
 	isCompleted: boolean;
 	details?: IDetails;
 }

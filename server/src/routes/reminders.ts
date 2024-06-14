@@ -15,8 +15,8 @@ router.get('/', requireAuth, ReminderController.getAll);
 router.get('/:id', requireAuth, ReminderController.getOne);
 router.delete('/', requireAuth, ReminderController.removeAll);
 router.delete('/:id', requireAuth, ReminderController.remove);
+router.patch('/:id', requireAuth, reminderUpdateValidation, ReminderController.update);
 router.post('/all', requireAuth, allRemindersUpdateValidation, ReminderController.updateAll);
 
-//router.patch('/:id', requireAuth, reminderUpdateValidation, ReminderContoller.update);
 
 export default router;

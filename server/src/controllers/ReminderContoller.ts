@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
-import { reminderCreateValidation, reminderUpdateValidation } from '../validations/validations';
 import ReminderModel from '../models/Reminder';
 import UserModel from '../models/User';
 import { ApiError } from '../exceptions/ApiError';
@@ -176,10 +175,10 @@ const updateAll = async (req: Request, res: Response, next: NextFunction) => {
 	}
 }
 
-/*
+
 const update = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const errors = validationResult(reminderUpdateValidation);
+		const errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
 			return next(ApiError.ValidationError(errors.array()));
@@ -191,32 +190,40 @@ const update = async (req: Request, res: Response, next: NextFunction) => {
 			return next(ApiError.BadRequest('User not found'));
 		}
 
-		const index = user.reminders.findIndex(reminder => (
+		const listIndex = user.lists.findIndex((list) => String(list._id) === req.params.listId);
+		
+		if (listIndex === -1) {
+			return next(ApiError.BadRequest('List with such id not found'));
+		}
+
+		const reminderIndex = user.lists[listIndex].reminders.findIndex(reminder => (
 			String(reminder._id) === req.params.id
 		));
 
-		if (index === -1) {
+		if (reminderIndex === -1) {
 			return res.status(404).send({error: 'Reminder not found'});
 		}
 
+		const userBaseData = user.lists[listIndex].reminders[reminderIndex];
+
 		const newReminder = {
-			...user.reminders[index]._doc,
+			...userBaseData._doc,
 			...req.body,
 			details: {
-				...user.reminders[index]._doc.details,
+				...userBaseData._doc.details,
 				...req.body.details,
 			}
 		}
 
-		user.reminders[index] = newReminder;
+		user.lists[listIndex].reminders[reminderIndex] = newReminder;
 
 		await user.save();
 
-		return res.send({user});
+		return res.json(newReminder);
 	} catch (err) {
 		next(err);
 	}
-}*/
+}
 
 export {
 	create,
@@ -225,5 +232,5 @@ export {
 	remove,
 	removeAll,
 	updateAll,
-	//update,
+	update,
 }

@@ -1,13 +1,15 @@
 import mongoose from 'mongoose';
-import { IReminder } from '../types/types';
+import type { IReminder } from '../types/types';
 
 export const ReminderSchema = new mongoose.Schema<IReminder>({
 	title: {
 		type: String,
-		required: true
+		required: true,
 	},
 	notes: String,
 	isCompleted: Boolean,
+	url: String,
+	priority: String,
 	details: {
 		_id: false,
 		location: String,

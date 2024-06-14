@@ -238,3 +238,29 @@ export const updateAllReminders = createAsyncThunk<
 		}
 	}
 );
+
+
+type UpdateReminderData = Pick<IReminder, '_id'> & Partial<Omit<IReminder, '_id'>>;
+
+export const updateReminder = createAsyncThunk<
+	{ reminder: IReminder, listId: string },
+	UpdateReminderData,
+	{ rejectValue: string, state: StateSchema }
+>(
+	'updateReminder',
+	async (data, { rejectWithValue, getState }) => {
+		const activeList = selectActiveList(getState());
+		try {
+			const response = await appAxios.patch<IReminder>(
+				`/lists/${activeList?._id}/reminders/${data._id}`,
+				data
+			);
+			return {
+				reminder: response.data,
+				listId: activeList!._id,
+			};
+		} catch (err) {
+			return rejectWithValue(JSON.stringify(err));
+		}
+	}
+);

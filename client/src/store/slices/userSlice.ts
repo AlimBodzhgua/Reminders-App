@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IUser } from 'types/user';
+import { arrayMove } from '@dnd-kit/sortable';
+import type { IUser } from 'types/user';
+
 import {
 	initUserAuth,
 	loginUser,
@@ -12,9 +14,9 @@ import {
 	clearReminders,
 	updateAllLists,
 	updateAllReminders,
+	updateReminder,
 } from '../actions/userActions';
 
-import { arrayMove } from '@dnd-kit/sortable';
 
 export interface UserStateSchema {
 	authData: IUser | null;
@@ -189,6 +191,19 @@ const userSlice = createSlice({
 						reminder._id !== payload.reminderId
 					));
 					state.authData.lists[index].reminders = filteredReminders;
+				}
+			})
+			// updateReminder
+			.addCase(updateReminder.rejected, (state, action) => {
+				state.error = action.payload;
+			})
+			.addCase(updateReminder.fulfilled, (state, { payload }) => {
+				if (state.authData) {
+					const index = state.authData.lists.findIndex((list) => list._id === payload.listId);
+					const reminderIndex = state.authData.lists[index].reminders.findIndex(
+						(reminder) => reminder._id === payload.reminder._id
+					);
+					state.authData.lists[index].reminders[reminderIndex] = payload.reminder;
 				}
 			})
 			// clearReminders

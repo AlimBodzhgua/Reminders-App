@@ -73,7 +73,7 @@ export const updateAllLists = createAsyncThunk<
 	'updateAllList',
 	async (_, { rejectWithValue, getState }) => {
 		const lists = selectUserLists(getState());
-		const body = { lists: lists }
+		const body = { lists: lists };
 		try {
 			appAxios.post('/lists/all', body);
 		} catch (err) {

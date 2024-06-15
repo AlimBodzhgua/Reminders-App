@@ -29,7 +29,7 @@ export const Content: FC = memo(() => {
 					<Spin size='large' />
 				</Flex>
 			</StyledContent>
-		)
+		);
 	}
 
 	if (!authData) {

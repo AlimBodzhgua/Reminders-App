@@ -44,7 +44,7 @@ export const StyledLink = styled(Typography.Link)`
 	display: flex;
 	gap: 8px;
 	color: #949090!important;
-`
+`;
 
 interface StyledCheckboxProps {
 	$color?: string;
@@ -68,4 +68,4 @@ export const StyledInfoCircleOutlined = styled(InfoCircleOutlined)<InfoCircleOut
 	color: ${props => props.$color};
 	font-size: 18px;
 	cursor: pointer;
-`
+`;

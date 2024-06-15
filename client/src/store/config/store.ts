@@ -25,7 +25,7 @@ startAppListening({
 			dispatch(activeListActions.setActiveList(activeListFromUser));
 		}
 	}
-})
+});
 
 
 export const createReduxStore = (initialState?: StateSchema) => {

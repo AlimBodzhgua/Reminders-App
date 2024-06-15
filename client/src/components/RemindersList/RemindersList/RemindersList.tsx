@@ -31,10 +31,10 @@ export const RemindersList: FC = memo(() => {
 				activeListId: activeList!._id,
 				overId: String(e.over!.id),
 				activeId: String(e.active.id),
-			}))
+			}));
 			dispatch(updateAllReminders());
 		}
-	}
+	};
 
 	return (
 		<DndContext

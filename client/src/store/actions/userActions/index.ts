@@ -10,7 +10,6 @@ export {
 	clearReminders,
 	updateAllReminders,
 	updateReminder,
-	addFlagReminder,
 } from './remindersActions';
 
 export {

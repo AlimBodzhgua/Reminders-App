@@ -30,11 +30,13 @@ export const isDateBefore = (date: string | undefined, time: string | undefined)
 	return dayjs(dateString).isBefore(dayjs());
 };
 
-
 export const getPriorityValue = (priority: PriorityType) => {
-	switch(priority) {
-		case('low'): return '!'
-		case('medium'): return '!!'
-		case('high'): return '!!!'
+	switch (priority) {
+	case 'low':
+		return '!';
+	case 'medium':
+		return '!!';
+	case 'high':
+		return '!!!';
 	}
-}
+};

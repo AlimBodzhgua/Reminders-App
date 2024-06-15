@@ -30,25 +30,25 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 			_id: reminder._id,
 			priority: value,
 		}));
-	}
+	};
 
 	const onChangeUrl = (e: ChangeEvent<HTMLInputElement>) => {
 		setUrl(e.target.value);
-	}
+	};
 
 	const onAddURL = async () => {
 		const { meta } = await dispatch(updateReminder({ _id: reminder._id, url }));
 		if (meta.requestStatus === 'rejected') {
 			messageApi.open({ type: 'error', content: 'Incorrect URL' });
 		}
-	}
+	};
 
 	const onToggleFlag = () => {
 		dispatch(updateReminder({
 			_id: reminder._id,
 			isFlagged: !reminder.isFlagged,
 		}));
-	}
+	};
 
 	return (
 		<StyledReminderOverview>
@@ -97,5 +97,5 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 				/>
 			</Space>
 		</StyledReminderOverview>
-	)
-})
+	);
+});

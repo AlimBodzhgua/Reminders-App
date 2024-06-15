@@ -9,5 +9,6 @@ export interface IList {
 	icon: ListsIconType;
 	color: string;
 	pinned: boolean;
+	readonly isMutable: boolean;
 	reminders: Array<IReminder>;
 };

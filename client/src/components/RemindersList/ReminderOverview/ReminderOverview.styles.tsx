@@ -10,7 +10,7 @@ export const StyledReminderOverview = styled.div`
 
 export const StyledTitle = styled(Typography.Title)`
 	&&& {
-		margin: 0 0 0 10px;
+		margin: 0;
 	}
 `
 

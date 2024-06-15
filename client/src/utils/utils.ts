@@ -17,6 +17,7 @@ export const createReminder = (values: FormFields) => {
 		title: values.title,
 		notes: values.notes,
 		isCompleted: false,
+		isFlagged: false,
 		details: {
 			...(values.date && { date: toDateString(values.date) }),
 			...(values.time && { time: toTimeString(values.time) }),

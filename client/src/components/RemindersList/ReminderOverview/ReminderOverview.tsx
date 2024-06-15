@@ -1,13 +1,11 @@
 import { FC, useState, ChangeEvent, memo } from 'react';
-import {
-	Typography,
-	Space,
-	Input,
-	message,
-} from 'antd';
+import { Typography, Space, Input, Flex, message } from 'antd';
 import { useAppDispatch } from 'hooks/redux';
 import { updateReminder } from 'store/actions/userActions';
 import { priorityOptions } from 'constants/priority';
+import { FlagOutlined } from '@ant-design/icons';
+import { StyledButton } from 'styled/Button.styles';
+
 import type { IReminder, PriorityType } from 'types/reminder';
 
 import {
@@ -31,7 +29,7 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 		dispatch(updateReminder({
 			_id: reminder._id,
 			priority: value,
-		}))
+		}));
 	}
 
 	const onChangeUrl = (e: ChangeEvent<HTMLInputElement>) => {
@@ -45,12 +43,29 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 		}
 	}
 
+	const onToggleFlag = () => {
+		dispatch(updateReminder({
+			_id: reminder._id,
+			isFlagged: !reminder.isFlagged,
+		}));
+	}
+
 	return (
 		<StyledReminderOverview>
 			{contextHolder}
-			<Typography.Title level={4}>
-				{reminder.title}
-			</Typography.Title>
+			<Flex justify='space-between' align='center'>
+				<StyledTitle level={4}>
+					{reminder.title}
+				</StyledTitle>
+				<StyledButton
+					size='small'
+					$color={reminder.isFlagged ? '#ff6600' : '#000'}
+					$borderColor={reminder.isFlagged ? '#ff6600' : '#000'}
+					onClick={onToggleFlag}
+				>
+					<FlagOutlined />
+				</StyledButton>
+			</Flex>
 			<Typography.Text>
 				{reminder.notes}
 			</Typography.Text>

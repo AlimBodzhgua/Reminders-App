@@ -55,7 +55,10 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 	const onAddReminder: FormProps<FormFields>['onFinish'] = async (values) => {
 		const newReminder = createReminder(values);
 
-		const { meta } = await dispatch(addReminder(newReminder));
+		const { meta } = await dispatch(addReminder({
+			listId: activeList!._id,
+			reminder: newReminder,
+		}));
 
 		if (meta.requestStatus === 'fulfilled' && onSuccess) {
 			onSuccess();
@@ -100,7 +103,7 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 								<StyledTimePicker
 									placeholder='Add Time'
 									variant='filled'
-									format={'HH:mm'}
+									format='HH:mm'
 									allowClear={{
 										clearIcon: <CloseOutlined />,
 									}}

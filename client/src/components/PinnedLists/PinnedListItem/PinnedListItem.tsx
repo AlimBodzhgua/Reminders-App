@@ -6,7 +6,7 @@ import {
 	useCallback,
 	ChangeEvent,
 } from 'react';
-import { Flex, Dropdown } from 'antd';
+import { Flex, Dropdown, notification } from 'antd';
 import { mapListToIcon } from 'constants/iconsList';
 import { useAppSelector } from 'hooks/redux';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
@@ -34,6 +34,7 @@ interface PinnedListItemProps {
 }
 
 export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
+	const [api, contextHolder] = notification.useNotification();
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const [value, setValue] = useState<string>(list.name);
 	const [isHover, hoverProps] = useHover();
@@ -51,8 +52,18 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 		setValue(list.name);
 	}
 
+	const openNotification = () => {
+		api['info']({
+			message: 'Immutable list',
+			description: 'Note that Today, Scheduled, All, Flagged are immutable lists',
+			placement: 'topRight'
+		});
+	};
+
 	const onEdit = useCallback(() => {
-		setIsEdit(prev => !prev);
+		if (list.isMutable) {
+			setIsEdit(prev => !prev);
+		} else openNotification();
 	}, []);
 
 	const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -82,6 +93,7 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 
 	return (
 		<SortableItem id={list._id} wrapperWidth='49%'>
+			{contextHolder}
 			<StyledListItem
 				onClick={onSelectList}
 				{...hoverProps}
@@ -99,7 +111,7 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 							size={28}
 						/>
 						<Flex align='center' gap='5px'>
-							{isHover && hoverExtraContent}
+							{(isHover && list.isMutable) && hoverExtraContent}
 							<StyledTitle
 								level={4}
 								$margin='0'

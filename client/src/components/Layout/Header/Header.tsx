@@ -4,7 +4,7 @@ import { LoginModal, RegisterModal } from 'components/Auth';
 import { selectUserAuthData } from 'store/selectors/userSelectors';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { userActions } from 'store/slices/userSlice';
-import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
+import { ACTIVE_LIST_LOCALSTORAGE_KEY, USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
 import { UserOutlined, PlusOutlined } from '@ant-design/icons';
 import { StyledAvatar } from 'styled/Avatar.styles';
 import { StyledHeader } from './Header.styles';
@@ -36,6 +36,7 @@ export const Header: FC = memo(() => {
 	const onLogout = useCallback(() => {
 		dispatch(userActions.logout());
 		localStorage.removeItem(USER_LOCALSTORAGE_KEY);
+		localStorage.removeItem(ACTIVE_LIST_LOCALSTORAGE_KEY);
 	}, [dispatch]);
 
 	const items: MenuProps['items'] = useMemo(() => [

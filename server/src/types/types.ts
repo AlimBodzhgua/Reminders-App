@@ -39,6 +39,7 @@ export interface IList extends DocResult<IList> {
 	name: string;
 	color: string;
 	pinned: boolean;
+	readonly isMutable: boolean;
 	icon: string;
 	reminders: Array<IReminder>;
 }

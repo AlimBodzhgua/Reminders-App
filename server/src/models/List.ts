@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import { IList } from '../types/types';
 import { ReminderSchema } from './Reminder';
+import type { IList } from '../types/types';
 
 export const ListSchema = new mongoose.Schema<IList>({
 	name: {
@@ -18,6 +18,11 @@ export const ListSchema = new mongoose.Schema<IList>({
 	pinned: {
 		type: Boolean,
 		require: true,
+	},
+	isMutable: {
+		type: Boolean,
+		require: true,
+		immutable: true,
 	},
 	reminders: [ReminderSchema]
 })

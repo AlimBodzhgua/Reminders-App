@@ -6,6 +6,7 @@ const today = new ListModel({
 	color: 'blue',
 	icon: 'DatabaseOutlined',
 	pinned: true,
+	isMutable: false,
 	reminders: [],
 });
 
@@ -14,6 +15,7 @@ const scheduled = new ListModel({
 	color: 'red',
 	icon: 'CalendarOutlined',
 	pinned: true,
+	isMutable: false,
 	reminders: [],
 });
 
@@ -22,7 +24,17 @@ const all = new ListModel({
 	color: 'grey',
 	icon: 'UnorderedListOutlined',
 	pinned: true,
+	isMutable: false,
 	reminders: [],
 });
 
-export const initialLists: IList[] = [today, scheduled, all];
+const flagged = new ListModel({
+	name: 'Flagged',
+	color: '#ff6600',
+	icon: 'FlagOutlined',
+	pinned: true,
+	isMutable: false,
+	reminders: [],
+})
+
+export const initialLists: IList[] = [today, scheduled, all, flagged];

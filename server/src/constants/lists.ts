@@ -37,4 +37,19 @@ const flagged = new ListModel({
 	reminders: [],
 })
 
-export const initialLists: IList[] = [today, scheduled, all, flagged];
+const completed = new ListModel({
+	name: 'Completed',
+	color: '#000',
+	icon: 'CheckOutlined',
+	pinned: true,
+	isMutable: false,
+	reminders: [],
+})
+
+export const initialLists: IList[] = [
+	today,
+	scheduled,
+	flagged,
+	completed,
+	all,
+];

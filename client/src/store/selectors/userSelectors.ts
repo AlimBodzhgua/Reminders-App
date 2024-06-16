@@ -69,7 +69,6 @@ export const selectCompletedReminders = createSelector(
 				}
 			})
 		});
-		console.log(completed);
 		return completed;
 	}
 );

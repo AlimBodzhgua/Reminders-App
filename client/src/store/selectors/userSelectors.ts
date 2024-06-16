@@ -57,3 +57,18 @@ export const selectTodaysReminders = createSelector(
 		return today;
 	}
 );
+
+export const selectCompletedReminders = createSelector(
+	selectUserLists,
+	(lists) => {
+		const completed: IReminder[] = [];
+		lists.forEach((list) => {
+			list.reminders.forEach((reminder) => {
+				if (reminder.details?.date && reminder.isCompleted) {
+					completed.push(reminder);
+				}
+			})
+		})
+		return completed;
+	}
+);

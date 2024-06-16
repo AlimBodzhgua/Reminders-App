@@ -18,4 +18,10 @@ export interface IReminder {
 	details?: IReminderDetails;
 };
 
-export type RemindersListType = 'todays' | 'scheduled' | 'all' | 'flagged' | 'others';
+export type RemindersListType = 
+	'todays' |
+	'scheduled' |
+	'flagged' |
+	'completed' |
+	'all' |
+	'others';

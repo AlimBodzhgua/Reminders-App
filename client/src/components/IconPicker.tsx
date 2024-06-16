@@ -64,6 +64,7 @@ export const IconPicker: FC<IconPickerColor> = memo((props) => {
 				icon={mapListToIcon[icon as ListsIconType]}
 				$bgColor={color}
 				$color='white'
+				$hoverBgColor={color}
 			/>
 		</Popover>
 	);

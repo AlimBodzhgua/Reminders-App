@@ -6,6 +6,7 @@ import { AddReminderForm } from 'components/AddReminderForm/AddReminderForm';
 import { RemindersList } from 'components/RemindersList';
 import { getRemindersListType } from 'utils/utils';
 import {
+    selectCompletedReminders,
 	selectFlaggedReminders,
 	selectTodaysReminders,
 	selectUserAuthData,
@@ -24,11 +25,13 @@ export const Content: FC = memo(() => {
 	const isLoading = useAppSelector(selectUserIsLoading);
 	const flaggedReminders = useAppSelector(selectFlaggedReminders);
 	const todaysReminders = useAppSelector(selectTodaysReminders);
+	const completedReminders = useAppSelector(selectCompletedReminders);
 	const [currentList, setCurrentList] = useState<RemindersListType>('others');
 
 	const mapToRemindersList: Record<RemindersListType, IReminder[]> = useMemo(() => ({
 		'flagged': flaggedReminders,
 		'todays': todaysReminders,
+		'completed': completedReminders,
 		'others': activeList?.reminders || [],
 		'scheduled': activeList?.reminders || [],
 		'all': activeList?.reminders || [],

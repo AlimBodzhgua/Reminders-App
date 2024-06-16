@@ -58,6 +58,10 @@ export const isScheduledList = (list: IList) => {
 	return (list.name === 'Scheduled' && !list.isMutable);
 };
 
+export const isCompletedList = (list: IList) => {
+	return (list.name === 'Completed' && !list.isMutable);
+};
+
 export const getRemindersListType = (list: IList): RemindersListType => {
 	if (isFlaggedList(list)) {
 		return 'flagged';
@@ -67,5 +71,7 @@ export const getRemindersListType = (list: IList): RemindersListType => {
 		return 'scheduled';
 	} else if (isAllList(list)) {
 		return 'all';
+	} else if (isCompletedList(list)) {
+		return 'completed';
 	} else return 'others';
 };

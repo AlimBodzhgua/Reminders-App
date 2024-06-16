@@ -64,11 +64,12 @@ export const selectCompletedReminders = createSelector(
 		const completed: IReminder[] = [];
 		lists.forEach((list) => {
 			list.reminders.forEach((reminder) => {
-				if (reminder.details?.date && reminder.isCompleted) {
+				if (reminder.isCompleted) {
 					completed.push(reminder);
 				}
 			})
-		})
+		});
+		console.log(completed);
 		return completed;
 	}
 );

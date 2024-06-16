@@ -29,7 +29,7 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 		const doc = new ReminderModel({
 			title: req.body.title,
 			notes: req.body.notes,
-			isCompleted: false,
+			isCompleted: req.body.isCompleted,
 			isFlagged: false,
 			details: req.body.details,
 		})

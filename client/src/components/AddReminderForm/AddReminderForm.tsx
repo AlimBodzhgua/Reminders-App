@@ -31,7 +31,7 @@ interface AddReminderFormProps {
 export interface FormFields {
 	title: string;
 	notes?: string;
-	isCompleted: boolean;
+	isCompleted?: boolean;
 	date?: Dayjs;
 	time?: Dayjs;
 }

@@ -30,7 +30,8 @@ interface AddReminderFormProps {
 
 export interface FormFields {
 	title: string;
-	notes: string;
+	notes?: string;
+	isCompleted: boolean;
 	date?: Dayjs;
 	time?: Dayjs;
 }
@@ -72,7 +73,12 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 			onFinish={onAddReminder}
 		>
 			<Flex align='start'>
-				<StyledCheckbox $color={activeList?.color}/>
+				<Form.Item<FormFields>
+					name='isCompleted'
+					valuePropName='checked'
+				>
+					<StyledCheckbox $color={activeList?.color}/>
+				</Form.Item>
 				<StyledFlex vertical>
 					<Form.Item<FormFields> name='title'>
 						<Input

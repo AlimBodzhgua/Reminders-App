@@ -46,5 +46,7 @@ export const reminderUpdateValidation = [
 	body('notes').optional().isLength({min: 2}).isString(),
 	body('details').optional().isObject(),
 	body('url').optional().isURL(),
+	body('isFlagged').optional().isBoolean(),
+	body('isCompleted').optional().isBoolean(),
 	body('priority').optional().isString(),
 ];

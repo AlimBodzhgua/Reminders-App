@@ -30,6 +30,7 @@ export interface IReminder extends DocResult<IReminder> {
 	notes?: string;
 	url?: string;
 	priority?: PriorityType;
+	isFlagged: boolean;
 	isCompleted: boolean;
 	details?: IDetails;
 }

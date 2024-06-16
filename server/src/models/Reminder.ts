@@ -7,9 +7,16 @@ export const ReminderSchema = new mongoose.Schema<IReminder>({
 		required: true,
 	},
 	notes: String,
-	isCompleted: Boolean,
 	url: String,
 	priority: String,
+	isCompleted: {
+		type: Boolean,
+		require: true,
+	},
+	isFlagged: {
+		type: Boolean,
+		require: true,
+	},
 	details: {
 		_id: false,
 		location: String,

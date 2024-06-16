@@ -9,10 +9,16 @@ import { useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
 import { userActions } from 'store/slices/userSlice';
 import { updateAllReminders } from 'store/actions/userActions';
 
+import type { IReminder } from 'types/reminder';
+
 import { RemindersListItem } from '../RemindersListItem/RemindersListItem';
 import { RemindersListHeader } from './RemindersListHeader';
 
-export const RemindersList: FC = memo(() => {
+interface RemindersListProps {
+	reminders: IReminder[];
+}
+
+export const RemindersList: FC<RemindersListProps> = memo(({reminders}) => {
 	const activeList = useAppSelector(selectActiveList);
 	const dispatch = useAppDispatch();
 
@@ -43,16 +49,17 @@ export const RemindersList: FC = memo(() => {
 			sensors={sensors}
 		>
 			<SortableContext
-				items={activeList!.reminders.map((reminder) => reminder._id)}
+				items={reminders.map((reminder) => reminder._id)}
 			>
-				<List header={<RemindersListHeader />}>
-					{activeList && activeList.reminders.map((reminder) => (
-						<RemindersListItem
-							reminder={reminder}
-							key={reminder._id}
-						/>
-					))}			
-				</List>
+				<List header={<RemindersListHeader reminders={reminders}/>}>
+					{reminders.length ? (
+						reminders.map((reminder) => (
+							<RemindersListItem reminder={reminder} key={reminder._id} />
+						))
+					) : ( 
+						<div /> 
+					)}
+				</List>;
 			</SortableContext>
 		</DndContext>
 	);

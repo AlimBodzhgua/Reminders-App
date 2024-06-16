@@ -1,22 +1,47 @@
-import { FC, memo, useState } from 'react';
-import { Button, Flex, Space, Spin } from 'antd';
+import { FC, memo, useState, useEffect, useMemo } from 'react';
+import { Flex, Spin } from 'antd';
 import { useAppSelector } from 'hooks/redux';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { AddReminderForm } from 'components/AddReminderForm/AddReminderForm';
 import { RemindersList } from 'components/RemindersList';
-import { selectUserAuthData, selectUserIsLoading } from 'store/selectors/userSelectors';
-import { StyledPlusOutlined, StyledContent, StyledTitle } from './Content.styles';
+import { getRemindersListType } from 'utils/utils';
+import {
+	selectFlaggedReminders,
+	selectTodaysReminders,
+	selectUserAuthData,
+	selectUserIsLoading,
+} from 'store/selectors/userSelectors';
+
+import type { IReminder, RemindersListType } from 'types/reminder';
+
+import { StyledContent, StyledTitle } from './Content.styles';
+
 
 export const Content: FC = memo(() => {
 	const activeList = useAppSelector(selectActiveList);
 	const [showForm, setShowForm] = useState<boolean>(false);
 	const authData = useAppSelector(selectUserAuthData);
 	const isLoading = useAppSelector(selectUserIsLoading);
-	const showEmptyTitle = !activeList?.reminders.length && !showForm;
+	const flaggedReminders = useAppSelector(selectFlaggedReminders);
+	const todaysReminders = useAppSelector(selectTodaysReminders);
+	const [currentList, setCurrentList] = useState<RemindersListType>('others');
 
-	const onShowForm = () => {
-		setShowForm(true);
-	};
+	const mapToRemindersList: Record<RemindersListType, IReminder[]> = useMemo(() => ({
+		'flagged': flaggedReminders,
+		'todays': todaysReminders,
+		'others': activeList?.reminders || [],
+		'scheduled': activeList?.reminders || [],
+		'all': activeList?.reminders || [],
+	}), [activeList])
+
+	const showEmptyTitle = !mapToRemindersList[currentList].length && !showForm;
+
+	useEffect(() => {
+		if (activeList) {
+			setCurrentList(getRemindersListType(activeList));
+		}
+	}, [activeList])
+
 
 	const onToggleShowForm = () => {
 		setShowForm(prev => !prev);
@@ -46,30 +71,7 @@ export const Content: FC = memo(() => {
 
 	return (
 		<StyledContent onClick={onToggleShowForm}>
-			<Flex justify='space-between' align='center'>
-				<Space>
-					<StyledTitle
-						$color={activeList?.color}
-						editable={{
-							triggerType: ['text'],
-							enterIcon: '',
-						}}
-					>
-						{activeList?.name}
-					</StyledTitle>
-					<Button
-						type='text'
-						icon={<StyledPlusOutlined />}
-						style={{marginBottom: '1em'}}
-						onClick={onShowForm}
-					/>
-				</Space>
-				<StyledTitle $color={activeList?.color} $weight={500}>
-					{activeList?.reminders.length}
-				</StyledTitle>
-			</Flex>
-			{activeList?.reminders.length && <RemindersList />}
-			{showForm && <AddReminderForm onSuccess={onToggleShowForm}/>}
+			<RemindersList reminders={mapToRemindersList[currentList]}/>
 
 			{showEmptyTitle &&
 				<Flex justify='center' align='center' style={{ height: '80%' }}>
@@ -78,6 +80,8 @@ export const Content: FC = memo(() => {
 					</StyledTitle>
 				</Flex>
 			}
+
+			{showForm && <AddReminderForm onSuccess={onToggleShowForm}/>}
 		</StyledContent>
 	);
 });

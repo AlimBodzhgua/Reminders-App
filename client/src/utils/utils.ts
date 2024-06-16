@@ -2,7 +2,8 @@ import { FormFields } from 'components/AddReminderForm/AddReminderForm';
 import dayjs from 'dayjs';
 
 import type { Dayjs } from 'dayjs';
-import type { PriorityType } from 'types/reminder';
+import type { PriorityType, RemindersListType } from 'types/reminder';
+import type { IList } from 'types/list';
 
 export const toDateString = (date: Dayjs) => {
 	return dayjs(date).format('YYYY.MM.DD').toString();
@@ -40,3 +41,31 @@ export const getPriorityValue = (priority: PriorityType) => {
 		return '!!!';
 	}
 };
+
+export const isFlaggedList = (list: IList) => {
+	return (list.name === 'Flagged' && !list.isMutable);
+}
+
+export const isTodaysList = (list: IList) => {
+	return (list.name === 'Today' && !list.isMutable);
+}
+
+export const isAllList = (list: IList) => {
+	return (list.name === 'All' && !list.isMutable);
+}
+
+export const isScheduledList = (list: IList) => {
+	return (list.name === 'Scheduled' && !list.isMutable);
+}
+
+export const getRemindersListType = (list: IList): RemindersListType => {
+	if (isFlaggedList(list)) {
+		return 'flagged';
+	} else if (isTodaysList(list)) {
+		return 'todays'
+	} else if (isScheduledList(list)) {
+		return 'scheduled'
+	} else if (isAllList(list)) {
+		return 'all'
+	} else return 'others';
+}

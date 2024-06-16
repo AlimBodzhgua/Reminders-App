@@ -17,3 +17,5 @@ export interface IReminder {
 	priority?: PriorityType;
 	details?: IReminderDetails;
 };
+
+export type RemindersListType = 'todays' | 'scheduled' | 'all' | 'flagged' | 'others';

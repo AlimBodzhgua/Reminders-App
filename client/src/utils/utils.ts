@@ -48,24 +48,24 @@ export const isFlaggedList = (list: IList) => {
 
 export const isTodaysList = (list: IList) => {
 	return (list.name === 'Today' && !list.isMutable);
-}
+};
 
 export const isAllList = (list: IList) => {
 	return (list.name === 'All' && !list.isMutable);
-}
+};
 
 export const isScheduledList = (list: IList) => {
 	return (list.name === 'Scheduled' && !list.isMutable);
-}
+};
 
 export const getRemindersListType = (list: IList): RemindersListType => {
 	if (isFlaggedList(list)) {
 		return 'flagged';
 	} else if (isTodaysList(list)) {
-		return 'todays'
+		return 'todays';
 	} else if (isScheduledList(list)) {
-		return 'scheduled'
+		return 'scheduled';
 	} else if (isAllList(list)) {
-		return 'all'
+		return 'all';
 	} else return 'others';
-}
+};

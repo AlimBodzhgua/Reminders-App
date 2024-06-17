@@ -1,19 +1,15 @@
-import { FC, memo, useState, useEffect, useMemo } from 'react';
+import { FC, memo, useState } from 'react';
 import { Flex, Spin } from 'antd';
 import { useAppSelector } from 'hooks/redux';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { AddReminderForm } from 'components/AddReminderForm/AddReminderForm';
 import { RemindersList } from 'components/RemindersList';
-import { getRemindersListType } from 'utils/utils';
 import {
-    selectCompletedReminders,
-	selectFlaggedReminders,
-	selectTodaysReminders,
 	selectUserAuthData,
 	selectUserIsLoading,
 } from 'store/selectors/userSelectors';
 
-import type { IReminder, RemindersListType } from 'types/reminder';
+import { useActiveList } from 'hooks/useActiveList';
 
 import { StyledContent, StyledTitle } from './Content.styles';
 
@@ -23,27 +19,8 @@ export const Content: FC = memo(() => {
 	const [showForm, setShowForm] = useState<boolean>(false);
 	const authData = useAppSelector(selectUserAuthData);
 	const isLoading = useAppSelector(selectUserIsLoading);
-	const flaggedReminders = useAppSelector(selectFlaggedReminders);
-	const todaysReminders = useAppSelector(selectTodaysReminders);
-	const completedReminders = useAppSelector(selectCompletedReminders);
-	const [currentList, setCurrentList] = useState<RemindersListType>('others');
-
-	const mapToRemindersList: Record<RemindersListType, IReminder[]> = useMemo(() => ({
-		'flagged': flaggedReminders,
-		'todays': todaysReminders,
-		'completed': completedReminders,
-		'others': activeList?.reminders || [],
-		'scheduled': activeList?.reminders || [],
-		'all': activeList?.reminders || [],
-	}), [activeList])
-
-	const showEmptyTitle = !mapToRemindersList[currentList].length && !showForm;
-
-	useEffect(() => {
-		if (activeList) {
-			setCurrentList(getRemindersListType(activeList));
-		}
-	}, [activeList])
+	const { currentList } = useActiveList();
+	const showEmptyTitle = !currentList.length && !showForm;
 
 
 	const onToggleShowForm = () => {
@@ -74,7 +51,7 @@ export const Content: FC = memo(() => {
 
 	return (
 		<StyledContent onClick={onToggleShowForm}>
-			<RemindersList reminders={mapToRemindersList[currentList]}/>
+			<RemindersList reminders={currentList}/>
 
 			{showEmptyTitle &&
 				<Flex justify='center' align='center' style={{ height: '80%' }}>

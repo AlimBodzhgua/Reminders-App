@@ -16,6 +16,8 @@ import { useHover } from 'hooks/useHover';
 import { EnterOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useListActions } from 'hooks/useListActions';
 import { SortableItem } from 'lib/components/SortableItem';
+import { useActiveList } from 'hooks/useActiveList';
+import { getRemindersListType } from 'utils/utils';
 import UnpinIcon from 'assets/icons/unpin.svg';
 import DotesIcon from 'assets/icons/dotes.svg';
 
@@ -46,6 +48,8 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 		onTogglePin,
 		onSelectList,
 	} = useListActions({list, onEscape: onBlurInput});
+	const { mapToRemindersList } = useActiveList();
+	const amount = mapToRemindersList[getRemindersListType(list)].length;
 
 	function onBlurInput() {
 		setIsEdit(false);
@@ -117,7 +121,7 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 								$margin='0'
 								$isActive={isActive}
 							>
-								{list.reminders.length}
+								{amount}
 							</StyledTitle>
 						</Flex>
 					</Flex>

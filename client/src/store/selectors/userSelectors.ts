@@ -5,6 +5,7 @@ import type { StateSchema } from 'store/config/StateSchema';
 import type { IReminder } from 'types/reminder';
 
 import { selectActiveList } from './activeListSelectors';
+import { getRemindersListType } from 'utils/utils';
 
 export const selectUserAuthData = (state: StateSchema) => state.user.authData;
 export const selectUserIsLoading = (state: StateSchema) => state.user.isLoading;
@@ -70,5 +71,18 @@ export const selectCompletedReminders = createSelector(
 			})
 		});
 		return completed;
+	}
+);
+
+export const selectAllReminders = createSelector(
+	selectUserLists,
+	(lists) => {
+		const all: IReminder[] = [];
+		lists.forEach((list) => {
+			if (getRemindersListType(list) === 'others') {
+				all.push(...list.reminders);
+			}
+		});
+		return all;
 	}
 );

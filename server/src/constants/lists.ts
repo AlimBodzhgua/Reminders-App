@@ -4,7 +4,7 @@ import ListModel from '../models/List';
 const today = new ListModel({
 	name: 'Today',
 	color: 'blue',
-	icon: 'DatabaseOutlined',
+	icon: 'UnorderedListOutlined',
 	pinned: true,
 	isMutable: false,
 	reminders: [],
@@ -22,7 +22,7 @@ const scheduled = new ListModel({
 const all = new ListModel({
 	name: 'All',
 	color: 'grey',
-	icon: 'UnorderedListOutlined',
+	icon: 'InboxOutlined',
 	pinned: true,
 	isMutable: false,
 	reminders: [],

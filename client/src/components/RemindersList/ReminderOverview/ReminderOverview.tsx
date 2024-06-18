@@ -3,7 +3,7 @@ import { Typography, Space, Input, Flex, message } from 'antd';
 import { useAppDispatch } from 'hooks/redux';
 import { updateReminder } from 'store/actions/userActions';
 import { priorityOptions } from 'constants/priority';
-import { FlagOutlined } from '@ant-design/icons';
+import { FlagFilled } from '@ant-design/icons';
 import { StyledButton } from 'styled/Button.styles';
 
 import type { IReminder, PriorityType } from 'types/reminder';
@@ -63,7 +63,7 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 					$borderColor={reminder.isFlagged ? '#ff6600' : '#000'}
 					onClick={onToggleFlag}
 				>
-					<FlagOutlined />
+					<FlagFilled />
 				</StyledButton>
 			</Flex>
 			<Typography.Text>

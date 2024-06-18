@@ -31,7 +31,7 @@ const all = new ListModel({
 const flagged = new ListModel({
 	name: 'Flagged',
 	color: '#ff6600',
-	icon: 'FlagOutlined',
+	icon: 'FlagFilled',
 	pinned: true,
 	isMutable: false,
 	reminders: [],

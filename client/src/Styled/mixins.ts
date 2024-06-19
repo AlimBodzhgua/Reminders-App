@@ -7,8 +7,8 @@ export const baseCheckbox = css`
 
 	& .ant-checkbox-inner {
 		border-radius: 50%;
-		width: 24px;
-		height: 24px;
+		width: 22px;
+		height: 22px;
 
 		background-color: white;
 		border-color: white;
@@ -22,8 +22,8 @@ export const baseCheckbox = css`
 	    bottom: 0;
 	    margin: auto;
 
-		width: 19px;
-		height: 19px;
+		width: 17px;
+		height: 17px;
 		border-radius: 50%;
 		border: none;
 		transform: none;

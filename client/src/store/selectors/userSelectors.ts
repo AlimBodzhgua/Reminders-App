@@ -86,3 +86,18 @@ export const selectAllReminders = createSelector(
 		return all;
 	}
 );
+
+export const selectScheduledReminders = createSelector(
+	selectUserLists,
+	(lists) => {
+		const scheduled: IReminder[] = [];
+		lists.forEach((list) => {
+			list.reminders.forEach((reminder) => {
+				if (reminder.details) {
+					scheduled.push(reminder);
+				}
+			})
+		});
+		return scheduled;
+	}
+);

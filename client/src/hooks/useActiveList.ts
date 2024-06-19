@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { getRemindersListType } from 'utils/utils';
 import {
     selectCompletedReminders,
+	selectScheduledReminders,
 	selectFlaggedReminders,
 	selectTodaysReminders,
 	selectAllReminders,
@@ -18,15 +19,16 @@ export const useActiveList = () => {
 	const todaysReminders = useAppSelector(selectTodaysReminders);
 	const completedReminders = useAppSelector(selectCompletedReminders);
 	const allReminders = useAppSelector(selectAllReminders);
+	const scheduledReminders = useAppSelector(selectScheduledReminders);
 	const [listType, setListType] = useState<RemindersListType>('others');
 
 	const mapToRemindersList: Record<RemindersListType, IReminder[]> = useMemo(() => ({
-		flagged: flaggedReminders,
 		todays: todaysReminders,
+		flagged: flaggedReminders,
 		completed: completedReminders,
-		others: activeList?.reminders || [],
-		scheduled: [],
+		scheduled: scheduledReminders,
 		all: allReminders,
+		others: activeList?.reminders || [],
 	}), [activeList]);
 
 	useEffect(() => {

@@ -1,6 +1,6 @@
 import { Checkbox, Typography, List } from 'antd';
 import { baseCheckbox } from 'styled/mixins';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined, FlagFilled } from '@ant-design/icons';
 import styled from 'styled-components';
 
 interface StyledListItemProps {
@@ -69,3 +69,8 @@ export const StyledInfoCircleOutlined = styled(InfoCircleOutlined)<InfoCircleOut
 	font-size: 18px;
 	cursor: pointer;
 `;
+
+export const StyledFlagFilled = styled(FlagFilled)`
+	color: #ff6600;
+	font-size: 16px;
+`

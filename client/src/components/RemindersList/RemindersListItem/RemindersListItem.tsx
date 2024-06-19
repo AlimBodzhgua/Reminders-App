@@ -11,7 +11,6 @@ import { getPriorityValue } from 'utils/utils';
 import dayjs from 'dayjs';
 
 import type { IReminder } from 'types/reminder';
-
 import { ReminderOverview } from '../ReminderOverview/ReminderOverview';
 
 import {
@@ -20,6 +19,7 @@ import {
 	StyledLink,
 	StyledCheckbox,
 	StyledListItem,
+	StyledFlagFilled,
 	StyledInfoCircleOutlined,
 } from './RemindersListItem.styles';
 
@@ -68,7 +68,7 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 						>
 							<Space>
 								{reminder.priority && 
-									<StyledTitle level={4} $color='#ff0000'>
+									<StyledTitle level={4} $color={activeList?.color}>
 										{getPriorityValue(reminder.priority)}
 									</StyledTitle>
 								}
@@ -85,12 +85,19 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 									</Button>
 								}
 							</Space>
-							<Popover
-								content={<ReminderOverview reminder={reminder}/>}
-								placement='left'
-							>
-								<StyledInfoCircleOutlined $color={activeList?.color} />
-							</Popover>
+							<Space size='middle'>
+								{isHover && 
+									<Popover
+										content={<ReminderOverview reminder={reminder}/>}
+										placement='left'
+									>
+										<StyledInfoCircleOutlined $color={activeList?.color} />
+									</Popover>
+								}
+								{reminder.isFlagged &&
+									<StyledFlagFilled />
+								}
+							</Space>
 						</Flex>
 						<StyledText>
 							{reminder.notes}

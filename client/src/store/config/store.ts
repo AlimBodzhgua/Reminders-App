@@ -1,6 +1,7 @@
 import { configureStore, ReducersMapObject } from '@reduxjs/toolkit';
 import { StateSchema } from './StateSchema';
 import { userReducer } from 'store/slices/userSlice';
+import { searchBarReducer } from 'store/slices/searchBarSlice';
 import { activeListActions, activeListReducer } from 'store/slices/activeListSlice';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { selectUserAuthData } from 'store/selectors/userSelectors';
@@ -32,6 +33,7 @@ export const createReduxStore = (initialState?: StateSchema) => {
 	const rootReducer: ReducersMapObject<StateSchema> = {
 		user: userReducer,
 		activeList: activeListReducer,
+		searchBar: searchBarReducer,
 	};
 
 	const store = configureStore({

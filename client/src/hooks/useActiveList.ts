@@ -7,7 +7,7 @@ import {
 	selectTodaysReminders,
 	selectAllReminders,
 } from 'store/selectors/userSelectors';
-import { selectActiveList } from 'store/selectors/activeListSelectors';
+import { selectActiveList, selectActiveListType } from 'store/selectors/activeListSelectors';
 
 import type { IReminder, RemindersListType } from 'types/reminder';
 
@@ -20,7 +20,7 @@ export const useActiveList = () => {
 	const completedReminders = useAppSelector(selectCompletedReminders);
 	const allReminders = useAppSelector(selectAllReminders);
 	const scheduledReminders = useAppSelector(selectScheduledReminders);
-	const [listType, setListType] = useState<RemindersListType>('others');
+	const listType = useAppSelector(selectActiveListType) || 'others';
 
 	const mapToRemindersList: Record<RemindersListType, IReminder[]> = useMemo(() => ({
 		todays: todaysReminders,
@@ -30,12 +30,6 @@ export const useActiveList = () => {
 		all: allReminders,
 		others: activeList?.reminders || [],
 	}), [activeList]);
-
-	useEffect(() => {
-		if (activeList) {
-			setListType(getRemindersListType(activeList));
-		}
-	}, [activeList]);
 
 	return {
 		currentList: mapToRemindersList[listType],

@@ -1,5 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
-import { getRemindersListType } from 'utils/utils';
+import { useMemo } from 'react';
 import {
     selectCompletedReminders,
 	selectScheduledReminders,

@@ -53,10 +53,10 @@ interface StyledCheckboxProps {
 export const StyledCheckbox = styled(Checkbox)<StyledCheckboxProps>`
 	${baseCheckbox};
 	margin-top: 5px;
-	border-color: ${props => props.$color};
+	border-color: ${props => props.$color || '#000'};
 	
 	.ant-checkbox-inner::after {
-		background-color: ${props => props.$color};
+		background-color: ${props => props.$color || '#000'};
 	}
 `;
 
@@ -71,6 +71,6 @@ export const StyledInfoCircleOutlined = styled(InfoCircleOutlined)<InfoCircleOut
 `;
 
 export const StyledFlagFilled = styled(FlagFilled)`
-	color: #ff6600;
+	color: #f60;
 	font-size: 16px;
-`
+`;

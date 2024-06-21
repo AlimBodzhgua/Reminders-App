@@ -1,13 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import type { IReminder } from 'types/reminder';
 
 export interface SearchBarStateSchema {
 	value: string;
 	isSearching: boolean;
+	searchResult: IReminder[];
 }
 
 const initialState: SearchBarStateSchema = {
 	value: '',
 	isSearching: false,
+	searchResult: [],
 };
 
 export const searchBarSlice = createSlice({
@@ -16,9 +19,18 @@ export const searchBarSlice = createSlice({
 	reducers: {
 		setValue: (state, action: PayloadAction<string>) => {
 			state.value = action.payload;
+			if (action.payload.length) {
+				state.isSearching = true;
+			}
 		},
 		setIsSearching: (state, action: PayloadAction<boolean>) => {
 			state.isSearching = action.payload;
+		},
+		setSearchResult: (state, action: PayloadAction<IReminder[]>) => {
+			state.searchResult = action.payload;
+		},
+		clearSearchResult: (state) => {
+			state.searchResult = [];
 		},
 	},
 });

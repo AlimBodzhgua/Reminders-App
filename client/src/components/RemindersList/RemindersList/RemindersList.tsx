@@ -8,11 +8,13 @@ import { SortableContext } from '@dnd-kit/sortable';
 import { useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
 import { userActions } from 'store/slices/userSlice';
 import { updateAllReminders } from 'store/actions/userActions';
+import { RemindersListHeader } from 'components/ListHeader/RemindersListHeader';
+import { SearchListHeader } from 'components/ListHeader/SearchListHeader';
+import { selectSearchBarIsSearching } from 'store/selectors/searchBarSelectors';
 
 import type { IReminder } from 'types/reminder';
 
 import { RemindersListItem } from '../RemindersListItem/RemindersListItem';
-import { RemindersListHeader } from './RemindersListHeader';
 
 interface RemindersListProps {
 	reminders: IReminder[];
@@ -20,6 +22,7 @@ interface RemindersListProps {
 
 export const RemindersList: FC<RemindersListProps> = memo(({reminders}) => {
 	const activeList = useAppSelector(selectActiveList);
+	const isSearching = useAppSelector(selectSearchBarIsSearching);
 	const dispatch = useAppDispatch();
 
 	const sensors = useSensors(
@@ -51,7 +54,7 @@ export const RemindersList: FC<RemindersListProps> = memo(({reminders}) => {
 			<SortableContext
 				items={reminders.map((reminder) => reminder._id)}
 			>
-				<List header={<RemindersListHeader reminders={reminders}/>}>
+				<List header={isSearching ? <SearchListHeader /> : <RemindersListHeader />}>
 					{reminders.length ? (
 						reminders.map((reminder) => (
 							<RemindersListItem reminder={reminder} key={reminder._id} />

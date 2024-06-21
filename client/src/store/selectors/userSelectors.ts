@@ -38,8 +38,8 @@ export const selectFlaggedReminders = createSelector(
 		lists.forEach((list) => {
 			list.reminders.forEach((reminder) => {
 				if (reminder.isFlagged) flagged.push(reminder); 
-			})
-		})
+			});
+		});
 		return flagged;
 	}
 );
@@ -53,8 +53,8 @@ export const selectTodaysReminders = createSelector(
 				if (reminder.details?.date && dayjs(reminder.details?.date).isToday()) {
 					today.push(reminder);
 				}
-			})
-		})
+			});
+		});
 		return today;
 	}
 );
@@ -68,7 +68,7 @@ export const selectCompletedReminders = createSelector(
 				if (reminder.isCompleted) {
 					completed.push(reminder);
 				}
-			})
+			});
 		});
 		return completed;
 	}
@@ -96,7 +96,7 @@ export const selectScheduledReminders = createSelector(
 				if (reminder.details) {
 					scheduled.push(reminder);
 				}
-			})
+			});
 		});
 		return scheduled;
 	}

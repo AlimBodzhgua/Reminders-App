@@ -1,6 +1,7 @@
 import { useCallback, MouseEvent, useEffect } from 'react';
 import { removeList, updateList } from 'store/actions/userActions';
 import { activeListActions } from 'store/slices/activeListSlice';
+import { searchBarActions } from 'store/slices/searchBarSlice';
 import { ACTIVE_LIST_LOCALSTORAGE_KEY } from 'constants/localStorage';
 import { useAppDispatch } from 'hooks/redux';
 
@@ -36,10 +37,10 @@ export const useListActions = ({ list, onEscape }: UseListActionsProps) => {
 		dispatch(updateList({ _id: list._id, pinned: !list.pinned }));
 	}, [dispatch]);
 
-
 	const onSelectList = useCallback((e: MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		dispatch(activeListActions.setActiveList(list));
+		dispatch(searchBarActions.setIsSearching(false));
 		localStorage.setItem(ACTIVE_LIST_LOCALSTORAGE_KEY, JSON.stringify(list));
 	}, [dispatch]);
 

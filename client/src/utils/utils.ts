@@ -44,7 +44,7 @@ export const getPriorityValue = (priority: PriorityType) => {
 
 export const isFlaggedList = (list: IList) => {
 	return (list.name === 'Flagged' && !list.isMutable);
-}
+};
 
 export const isTodaysList = (list: IList) => {
 	return (list.name === 'Today' && !list.isMutable);

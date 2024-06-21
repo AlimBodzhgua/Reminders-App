@@ -1,5 +1,6 @@
 import {
 	FC,
+	memo,
 	useMemo,
 	useState,
 	useCallback,
@@ -35,7 +36,7 @@ interface MyListsItemProps {
 	list: IList;
 }
 
-export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
+export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 	const {
 		onRemove,
 		onUpdate,
@@ -120,4 +121,4 @@ export const UnpinnedListItem: FC<MyListsItemProps> = ({ list }) => {
 			</StyledListItem>
 		</SortableItem>
 	);
-};
+});

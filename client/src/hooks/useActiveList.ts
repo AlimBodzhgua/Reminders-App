@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import {
-    selectCompletedReminders,
+	selectCompletedReminders,
 	selectScheduledReminders,
 	selectFlaggedReminders,
 	selectTodaysReminders,
@@ -34,5 +34,5 @@ export const useActiveList = () => {
 		currentList: mapToRemindersList[listType],
 		listType,
 		mapToRemindersList,
-	}
+	};
 };

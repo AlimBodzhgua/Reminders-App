@@ -56,7 +56,7 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 			>
 				<Flex gap={15} align='start' style={{width: '100%'}}>
 					<StyledCheckbox
-						$color={activeList!.color}
+						$color={activeList?.color}
 						checked={reminder.isCompleted}
 						disabled
 					/>

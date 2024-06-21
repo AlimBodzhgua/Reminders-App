@@ -1,13 +1,15 @@
 import { FC, memo, useState, useCallback } from 'react';
-import { selectActiveList, selectNumberCompletedReminders } from 'store/selectors/activeListSelectors';
+import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { clearReminders } from 'store/actions/userActions';
 import { useAppSelector, useAppDispatch } from 'hooks/redux';
 import { ListHeader } from './ListHeader';
+import { useActiveList } from 'hooks/useActiveList';
+import { countCompletedReminders } from 'utils/utils';
 
 export const RemindersListHeader: FC = memo(() => {
 	const activeList = useAppSelector(selectActiveList);
+	const { currentList } = useActiveList();
 	const dispatch = useAppDispatch();
-	const completedNumber = useAppSelector(selectNumberCompletedReminders);
 	const [showForm, setShowForm] = useState<boolean>(false);
 
 	const onShowForm = useCallback(() => {
@@ -24,9 +26,9 @@ export const RemindersListHeader: FC = memo(() => {
 
 	return (
 		<ListHeader
-			completedNumber={completedNumber}
+			completedNumber={countCompletedReminders(currentList)}
 			title={activeList?.name || ''}
-			amount={activeList?.reminders.length || 0}
+			amount={currentList.length}
 			color={activeList?.color}
 			onClear={onClear}
 			onShow={onShow}

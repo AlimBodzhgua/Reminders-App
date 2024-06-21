@@ -2,7 +2,7 @@ import { FormFields } from 'components/AddReminderForm/AddReminderForm';
 import dayjs from 'dayjs';
 
 import type { Dayjs } from 'dayjs';
-import type { PriorityType, RemindersListType } from 'types/reminder';
+import type { IReminder, PriorityType, RemindersListType } from 'types/reminder';
 import type { IList } from 'types/list';
 
 export const toDateString = (date: Dayjs) => {
@@ -74,4 +74,9 @@ export const getRemindersListType = (list: IList): RemindersListType => {
 	} else if (isCompletedList(list)) {
 		return 'completed';
 	} else return 'others';
+};
+
+export const countCompletedReminders = (reminders: IReminder[]) => {
+	const completed = reminders.filter(reminder => reminder.isCompleted);
+	return completed.length;
 };

@@ -30,7 +30,7 @@ export const Content: FC = memo(() => {
 	const showEmpty = isSearching ? isEmptySearch : isEmptyReminders;
 
 	const onToggleShowForm = () => {
-		if (listType !== 'completed' && listType !== 'all') {
+		if (listType !== 'completed' && listType !== 'all' && !isSearching) {
 			setShowForm(prev => !prev);
 		}
 	};

@@ -36,6 +36,7 @@ export const allRemindersUpdateValidation = [
 export const reminderCreateValidation = [
 	body('title').notEmpty().isLength({min: 2}).isString(),
 	body('isCompleted').notEmpty().isBoolean(),
+	body('isFlagged').notEmpty().isBoolean(),
 	body('notes').optional().isLength({min: 2}).isString(),
 	body('details').optional().isObject(),
 	body('url').optional().isURL(),

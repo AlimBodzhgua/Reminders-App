@@ -30,7 +30,7 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 			title: req.body.title,
 			notes: req.body.notes,
 			isCompleted: req.body.isCompleted,
-			isFlagged: false,
+			isFlagged: req.body.isFlagged,
 			details: req.body.details,
 		})
 

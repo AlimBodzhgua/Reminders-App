@@ -49,7 +49,10 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 		onSelectList,
 	} = useListActions({list, onEscape: onBlurInput});
 	const { mapToRemindersList } = useActiveList();
-	const amount = mapToRemindersList[getRemindersListType(list)].length;
+	
+	const amount = getRemindersListType(list) === 'others' 
+		? list.reminders.length
+		: mapToRemindersList[getRemindersListType(list)].length;
 
 	function onBlurInput() {
 		setIsEdit(false);

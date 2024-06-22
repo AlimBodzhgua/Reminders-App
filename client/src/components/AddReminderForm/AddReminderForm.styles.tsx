@@ -52,10 +52,15 @@ export const StyledCheckbox = styled(Checkbox)<StyledCheckboxProps>`
 	}
 `;
 
-export const StyledButton = styled(Button)`
+interface StyledButtonProps {
+	$color?: string;
+}
+
+export const StyledButton = styled(Button)<StyledButtonProps>`
 	background: rgb(0 0 0 / 4%);
 	border-radius: 0;
 	height: 30px;
 	margin-bottom: 5px;
-	color: #949090;
+	color: ${props => props.$color || '#949090'};
+	border-color: rgb(0 0 0 / 4%);
 `;

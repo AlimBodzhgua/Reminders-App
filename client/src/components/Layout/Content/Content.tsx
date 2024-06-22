@@ -18,7 +18,7 @@ import { StyledContent, StyledTitle } from './Content.styles';
 
 export const Content: FC = memo(() => {
 	const [showForm, setShowForm] = useState<boolean>(false);
-	const { currentList } = useActiveList();
+	const { currentList, listType } = useActiveList();
 	const authData = useAppSelector(selectUserAuthData);
 	const isLoading = useAppSelector(selectUserIsLoading);
 	const searchResult = useAppSelector(selectSearchBarSearchResult);
@@ -30,7 +30,9 @@ export const Content: FC = memo(() => {
 	const showEmpty = isSearching ? isEmptySearch : isEmptyReminders;
 
 	const onToggleShowForm = () => {
-		setShowForm(prev => !prev);
+		if (listType !== 'completed' && listType !== 'all') {
+			setShowForm(prev => !prev);
+		}
 	};
 
 	if (isLoading) {
@@ -54,6 +56,7 @@ export const Content: FC = memo(() => {
 			</StyledContent>
 		);
 	}
+
 
 	return (
 		<StyledContent

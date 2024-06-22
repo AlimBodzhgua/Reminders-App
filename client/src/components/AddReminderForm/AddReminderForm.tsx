@@ -1,4 +1,4 @@
-import { FC, MouseEvent, memo, useState } from 'react';
+import { FC, MouseEvent, memo, useState, useEffect } from 'react';
 import {
 	Form,
 	Space,
@@ -11,6 +11,8 @@ import { addReminder } from 'store/actions/userActions';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { createReminder } from 'utils/utils';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
+import { FlagFilled } from '@ant-design/icons';
+import { isFlaggedList, isTodaysList, isScheduledList } from 'utils/utils';
 import dayjs from 'dayjs';
 
 import type { Dayjs } from 'dayjs';
@@ -37,16 +39,23 @@ export interface FormFields {
 	date?: Dayjs;
 	time?: Dayjs;
 }
-import { FlagFilled } from '@ant-design/icons';
-
 
 export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 	const { onSuccess } = props;
 	const [form] = Form.useForm();
+	const dispatch = useAppDispatch();
 	const [showTimePicker, setShowTimePicker] = useState<boolean>(false);
 	const [isFlagged, setIsFlagged] = useState<boolean>(false);
 	const activeList = useAppSelector(selectActiveList);
-	const dispatch = useAppDispatch();
+	const withInitialDate = isTodaysList(activeList!) || isScheduledList(activeList!);
+
+	useEffect(() => {
+		if (isFlaggedList(activeList!)) {
+			setIsFlagged(true);
+		} else if (withInitialDate) {
+			setShowTimePicker(true);
+		}
+	}, []);
 
 	const onContentClick = (e: MouseEvent<HTMLFormElement>) => {
 		e.stopPropagation();
@@ -74,6 +83,7 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 			onSuccess();
 		}
 	};
+
 
 	return (
 		<StyledForm
@@ -103,15 +113,16 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 						/>
 					</Form.Item>
 					<Space>
-						<Form.Item<FormFields> name='date'>
+						<Form.Item<FormFields>
+							name='date'
+							initialValue={withInitialDate && dayjs()}
+						>
 							<StyledDatePicker
 								placeholder='Add Date'
 								variant='filled'
 								onChange={onChangeDate}
-								allowClear={{
-									clearIcon: <CloseOutlined />,
-								}}
-								//defaultValue={dayjs()}
+								disabled={isTodaysList(activeList!)}
+								allowClear={{clearIcon: <CloseOutlined />}}
 							/>
 						</Form.Item>
 						{showTimePicker && 
@@ -120,9 +131,7 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 									placeholder='Add Time'
 									variant='filled'
 									format='HH:mm'
-									allowClear={{
-										clearIcon: <CloseOutlined />,
-									}}
+									allowClear={{clearIcon: <CloseOutlined />}}
 								/>
 							</Form.Item>
 						}
@@ -130,6 +139,7 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 							size='small'
 							$color={isFlagged ? '#ff6600' : '#000'}
 							onClick={onToggleFlag}
+							disabled={isFlaggedList(activeList!)}
 						>
 							<FlagFilled />
 						</StyledButton>

@@ -1,5 +1,4 @@
 import { FC, memo } from 'react';
-import { List } from 'antd';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
@@ -15,6 +14,7 @@ import { selectSearchBarIsSearching } from 'store/selectors/searchBarSelectors';
 import type { IReminder } from 'types/reminder';
 
 import { RemindersListItem } from '../RemindersListItem/RemindersListItem';
+import { StyledList } from './RemindersList.styles';
 
 interface RemindersListProps {
 	reminders: IReminder[];
@@ -51,18 +51,12 @@ export const RemindersList: FC<RemindersListProps> = memo(({reminders}) => {
 			modifiers={[restrictToParentElement]}
 			sensors={sensors}
 		>
-			<SortableContext
-				items={reminders.map((reminder) => reminder._id)}
-			>
-				<List header={isSearching ? <SearchListHeader /> : <RemindersListHeader />}>
-					{reminders.length ? (
-						reminders.map((reminder) => (
-							<RemindersListItem reminder={reminder} key={reminder._id} />
-						))
-					) : ( 
-						<div /> 
-					)}
-				</List>;
+			<SortableContext items={reminders.map((reminder) => reminder._id)}>
+				<StyledList
+					header={isSearching ? <SearchListHeader /> : <RemindersListHeader />}
+					dataSource={reminders.length ? reminders : []}
+					renderItem={(reminder) => <RemindersListItem reminder={reminder} key={reminder._id} />}
+				/>
 			</SortableContext>
 		</DndContext>
 	);

@@ -4,6 +4,7 @@ import { useAppSelector } from 'hooks/redux';
 import { AddReminderForm } from 'components/AddReminderForm/AddReminderForm';
 import { RemindersList } from 'components/RemindersList';
 import { useActiveList } from 'hooks/useActiveList';
+import { selectActiveList } from 'store/selectors/activeListSelectors';
 import {
 	selectUserAuthData,
 	selectUserIsLoading,
@@ -22,6 +23,7 @@ export const Content: FC = memo(() => {
 	const isLoading = useAppSelector(selectUserIsLoading);
 	const searchResult = useAppSelector(selectSearchBarSearchResult);
 	const isSearching = useAppSelector(selectSearchBarIsSearching);
+	const activeList = useAppSelector(selectActiveList);
 
 	const isEmptyReminders = !currentList.length && !showForm;
 	const isEmptySearch = !searchResult.length && !showForm;
@@ -54,7 +56,10 @@ export const Content: FC = memo(() => {
 	}
 
 	return (
-		<StyledContent onClick={onToggleShowForm}>
+		<StyledContent
+			onClick={onToggleShowForm}
+			$thumbColor={activeList?.color}
+		>
 			<RemindersList reminders={isSearching ? searchResult : currentList} />
 			{showEmpty &&
 				<Flex justify='center' align='center' style={{ height: '80%' }}>

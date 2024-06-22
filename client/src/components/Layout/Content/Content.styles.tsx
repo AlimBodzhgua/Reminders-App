@@ -2,10 +2,22 @@ import { Layout, Typography } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
-export const StyledContent = styled(Layout.Content)`
-	padding: 15px 30px;
+interface StyledContentProps {
+	$thumbColor?: string;
+}
+
+export const StyledContent = styled(Layout.Content)<StyledContentProps>`
+	padding: 15px 30px 45px 30px;
 	color: #fff;
 	background-color: #ffff;
+
+	overflow-y: auto;
+	height: calc(100vh - 65px);
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 5px;
+		background-color: ${props => props.$thumbColor}!important;
+	}
 `;
 
 export const StyledPlusOutlined = styled(PlusOutlined)`

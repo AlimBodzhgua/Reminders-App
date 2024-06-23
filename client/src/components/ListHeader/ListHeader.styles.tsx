@@ -12,7 +12,7 @@ export const DoteDivider = styled.div`
 
 export const StyledPlusOutlined = styled(PlusOutlined)`
 	color: #000;
-	font-size: 28px!important;
+	font-size: 22px!important;
 `;
 
 interface StyledTitleProps {

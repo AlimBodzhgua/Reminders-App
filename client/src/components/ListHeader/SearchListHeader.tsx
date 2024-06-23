@@ -1,4 +1,4 @@
-import { FC, memo, useState, useCallback } from 'react';
+import { FC, memo, useCallback } from 'react';
 import { useAppSelector, useAppDispatch } from 'hooks/redux';
 import { searchBarActions } from 'store/slices/searchBarSlice';
 import { selectSearchBarSearchResult, selectSearchBarValue } from 'store/selectors/searchBarSelectors';
@@ -8,11 +8,6 @@ export const SearchListHeader: FC = memo(() => {
 	const dispatch = useAppDispatch();
 	const searchValue = useAppSelector(selectSearchBarValue);
 	const searchResult = useAppSelector(selectSearchBarSearchResult);
-	const [showForm, setShowForm] = useState<boolean>(false);
-
-	const onShowForm = useCallback(() => {
-		setShowForm(true);
-	}, []);
 
 	const onShow = useCallback(() => {
 		console.log('show');

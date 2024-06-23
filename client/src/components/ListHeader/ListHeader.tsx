@@ -48,14 +48,10 @@ export const ListHeader: FC<ListHeaderProps> = memo((props) => {
 	return (
 		<Flex vertical gap={10} onClick={onContentClick}>
 			<Flex justify='space-between' align='center'>
-				<Space>
+				<Space align='end'>
 					<StyledTitle $color={color}>
 						{title}
 					</StyledTitle>
-					<Button
-						type='text'
-						icon={<StyledPlusOutlined />}
-					/>
 				</Space>
 				<StyledTitle $color={color} $weight={500}>
 					{amount}

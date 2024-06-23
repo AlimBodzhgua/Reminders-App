@@ -1,4 +1,4 @@
-import { FC, memo, useState, useCallback } from 'react';
+import { FC, memo, useCallback } from 'react';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { clearReminders } from 'store/actions/userActions';
 import { useAppSelector, useAppDispatch } from 'hooks/redux';
@@ -10,11 +10,6 @@ export const RemindersListHeader: FC = memo(() => {
 	const activeList = useAppSelector(selectActiveList);
 	const { currentList } = useActiveList();
 	const dispatch = useAppDispatch();
-	const [showForm, setShowForm] = useState<boolean>(false);
-
-	const onShowForm = useCallback(() => {
-		setShowForm(true);
-	}, []);
 
 	const onShow = useCallback(() => {
 		console.log('show');

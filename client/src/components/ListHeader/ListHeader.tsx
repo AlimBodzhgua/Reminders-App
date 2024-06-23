@@ -5,7 +5,6 @@ import { StyledButton } from 'styled/Button.styles';
 import {
 	DoteDivider,
 	StyledTitle,
-	StyledPlusOutlined,
 } from './ListHeader.styles';
 
 interface ListHeaderProps {

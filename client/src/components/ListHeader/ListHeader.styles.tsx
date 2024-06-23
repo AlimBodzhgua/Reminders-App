@@ -1,5 +1,4 @@
 import { Typography } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 export const DoteDivider = styled.div`
@@ -8,11 +7,6 @@ export const DoteDivider = styled.div`
 	display: block;
 	background-color: #000;
 	border-radius: 50%;
-`;
-
-export const StyledPlusOutlined = styled(PlusOutlined)`
-	color: #000;
-	font-size: 22px!important;
 `;
 
 interface StyledTitleProps {

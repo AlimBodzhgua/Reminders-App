@@ -1,4 +1,4 @@
-import { FC, memo, useState } from 'react';
+import { FC, memo } from 'react';
 import { Flex, Spin } from 'antd';
 import { useAppSelector } from 'hooks/redux';
 import { AddReminderForm } from 'components/AddReminderForm/AddReminderForm';
@@ -16,9 +16,14 @@ import {
 
 import { StyledContent, StyledTitle } from './Content.styles';
 
-export const Content: FC = memo(() => {
-	const [showForm, setShowForm] = useState<boolean>(false);
-	const { currentList, listType } = useActiveList();
+interface ContentProps {
+	showForm: boolean;
+	onToggleShowForm: () => void;
+}
+
+export const Content: FC<ContentProps> = memo((props) => {
+	const { showForm, onToggleShowForm } = props;
+	const { currentList } = useActiveList();
 	const authData = useAppSelector(selectUserAuthData);
 	const isLoading = useAppSelector(selectUserIsLoading);
 	const searchResult = useAppSelector(selectSearchBarSearchResult);
@@ -28,12 +33,6 @@ export const Content: FC = memo(() => {
 	const isEmptyReminders = !currentList.length && !showForm;
 	const isEmptySearch = !searchResult.length && !showForm;
 	const showEmpty = isSearching ? isEmptySearch : isEmptyReminders;
-
-	const onToggleShowForm = () => {
-		if (listType !== 'completed' && listType !== 'all' && !isSearching) {
-			setShowForm(prev => !prev);
-		}
-	};
 
 	if (isLoading) {
 		return (

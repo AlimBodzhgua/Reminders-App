@@ -5,13 +5,17 @@ import { selectUserAuthData } from 'store/selectors/userSelectors';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { userActions } from 'store/slices/userSlice';
 import { ACTIVE_LIST_LOCALSTORAGE_KEY, USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
-import { UserOutlined, PlusOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import { StyledAvatar } from 'styled/Avatar.styles';
-import { StyledHeader } from './Header.styles';
+import { StyledHeader, StyledPlusOutlined } from './Header.styles';
 
 import type { MenuProps } from 'antd';
 
-export const Header: FC = memo(() => {
+interface HeaderProps {
+	onToggleShowForm: () => void;
+}
+
+export const Header: FC<HeaderProps> = memo(({ onToggleShowForm }) => {
 	const authData = useAppSelector(selectUserAuthData);
 	const [isLoginModal, setIsLoginModal] = useState<boolean>(false);
 	const [isRegisterModal, setIsRegisterModal] = useState<boolean>(false);
@@ -40,25 +44,25 @@ export const Header: FC = memo(() => {
 	}, [dispatch]);
 
 	const items: MenuProps['items'] = useMemo(() => [
-		{ key: '1', label: <Button>Profile</Button> },
-		{ key: '2', label: <Button onClick={onLogout}>Logout</Button> },
+		{ key: '1', label: <div onClick={onLogout} role='button'>Logout</div> },
 	], []);
 
 	return (
 		<StyledHeader>
 			<Flex justify='end' align='center' style={{ height: '100%' }}>
 				{authData ? (
-					<Flex gap='10px'>
-						<Button type='text'>
-							<PlusOutlined
-								style={{ fontSize: '28px', color: '#fff' }}
-							/>
-						</Button>
+					<Flex gap='15px'>
+						<Button
+							type='text'
+							icon={<StyledPlusOutlined/>}
+							onClick={onToggleShowForm}
+						/>
 						<Dropdown menu={{ items }} placement='bottom'>
 							<StyledAvatar 
 								icon={<UserOutlined />}
-								size='large'
 								alt='user avatar'
+								$bgColor='#fff'
+								$color='#282B2B'
 							/>
 						</Dropdown>
 					</Flex>

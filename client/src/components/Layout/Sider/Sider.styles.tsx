@@ -7,5 +7,13 @@ export const StyledSider = styled(Layout.Sider)`
 		color: #E9E9E9;
 		background-color: #F5F6F7!important;
 		padding: 35px 12px;
+		position: relative;
+	}
+
+	.ant-layout-sider-zero-width-trigger {
+		color: red;
+		top: 12px;
+		background-color: #F5F6F7;
+		color: #000;
 	}
 `;

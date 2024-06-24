@@ -22,7 +22,11 @@ export const Sider: FC = memo(() => {
 	}, []);
 
 	return (
-		<StyledSider width={315}>
+		<StyledSider
+			width={315}
+			collapsible
+			collapsedWidth={0}
+		>
 			<Flex justify='space-between' vertical style={{ height: '100%' }}>
 				<Flex vertical gap='5px'>
 					<SearchBar />

@@ -11,6 +11,27 @@ export const StyledReminderOverview = styled.div`
 export const StyledTitle = styled(Typography.Title)`
 	&&& {
 		margin: 0;
+		inset-inline-start: 0px;		
+	}
+
+	.ant-input {
+		padding: 0 0 0 4px;
+		border-radius: 0;
+		min-height: auto;
+	}
+`;
+
+export const StyledText = styled(Typography.Text)`
+
+	&&& {
+		margin: 0;
+		inset-inline-start: 0px;		
+	}
+
+	.ant-input {
+		padding: 0 10px 0 4px;
+		border-radius: 0;
+		min-height: auto;
 	}
 `;
 

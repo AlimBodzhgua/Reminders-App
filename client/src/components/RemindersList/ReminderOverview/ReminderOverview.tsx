@@ -1,5 +1,5 @@
-import { FC, useState, ChangeEvent, memo } from 'react';
-import { Typography, Space, Input, Flex, message } from 'antd';
+import { FC, useState, ChangeEvent, memo, useEffect } from 'react';
+import { Space, Input, Flex, message } from 'antd';
 import { useAppDispatch } from 'hooks/redux';
 import { updateReminder } from 'store/actions/userActions';
 import { priorityOptions } from 'constants/priority';
@@ -10,6 +10,7 @@ import type { IReminder, PriorityType } from 'types/reminder';
 
 import {
 	StyledTitle,
+	StyledText,
 	StyledSelect,
 	StyledDivider,
 	StyledReminderOverview,
@@ -23,7 +24,18 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 	const dispatch = useAppDispatch();
 	const [url, setUrl] = useState<string>(reminder.url!);
 	const [messageApi, contextHolder] = message.useMessage();
+	const [title, setTitle] = useState<string>(reminder.title);
+	const [notes, setNotes] = useState<string | undefined>(reminder.notes);
 
+	const onChangeTitle = (value: string) => {
+		dispatch(updateReminder({ _id: reminder._id, title: value }));
+		setTitle(value);
+	}
+
+	const onChangeNotes = (value: string) => {
+		dispatch(updateReminder({ _id: reminder._id, notes: value }));
+		setNotes(value);
+	}
 
 	const onChangePriority = (value: PriorityType) => {
 		dispatch(updateReminder({
@@ -53,9 +65,15 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 	return (
 		<StyledReminderOverview>
 			{contextHolder}
-			<Flex justify='space-between' align='center'>
-				<StyledTitle level={4}>
-					{reminder.title}
+			<Flex justify='space-between' align='center' gap={8}>
+				<StyledTitle
+					level={4}
+					editable={{
+						onChange: onChangeTitle,
+						triggerType: ['icon', 'text'],
+					}}
+				>
+					{title}
 				</StyledTitle>
 				<StyledButton
 					size='small'
@@ -66,9 +84,12 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 					<FlagFilled />
 				</StyledButton>
 			</Flex>
-			<Typography.Text>
-				{reminder.notes}
-			</Typography.Text>
+			<StyledText editable={{
+				onChange: onChangeNotes,
+				triggerType: ['icon', 'text'],
+			}}>
+				{notes}
+			</StyledText>
 			<StyledDivider />
 			<Space align='center'>
 				<StyledTitle level={5}>
@@ -83,9 +104,7 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 			</Space>
 			<StyledDivider />
 			<Space>
-				<StyledTitle level={5}>
-					URL
-				</StyledTitle>
+				<StyledTitle level={5}>URL</StyledTitle>
 				<Input
 					size='small'
 					variant='borderless'

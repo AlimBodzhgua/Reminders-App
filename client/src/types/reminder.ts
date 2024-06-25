@@ -14,6 +14,7 @@ export interface IReminder {
 	isFlagged: boolean;
 	url?: string;
 	notes?: string;
+	createdAt?: string;
 	priority?: PriorityType;
 	details?: IReminderDetails;
 };

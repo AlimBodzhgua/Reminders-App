@@ -17,4 +17,5 @@ export {
 	removeList,
 	updateList,
 	updateAllLists,
+	changeListSort,
 } from './listsActions';

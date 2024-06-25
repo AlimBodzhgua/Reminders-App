@@ -62,6 +62,24 @@ export const updateList = createAsyncThunk<
 	}
 );
 
+type SortListDataType = Pick<IList, '_id' | 'sortField' | 'sortDirection'>;
+
+export const changeListSort = createAsyncThunk<
+	SortListDataType,
+	SortListDataType,
+	{ rejectValue: string }
+>(
+	'changeListSort',
+	async (data, { rejectWithValue }) => {
+		try {
+			const response = await appAxios.patch<SortListDataType>(`/lists/${data._id}`, data);
+			return response.data;
+		} catch (err) {
+			return rejectWithValue(JSON.stringify(err));
+		}
+	}
+);
+
 export const updateAllLists = createAsyncThunk<
 	void,
 	void,

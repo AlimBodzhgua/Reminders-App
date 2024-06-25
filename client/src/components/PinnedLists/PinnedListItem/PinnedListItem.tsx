@@ -68,7 +68,7 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 	};
 
 	const onEdit = useCallback(() => {
-		if (list.isMutable) {
+		if (list._isMutable) {
 			setIsEdit(prev => !prev);
 		} else openNotification();
 	}, []);
@@ -118,7 +118,7 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
 							size={28}
 						/>
 						<Flex align='center' gap='5px'>
-							{(isHover && list.isMutable) && hoverExtraContent}
+							{(isHover && list._isMutable) && hoverExtraContent}
 							<StyledTitle
 								level={4}
 								$margin='0'

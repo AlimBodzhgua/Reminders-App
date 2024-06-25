@@ -15,8 +15,8 @@ import {
 	updateAllLists,
 	updateAllReminders,
 	updateReminder,
+	changeListSort,
 } from '../actions/userActions';
-
 
 export interface UserStateSchema {
 	authData: IUser | null;
@@ -131,6 +131,22 @@ const userSlice = createSlice({
 			.addCase(addList.rejected, (state, action) => {
 				state.isLoading = false;
 				state.error = action.payload;
+			})
+			// changeListSort
+			.addCase(changeListSort.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.error = undefined;
+				if (state.authData) {
+					state.authData.lists = state.authData.lists.map((list) => {
+						if (list._id === action.payload._id) {
+							return {
+								...list,
+								sortField: action.payload.sortField,
+								sortDirection: action.payload.sortDirection,
+							}
+						} else return list;
+					});
+				}
 			})
 			// removeList
 			.addCase(removeList.pending, (state) => {

@@ -9,8 +9,8 @@ import {
 import { selectActiveList, selectActiveListType } from 'store/selectors/activeListSelectors';
 
 import type { IReminder, RemindersListType } from 'types/reminder';
-
 import { useAppSelector } from './redux';
+import { sortReminders } from 'utils/utils';
 
 export const useActiveList = () => {
 	const activeList = useAppSelector(selectActiveList);
@@ -30,8 +30,14 @@ export const useActiveList = () => {
 		others: activeList?.reminders || [],
 	}), [activeList]);
 
+	const sortedReminders = useMemo(() => sortReminders(
+		mapToRemindersList[listType],
+		activeList?.sortField || 'creation',
+		activeList?.sortDirection || 'asc',
+	), [activeList]);
+
 	return {
-		currentList: mapToRemindersList[listType],
+		currentList: sortedReminders,
 		listType,
 		mapToRemindersList,
 	};

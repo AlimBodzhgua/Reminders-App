@@ -2,7 +2,7 @@ import { FC, useMemo, memo, MouseEvent, useCallback } from 'react';
 import { Dropdown, Select } from 'antd';
 import { StyledButton } from 'styled/Button.styles';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { updateList, changeListSort } from 'store/actions/userActions';
+import { changeListSort } from 'store/actions/userActions';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { SortDirectionType, SortFieldType } from 'types/list';
 import { sortDirectionOptions, sortFieldOptions } from 'constants/sort';

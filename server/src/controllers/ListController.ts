@@ -17,8 +17,10 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
 			name: req.body.name,
 			color: req.body.color,
 			icon: req.body.icon,
-			isMutable: true,
+			_isMutable: true,
 			pinned: false,
+			sortField: 'creation',
+			sortDirection: 'asc',
 			reminders: [],
 		})
 

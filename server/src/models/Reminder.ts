@@ -22,8 +22,8 @@ export const ReminderSchema = new mongoose.Schema<IReminder>({
 		location: String,
 		time: String,
 		date: String,
-	}
-})
+	},
+}, { timestamps: true })
 
 const ReminderModel = mongoose.model<IReminder>('Reminder', ReminderSchema);
 

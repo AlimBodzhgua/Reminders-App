@@ -23,6 +23,8 @@ export const listUpdateValidation = [
 	body('color').optional().isString(),
 	body('icon').optional().isString(),
 	body('pinned').optional().isBoolean(),
+	body('sortField').optional().isString(),
+	body('sortDiection').optional().isString(),
 ];
 
 export const allListsUpdateValidation = [

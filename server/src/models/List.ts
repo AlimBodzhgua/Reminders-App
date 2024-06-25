@@ -19,10 +19,18 @@ export const ListSchema = new mongoose.Schema<IList>({
 		type: Boolean,
 		require: true,
 	},
-	isMutable: {
+	_isMutable: {
 		type: Boolean,
 		require: true,
 		immutable: true,
+	},
+	sortField: {
+		type: String,
+		require: true,
+	},
+	sortDirection: {
+		type: String,
+		require: true,
 	},
 	reminders: [ReminderSchema]
 })

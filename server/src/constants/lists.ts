@@ -6,7 +6,9 @@ const today = new ListModel({
 	color: 'blue',
 	icon: 'UnorderedListOutlined',
 	pinned: true,
-	isMutable: false,
+	_isMutable: false,
+	sortField: 'creation',
+	sortDirection: 'asc',
 	reminders: [],
 });
 
@@ -15,7 +17,9 @@ const scheduled = new ListModel({
 	color: 'red',
 	icon: 'CalendarOutlined',
 	pinned: true,
-	isMutable: false,
+	_isMutable: false,
+	sortField: 'creation',
+	sortDirection: 'asc',
 	reminders: [],
 });
 
@@ -24,7 +28,9 @@ const all = new ListModel({
 	color: 'grey',
 	icon: 'InboxOutlined',
 	pinned: true,
-	isMutable: false,
+	_isMutable: false,
+	sortField: 'creation',
+	sortDirection: 'asc',
 	reminders: [],
 });
 
@@ -34,6 +40,8 @@ const flagged = new ListModel({
 	icon: 'FlagFilled',
 	pinned: true,
 	isMutable: false,
+	sortField: 'creation',
+	sortDirection: 'asc',
 	reminders: [],
 })
 
@@ -42,7 +50,9 @@ const completed = new ListModel({
 	color: '#000',
 	icon: 'CheckOutlined',
 	pinned: true,
-	isMutable: false,
+	_isMutable: false,
+	sortField: 'creation',
+	sortDirection: 'asc',
 	reminders: [],
 })
 

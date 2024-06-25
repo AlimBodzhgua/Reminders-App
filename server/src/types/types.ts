@@ -35,12 +35,18 @@ export interface IReminder extends DocResult<IReminder> {
 	details?: IDetails;
 }
 
+
+export type SortFieldType = 'name' | 'deadline' | 'creation' | 'priority';
+export type SortDirectionType = 'asc' | 'desc';
+
 export interface IList extends DocResult<IList> {
 	_id: Types.ObjectId;
+	_isMutable: boolean;
 	name: string;
 	color: string;
 	pinned: boolean;
-	readonly isMutable: boolean;
+	sortField: SortFieldType;
+	sortDirection: SortDirectionType;
 	icon: string;
 	reminders: Array<IReminder>;
 }

@@ -1,4 +1,4 @@
-import { FC, memo, useEffect } from 'react';
+import { FC, memo } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
@@ -19,9 +19,6 @@ import { StyledList } from './RemindersList.styles';
 interface RemindersListProps {
 	reminders: IReminder[];
 }
-
-import { sortByPriority, sortByName, sortByDeadline, sortByCreationDate } from 'utils/utils';
-import dayjs from 'dayjs';
 
 export const RemindersList: FC<RemindersListProps> = memo(({reminders}) => {
 	const activeList = useAppSelector(selectActiveList);
@@ -47,15 +44,6 @@ export const RemindersList: FC<RemindersListProps> = memo(({reminders}) => {
 			dispatch(updateAllReminders());
 		}
 	};
-
-	useEffect(() => {
-		if (reminders) {
-			//console.log(sortByName(reminders));
-			//console.log(sortByPriority(reminders));
-			//console.log(sortByDeadline(reminders));
-			console.log(sortByCreationDate(reminders));
-		}
-	}, [reminders])
 
 	return (
 		<DndContext

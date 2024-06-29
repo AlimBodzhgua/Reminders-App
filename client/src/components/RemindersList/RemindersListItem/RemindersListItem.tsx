@@ -1,7 +1,7 @@
 import { FC, MouseEvent, useState, memo } from 'react';
 import { Flex, Button, Space, Popover } from 'antd';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { removeReminder } from 'store/actions/userActions';
+import { removeReminder, updateReminder } from 'store/actions/userActions';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { isDateBefore } from 'utils/utils';
 import { DeleteOutlined, LinkOutlined } from '@ant-design/icons';
@@ -11,6 +11,8 @@ import { getPriorityValue } from 'utils/utils';
 import dayjs from 'dayjs';
 
 import type { IReminder } from 'types/reminder';
+import type { CheckboxProps } from 'antd'
+
 import { ReminderOverview } from '../ReminderOverview/ReminderOverview';
 
 import {
@@ -47,6 +49,10 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 		e.stopPropagation();
 	};
 
+	const onChangeCompleted: CheckboxProps['onChange'] = (e) => {
+		dispatch(updateReminder({ _id: reminder._id, isCompleted: e.target.checked }));
+	}
+
 	return (
 		<SortableItem id={reminder._id}>
 			<StyledListItem
@@ -58,7 +64,7 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 					<StyledCheckbox
 						$color={activeList?.color}
 						checked={reminder.isCompleted}
-						disabled
+						onChange={onChangeCompleted}
 					/>
 					<Flex vertical gap={0} style={{width: '100%'}}>
 						<Flex

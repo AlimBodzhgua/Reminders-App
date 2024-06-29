@@ -1,11 +1,13 @@
-import { FC, useState, ChangeEvent, memo, useEffect } from 'react';
+import { FC, useState, ChangeEvent, memo } from 'react';
 import { Space, Input, Flex, message } from 'antd';
 import { useAppDispatch } from 'hooks/redux';
 import { updateReminder } from 'store/actions/userActions';
 import { priorityOptions } from 'constants/priority';
-import { FlagFilled } from '@ant-design/icons';
+import { FlagFilled, CloseOutlined } from '@ant-design/icons';
 import { StyledButton } from 'styled/Button.styles';
+import dayjs from 'dayjs';
 
+import type { DatePickerProps, TimePickerProps } from 'antd';
 import type { IReminder, PriorityType } from 'types/reminder';
 
 import {
@@ -13,6 +15,8 @@ import {
 	StyledText,
 	StyledSelect,
 	StyledDivider,
+	StyledDatePicker,
+	StyledTimePicker,
 	StyledReminderOverview,
 } from './ReminderOverview.styles';
 
@@ -37,11 +41,18 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 		setNotes(value);
 	}
 
+	const onChangeDate: DatePickerProps['onChange'] = (date, dateString) => {
+		const newDetailsData = { ...reminder.details, date: dateString as string };
+		dispatch(updateReminder({ _id: reminder._id, details: newDetailsData }));
+	}
+
+	const onChangeTime: TimePickerProps['onChange'] = (time, timeString) => {
+		const newDetailsData = { ...reminder.details, time: timeString as string };
+		dispatch(updateReminder({ _id: reminder._id, details: newDetailsData }));
+	}
+
 	const onChangePriority = (value: PriorityType) => {
-		dispatch(updateReminder({
-			_id: reminder._id,
-			priority: value,
-		}));
+		dispatch(updateReminder({ _id: reminder._id, priority: value }));
 	};
 
 	const onChangeUrl = (e: ChangeEvent<HTMLInputElement>) => {
@@ -84,12 +95,44 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 					<FlagFilled />
 				</StyledButton>
 			</Flex>
-			<StyledText editable={{
-				onChange: onChangeNotes,
-				triggerType: ['icon', 'text'],
-			}}>
-				{notes}
-			</StyledText>
+			{notes &&
+				<StyledText editable={{
+					onChange: onChangeNotes,
+					triggerType: ['icon', 'text'],
+				}}>
+					{notes}
+				</StyledText>
+			}
+			<StyledDivider />
+			<Flex justify='space-between'>
+				<StyledTitle level={5}>
+					remind
+				</StyledTitle>
+				<Space direction='vertical'>
+					<StyledDatePicker
+						variant='borderless'
+						value={reminder?.details?.date 
+							? dayjs(reminder.details.date)
+							: undefined
+						}
+						allowClear={{clearIcon: <CloseOutlined />}}
+						onChange={onChangeDate}
+						format='YYYY.MM.DD'
+					/>
+					{reminder?.details?.date &&
+						<StyledTimePicker
+							variant='borderless'
+							value={reminder?.details?.time 
+								? dayjs(`${reminder.details.date} ${reminder.details.time}`)
+								: undefined
+							}
+							format='HH:mm'
+							onChange={onChangeTime}
+							allowClear={{clearIcon: <CloseOutlined />}}
+						/>
+					}
+				</Space>
+			</Flex>
 			<StyledDivider />
 			<Space align='center'>
 				<StyledTitle level={5}>

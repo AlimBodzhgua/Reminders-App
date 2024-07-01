@@ -72,4 +72,4 @@ export const reminder: IReminder = {
 	priority: 'low',
 	isFlagged: false,
 	_id: '6682862c7e22d606489783ed'
-}
+};

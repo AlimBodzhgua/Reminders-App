@@ -28,5 +28,5 @@ export const AppLayout: FC = memo(() => {
 				<Content showForm={showForm} onToggleShowForm={onToggleShowForm} />
 			</Layout>
 		</StyledLayout>
-	)
-})
+	);
+});

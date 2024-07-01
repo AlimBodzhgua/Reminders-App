@@ -1,6 +1,6 @@
 import { componentRender } from 'lib/tests/componentRender';
 import { vi } from 'vitest';
-import { screen } from '@testing-library/react'
+import { screen } from '@testing-library/react';
 import { withUser, emptyUser } from 'constants/testsData';
 import { Header } from './Header';
 
@@ -23,4 +23,4 @@ describe('Header', () => {
 		const avatar = screen.getByTestId('user-avatar');
 		expect(avatar).toBeInTheDocument();
 	});
-})
+});

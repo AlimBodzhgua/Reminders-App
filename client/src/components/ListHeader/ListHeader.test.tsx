@@ -1,5 +1,5 @@
 import { componentRender } from 'lib/tests/componentRender';
-import { screen } from '@testing-library/react'
+import { screen } from '@testing-library/react';
 import { ListHeader } from './ListHeader';
 
 describe('List header', () => {
@@ -15,4 +15,4 @@ describe('List header', () => {
 		expect(screen.getByText('2 Completed')).toBeInTheDocument();
 		expect(screen.getByText('3')).toBeInTheDocument();
 	});
-})
+});

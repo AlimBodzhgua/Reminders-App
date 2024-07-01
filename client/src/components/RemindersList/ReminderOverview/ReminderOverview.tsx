@@ -34,22 +34,22 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 	const onChangeTitle = (value: string) => {
 		dispatch(updateReminder({ _id: reminder._id, title: value }));
 		setTitle(value);
-	}
+	};
 
 	const onChangeNotes = (value: string) => {
 		dispatch(updateReminder({ _id: reminder._id, notes: value }));
 		setNotes(value);
-	}
+	};
 
 	const onChangeDate: DatePickerProps['onChange'] = (date, dateString) => {
 		const newDetailsData = { ...reminder.details, date: dateString as string };
 		dispatch(updateReminder({ _id: reminder._id, details: newDetailsData }));
-	}
+	};
 
 	const onChangeTime: TimePickerProps['onChange'] = (time, timeString) => {
 		const newDetailsData = { ...reminder.details, time: timeString as string };
 		dispatch(updateReminder({ _id: reminder._id, details: newDetailsData }));
-	}
+	};
 
 	const onChangePriority = (value: PriorityType) => {
 		dispatch(updateReminder({ _id: reminder._id, priority: value }));

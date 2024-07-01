@@ -7,4 +7,4 @@ export const StyledList: IStyledComponent<'web', ListProps<IReminder>> = styled(
 	.ant-list-empty-text {
 		display: none;
 	}
-`
+`;

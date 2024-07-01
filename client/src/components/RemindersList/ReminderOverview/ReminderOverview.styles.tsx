@@ -12,7 +12,7 @@ export const StyledReminderOverview = styled.div`
 export const StyledTitle = styled(Typography.Title)`
 	&&& {
 		margin: 0;
-		inset-inline-start: 0px;		
+		inset-inline-start: 0;		
 	}
 
 	.ant-input {
@@ -26,7 +26,7 @@ export const StyledText = styled(Typography.Text)`
 
 	&&& {
 		margin: 0;
-		inset-inline-start: 0px;		
+		inset-inline-start: 0;		
 	}
 
 	.ant-input {
@@ -51,9 +51,9 @@ export const StyledSelect: IStyledComponent<'web', SelectProps> = styled(Select)
 export const StyledDatePicker: IStyledComponent<'web', DatePickerProps> = styled(DatePicker)`
 	${basePicker};
 	width: 100%;
-`
+`;
 
 export const StyledTimePicker = styled(TimePicker)`
 	${basePicker};
 	width: 100%;
-`
+`;

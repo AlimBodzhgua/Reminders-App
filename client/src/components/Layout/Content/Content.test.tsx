@@ -1,5 +1,5 @@
 import { componentRender } from 'lib/tests/componentRender';
-import { screen } from '@testing-library/react'
+import { screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import { Content } from './Content';
 import { emptyUser, todayList, userLoading } from 'constants/testsData';
@@ -49,4 +49,4 @@ describe('Content', () => {
 		);
 		expect(screen.getByPlaceholderText('Title')).toBeInTheDocument();
 	});
-})
+});

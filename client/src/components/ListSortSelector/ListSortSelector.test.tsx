@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { screen } from '@testing-library/react';
 import { componentRender } from 'lib/tests/componentRender';
 import { todayList } from 'constants/testsData';
 import userEvent from '@testing-library/user-event';
@@ -28,4 +28,4 @@ describe('ListSortSelector', () => {
 		expect(screen.getByText('name')).toBeInTheDocument();
 		expect(screen.getByText('ascending')).toBeInTheDocument();
 	});
-})
+});

@@ -10,7 +10,7 @@ import { sortDirectionOptions, sortFieldOptions } from 'constants/sort';
 import type { MenuProps } from 'antd';
 
 export const ListSortSelector: FC = memo(() => {
-	const dispatch = useAppDispatch()
+	const dispatch = useAppDispatch();
 	const activeList = useAppSelector(selectActiveList);
 
 	const onSelectClick = (e: MouseEvent<HTMLDivElement>) => {
@@ -43,7 +43,7 @@ export const ListSortSelector: FC = memo(() => {
 					onChange={onChangeField}
 					value={activeList?.sortField}
 					placeholder='Sort field'
-					style={{ width: "100%" }}
+					style={{ width: '100%' }}
 					size='small'
 					variant='borderless'
 				/>
@@ -67,7 +67,7 @@ export const ListSortSelector: FC = memo(() => {
 
 	return (
 		<Dropdown menu={{ items }} trigger={['click']}>
-	        <StyledButton
+			<StyledButton
 				type='text'
 				size='small'
 				$color={activeList?.color}

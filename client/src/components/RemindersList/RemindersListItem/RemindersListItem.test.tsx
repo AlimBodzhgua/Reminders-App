@@ -1,15 +1,8 @@
-import { screen } from '@testing-library/react'
+import { screen } from '@testing-library/react';
 import { componentRender } from 'lib/tests/componentRender';
-import { RemindersListItem } from './RemindersListItem';
+import { reminder } from 'constants/testsData';
 import userEvent from '@testing-library/user-event';
-
-const reminder = {
-	title: 'Test',
-	notes: 'test notes',
-	isCompleted: false,
-	isFlagged: false,
-	_id: '6682862c7e22d606489783ed'
-}
+import { RemindersListItem } from './RemindersListItem';
 
 
 describe('RemindersListItem', () => {
@@ -36,4 +29,4 @@ describe('RemindersListItem', () => {
 		componentRender(<RemindersListItem reminder={{...reminder, priority: 'high'}}/>);
 		expect(screen.getByText('!!!')).toBeInTheDocument();
 	});
-})
+});

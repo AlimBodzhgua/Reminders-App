@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react'
+import { screen } from '@testing-library/react';
 import { componentRender } from 'lib/tests/componentRender';
 import { mutableListItem, todayList } from 'constants/testsData';
 import { AddReminderForm } from './AddReminderForm';
@@ -36,4 +36,4 @@ describe('AddReminderForm', () => {
 		);
 		expect(screen.getByPlaceholderText('Add Time')).toBeInTheDocument();
 	});
-})
+});

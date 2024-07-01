@@ -11,7 +11,7 @@ import { getPriorityValue } from 'utils/utils';
 import dayjs from 'dayjs';
 
 import type { IReminder } from 'types/reminder';
-import type { CheckboxProps } from 'antd'
+import type { CheckboxProps } from 'antd';
 
 import { ReminderOverview } from '../ReminderOverview/ReminderOverview';
 
@@ -51,7 +51,7 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 
 	const onChangeCompleted: CheckboxProps['onChange'] = (e) => {
 		dispatch(updateReminder({ _id: reminder._id, isCompleted: e.target.checked }));
-	}
+	};
 
 	return (
 		<SortableItem id={reminder._id}>

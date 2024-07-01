@@ -7,10 +7,9 @@ interface StyledContentProps {
 }
 
 export const StyledContent = styled(Layout.Content)<StyledContentProps>`
-	padding: 15px 30px 45px 30px;
+	padding: 15px 30px 45px;
 	color: #fff;
 	background-color: #ffff;
-
 	overflow-y: auto;
 	height: calc(100vh - 65px);
 

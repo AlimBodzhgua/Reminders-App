@@ -143,7 +143,7 @@ const userSlice = createSlice({
 								...list,
 								sortField: action.payload.sortField,
 								sortDirection: action.payload.sortDirection,
-							}
+							};
 						} else return list;
 					});
 				}

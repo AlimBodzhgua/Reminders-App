@@ -95,13 +95,13 @@ export const toPriorityLevel = (priority: PriorityType) => {
 	case 'high':
 		return 3;
 	}
-}
+};
 
 export const sortByName = (
 	reminders: IReminder[],
 	direction: SortDirectionType = sortDirection.asc,
 ) => {
-	if (direction === "asc") {
+	if (direction === 'asc') {
 		return [...reminders].sort((a, b) => a.title.localeCompare(b.title));
 	} else {
 		return [...reminders].sort((a, b) => b.title.localeCompare(a.title));
@@ -162,13 +162,13 @@ export const sortReminders = (
 	sortDirection: SortDirectionType,
 ) => {
 	switch (sortField) {
-		case 'name':
-			return sortByName(reminders, sortDirection);
-		case 'priority':
-			return sortByPriority(reminders, sortDirection);
-		case 'creation':
-			return sortByCreationDate(reminders, sortDirection);
-		case 'deadline':
-			return sortByDeadline(reminders, sortDirection);		
+	case 'name':
+		return sortByName(reminders, sortDirection);
+	case 'priority':
+		return sortByPriority(reminders, sortDirection);
+	case 'creation':
+		return sortByCreationDate(reminders, sortDirection);
+	case 'deadline':
+		return sortByDeadline(reminders, sortDirection);		
 	}
 };

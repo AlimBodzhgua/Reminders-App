@@ -1,8 +1,8 @@
 import { componentRender } from 'lib/tests/componentRender';
-import { screen } from '@testing-library/react'
-import { UnpinnedListItem } from './UnpinnedListItem';
+import { screen } from '@testing-library/react';
 import { mutableListItem } from 'constants/testsData';
-import userEvent from '@testing-library/user-event'
+import userEvent from '@testing-library/user-event';
+import { UnpinnedListItem } from './UnpinnedListItem';
  
 describe('UnpinnedListItem', () => {
 	it('Component should render', () => {

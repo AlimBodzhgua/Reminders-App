@@ -1,9 +1,7 @@
-import { screen } from '@testing-library/react'
+import { screen } from '@testing-library/react';
 import { componentRender } from 'lib/tests/componentRender';
-import { ReminderOverview } from './ReminderOverview';
 import { reminder } from 'constants/testsData';
-import userEvent from '@testing-library/user-event';
-
+import { ReminderOverview } from './ReminderOverview';
 
 describe('RemindersOverview', () => {
 	it('Components should render', () => {
@@ -28,4 +26,4 @@ describe('RemindersOverview', () => {
 		expect(screen.getByText('priority')).toBeInTheDocument();		
 		expect(screen.getByTestId('priority-select')).toBeInTheDocument();
 	});
-})
+});

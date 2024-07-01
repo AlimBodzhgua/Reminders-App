@@ -1,8 +1,7 @@
 import { componentRender } from 'lib/tests/componentRender';
-import { screen } from '@testing-library/react'
+import { screen } from '@testing-library/react';
 import { emptyUser, filledAuthData } from 'constants/testsData';
 import { Sider } from './Sider';
-
 
 describe('Sider', () => {
 	it('Component should render', () => {

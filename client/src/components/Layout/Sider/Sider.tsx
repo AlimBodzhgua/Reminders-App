@@ -3,11 +3,11 @@ import { PlusCircleOutlined } from '@ant-design/icons';
 import { Button, Flex } from 'antd';
 import { PinnedLists } from 'components/PinnedLists/PinnedLists';
 import { UnpinnedLists } from 'components/UnpinnedLists';
-import { AddListModal } from 'components/AddListModal';
-import { StyledSider } from './Sider.styles';
+import { AddListModal } from 'components/AddList/AddListModal';
 import { selectUserAuthData } from 'store/selectors/userSelectors';
 import { useAppSelector } from 'hooks/redux';
 import { SearchBar } from 'components/SearchBar/SearchBar';
+import { StyledSider } from './Sider.styles';
 
 export const Sider: FC = memo(() => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -26,6 +26,7 @@ export const Sider: FC = memo(() => {
 			width={315}
 			collapsible
 			collapsedWidth={0}
+			data-testid='sider'
 		>
 			<Flex justify='space-between' vertical style={{ height: '100%' }}>
 				<Flex vertical gap='5px'>

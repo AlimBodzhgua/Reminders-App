@@ -58,6 +58,7 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 			<StyledListItem
 				onClick={onContentClick}
 				$isLoading={isDeleting}
+				data-testid='reminder-item'
 				{...hoverProps}
 			>
 				<Flex gap={15} align='start' style={{width: '100%'}}>
@@ -86,6 +87,7 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 										size='small'
 										onClick={onRemove}
 										disabled={isDeleting}
+										data-testid='delete-btn'
 									>
 										<DeleteOutlined />
 									</Button>
@@ -97,7 +99,10 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 										content={<ReminderOverview reminder={reminder}/>}
 										placement='left'
 									>
-										<StyledInfoCircleOutlined $color={activeList?.color} />
+										<StyledInfoCircleOutlined
+											$color={activeList?.color}
+											data-testid='overview-popover'
+										/>
 									</Popover>
 								}
 								{reminder.isFlagged &&

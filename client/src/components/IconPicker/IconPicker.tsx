@@ -32,6 +32,7 @@ export const IconPicker: FC<IconPickerColor> = memo((props) => {
 			<Radio.Button
 				key={index}
 				value={icon}
+				data-testid='icon-item'
 			>
 				{mapListToIcon[icon as ListsIconType]}
 			</Radio.Button>
@@ -43,6 +44,7 @@ export const IconPicker: FC<IconPickerColor> = memo((props) => {
 		<Radio.Group
 			size='small'
 			onChange={onChangeIcon}
+			data-testid='icon-popover-content'
 		>
 			<Flex wrap gap='small' style={{width: '145px'}}>
 				{renderIconslist()}
@@ -62,6 +64,7 @@ export const IconPicker: FC<IconPickerColor> = memo((props) => {
 				size='large'
 				shape='circle'
 				icon={mapListToIcon[icon as ListsIconType]}
+				data-testid='icon-picker'
 				$bgColor={color}
 				$color='white'
 				$hoverBgColor={color}

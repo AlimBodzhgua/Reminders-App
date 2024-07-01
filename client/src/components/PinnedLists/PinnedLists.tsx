@@ -23,7 +23,7 @@ export const PinnedLists: FC = memo(() => {
 			<SortableContext
 				items={pinnedLists.map((list) => list._id)}
 			>
-				<List>
+				<List data-testid='pinned-list'>
 					<Flex wrap align='center' gap='5px'>
 						{authData && pinnedLists.map((list) => (
 							<PinnedListItem key={list._id} list={list} />

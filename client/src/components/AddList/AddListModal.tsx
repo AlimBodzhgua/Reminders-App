@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
 import { Modal } from 'antd';
-import { AddListForm } from 'components/AddListForm';
+import { AddListForm } from './AddListForm';
 
 interface AddListModalProps {
 	isOpen: boolean;

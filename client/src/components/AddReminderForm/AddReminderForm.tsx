@@ -90,6 +90,7 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 			form={form}
 			onClick={onContentClick}
 			onFinish={onAddReminder}
+			data-testid='add-reminder-form'
 		>
 			<Flex align='start'>
 				<Form.Item<FormFields>
@@ -140,6 +141,7 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 							$color={isFlagged ? '#ff6600' : '#000'}
 							onClick={onToggleFlag}
 							disabled={isFlaggedList(activeList!)}
+							data-testid='flag-btn'
 						>
 							<FlagFilled />
 						</StyledButton>

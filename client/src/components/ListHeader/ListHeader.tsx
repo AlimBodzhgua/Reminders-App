@@ -1,6 +1,6 @@
 import { FC, memo, MouseEvent } from 'react';
 import { Flex, Space, Dropdown } from 'antd';
-import { ListSortSelector } from 'components/ListSortSelector';
+import { ListSortSelector } from 'components/ListSortSelector/ListSortSelector';
 import { StyledButton } from 'styled/Button.styles';
 
 import {
@@ -42,7 +42,6 @@ export const ListHeader: FC<ListHeaderProps> = memo((props) => {
 			onShow();
 		}
 	};
-
 
 	return (
 		<Flex vertical gap={10} onClick={onContentClick}>

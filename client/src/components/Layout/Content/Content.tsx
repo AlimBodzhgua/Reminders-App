@@ -36,9 +36,9 @@ export const Content: FC<ContentProps> = memo((props) => {
 
 	if (isLoading) {
 		return (
-			<StyledContent>
+			<StyledContent data-testid='content'>
 				<Flex justify='center' align='center' style={{ height: '80%' }}>
-					<Spin size='large' />
+					<Spin size='large' data-testid='spinner'/>
 				</Flex>
 			</StyledContent>
 		);
@@ -46,7 +46,7 @@ export const Content: FC<ContentProps> = memo((props) => {
 
 	if (!authData) {
 		return (
-			<StyledContent>
+			<StyledContent data-testid='content'>
 				<Flex justify='center' align='center' style={{ height: '80%' }}>
 					<StyledTitle $color='#D0D0D0' $weight={500}>
 						Login or register to have access
@@ -61,6 +61,7 @@ export const Content: FC<ContentProps> = memo((props) => {
 		<StyledContent
 			onClick={onToggleShowForm}
 			$thumbColor={activeList?.color}
+			data-testid='content'
 		>
 			<RemindersList reminders={isSearching ? searchResult : currentList} />
 			{showEmpty &&

@@ -4,7 +4,7 @@ import { activeListActions } from 'store/slices/activeListSlice';
 import { addList } from 'store/actions/userActions';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { AppColorPicker } from 'components/AppColorPicker/AppColorPicker';
-import { IconPicker } from 'components/IconPicker';
+import { IconPicker } from 'components/IconPicker/IconPicker';
 import { IList, ListsIconType } from 'types/list';
 import { listRules } from 'constants/rules';
 import {

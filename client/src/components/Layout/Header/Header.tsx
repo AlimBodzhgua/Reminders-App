@@ -48,7 +48,7 @@ export const Header: FC<HeaderProps> = memo(({ onToggleShowForm }) => {
 	], []);
 
 	return (
-		<StyledHeader>
+		<StyledHeader data-testid='header'>
 			<Flex justify='end' align='center' style={{ height: '100%' }}>
 				{authData ? (
 					<Flex gap='15px'>
@@ -61,6 +61,7 @@ export const Header: FC<HeaderProps> = memo(({ onToggleShowForm }) => {
 							<StyledAvatar 
 								icon={<UserOutlined />}
 								alt='user avatar'
+								data-testid='user-avatar'
 								$bgColor='#fff'
 								$color='#282B2B'
 							/>
@@ -69,7 +70,7 @@ export const Header: FC<HeaderProps> = memo(({ onToggleShowForm }) => {
 				) : (
 					<Space>
 						<Button onClick={onOpenLogin}>Login</Button>
-						<Button onClick={onOpenRegister}>Regiser</Button>
+						<Button onClick={onOpenRegister}>Register</Button>
 						<LoginModal
 							isOpen={isLoginModal}
 							onClose={onCloseLogin}

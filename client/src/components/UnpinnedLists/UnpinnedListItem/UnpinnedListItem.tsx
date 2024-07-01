@@ -74,6 +74,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 	const hoverExtraContent = (
 		<Dropdown menu={{ items }} placement='bottom'>
 			<StyledButton
+				data-testid='dropdown-menu'
 				type='text'
 				icon={<DotesIcon />}
 				$color='#1677ff'
@@ -88,6 +89,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 				extra={<StyledExtraItem>{list.reminders.length}</StyledExtraItem >}
 				onDoubleClick={onEdit}
 				onClick={onSelectList}
+				data-testid='unpinned-list-item'
 				role='button'
 				$bgColor={isActive ? '#d9d9d9' : ''}
 				{...hoverProps}
@@ -109,6 +111,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 								value={value}
 								onChange={onChangeInput}
 								suffix={<EnterOutlined />}
+								data-testid='list-item-input'
 								size='small'
 								onPressEnter={onSave}
 								autoFocus

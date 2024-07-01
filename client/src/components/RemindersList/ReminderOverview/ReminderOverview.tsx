@@ -74,7 +74,7 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 	};
 
 	return (
-		<StyledReminderOverview>
+		<StyledReminderOverview data-testid='reminder-overview'>
 			{contextHolder}
 			<Flex justify='space-between' align='center' gap={8}>
 				<StyledTitle
@@ -140,6 +140,7 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 				</StyledTitle>
 				<StyledSelect 
 					placeholder={'None'}
+					data-testid='priority-select'
 					onChange={onChangePriority}
 					options={priorityOptions}
 					value={reminder.priority}

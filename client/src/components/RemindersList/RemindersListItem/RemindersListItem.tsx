@@ -3,11 +3,10 @@ import { Flex, Button, Space, Popover } from 'antd';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { removeReminder, updateReminder } from 'store/actions/userActions';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
-import { isDateBefore } from 'utils/utils';
+import { isDateBefore, toPriorityLevel } from 'utils/utils';
 import { DeleteOutlined, LinkOutlined } from '@ant-design/icons';
 import { useHover } from 'hooks/useHover';
 import { SortableItem } from 'lib/components/SortableItem';
-import { getPriorityValue } from 'utils/utils';
 import dayjs from 'dayjs';
 
 import type { IReminder } from 'types/reminder';
@@ -76,7 +75,7 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 							<Space>
 								{reminder.priority && 
 									<StyledTitle level={4} $color={activeList?.color}>
-										{getPriorityValue(reminder.priority)}
+										{'!'.repeat(toPriorityLevel(reminder.priority))}
 									</StyledTitle>
 								}
 								<StyledTitle level={4}>

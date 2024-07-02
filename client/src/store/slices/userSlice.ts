@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { arrayMove } from '@dnd-kit/sortable';
 import type { IUser } from 'types/user';
 
 import {
@@ -40,16 +39,6 @@ const userSlice = createSlice({
 		},
 		logout: (state) => {
 			state.authData = null;
-		},
-		moveLists: (state, { payload }: PayloadAction<{activeId: string, overId: string}>) => {
-			if (state.authData) {
-				const { authData } = state;
-				
-				const activeId = authData.lists.findIndex((list) => list._id === payload.activeId);
-				const overId = authData.lists.findIndex((list) => list._id === payload.overId);
-
-				state.authData.lists = arrayMove(authData.lists, activeId, overId);
-			}
 		},
 	},
 	extraReducers: (builder) => {
@@ -213,6 +202,10 @@ const userSlice = createSlice({
 			.addCase(updateAllLists.rejected, (state, action) => {
 				state.isLoading = false;
 				state.error = action.payload;
+			})
+			.addCase(updateAllLists.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.authData!.lists = action.payload;
 			})
 			.addCase(updateAllReminders.rejected, (state, action) => {
 				state.isLoading = false;

@@ -1,9 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { selectUserLists } from 'store/selectors/userSelectors';
-import type { IList } from 'types/list';
-import type { StateSchema } from 'store/config/StateSchema';
+import { selectUserAuthData } from 'store/selectors/userSelectors';
+import { AppDispatch } from 'store/config/store';
+import { arrayMove } from '@dnd-kit/sortable';
 import appAxios from 'api/axios';
 
+import type { IList } from 'types/list';
+import type { StateSchema } from 'store/config/StateSchema';
 
 export const addList = createAsyncThunk<
 	IList,
@@ -12,11 +14,7 @@ export const addList = createAsyncThunk<
 >(
 	'addList',
 	async (list, { rejectWithValue }) => {
-		const body = {
-			name: list.name,
-			icon: list.icon,
-			color: list.color,
-		};
+		const body = { name: list.name, icon: list.icon, color: list.color };
 		
 		try {
 			const response = await appAxios.post<IList>('/lists', body);
@@ -44,17 +42,17 @@ export const removeList = createAsyncThunk<
 	}
 );
 
-type UpdateListData = Pick<IList, '_id'> & Partial<Omit<IList, '_id'>>;
+type UpdateListDataType = Pick<IList, '_id'> & Partial<Omit<IList, '_id'>>;
 
 export const updateList = createAsyncThunk<
-	UpdateListData,
-	UpdateListData,
+	UpdateListDataType,
+	UpdateListDataType,
 	{ rejectValue: string }
 >(
 	'updateList',
 	async (data, { rejectWithValue }) => {
 		try {
-			const response = await appAxios.patch<UpdateListData>(`/lists/${data._id}`, data);
+			const response = await appAxios.patch<UpdateListDataType>(`/lists/${data._id}`, data);
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -81,21 +79,38 @@ export const changeListSort = createAsyncThunk<
 );
 
 export const updateAllLists = createAsyncThunk<
-	void,
-	void,
-	{
-		rejectValue: string,
-		state: StateSchema,
-	}
+	IList[],
+	IList[],
+	{ rejectValue: string }
 >(
-	'updateAllList',
-	async (_, { rejectWithValue, getState }) => {
-		const lists = selectUserLists(getState());
-		const body = { lists: lists };
+	'updateAllLists',
+	async (lists, { rejectWithValue }) => {
 		try {
-			appAxios.post('/lists/all', body);
+			appAxios.post('/lists/all', { lists: lists });
+			return lists;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
 		}
+	}
+);
+
+
+export const moveLists = createAsyncThunk<
+	IList[],
+	{ activeId: string, overId: string },
+	{ state: StateSchema, dispatch: AppDispatch }
+>(
+	'moveLists',
+	async ({ activeId, overId }, { getState, dispatch }) => {
+		const authData = selectUserAuthData(getState());
+
+		const activeIndex = authData!.lists.findIndex((list) => list._id === activeId);
+		const overIndex = authData!.lists.findIndex((list) => list._id === overId);
+
+		const movedLists = arrayMove(authData!.lists, activeIndex, overIndex);
+
+		dispatch(updateAllLists(movedLists));
+
+		return movedLists;
 	}
 );

@@ -147,8 +147,8 @@ export const sortByCreationDate = (
 
 export const sortReminders = (
 	reminders: IReminder[],
-	sortField: SortFieldType,
-	sortDirection: SortDirectionType,
+	sortField: SortFieldType = 'manually',
+	sortDirection: SortDirectionType = 'asc',
 ) => {
 	switch (sortField) {
 	case 'name':
@@ -159,5 +159,7 @@ export const sortReminders = (
 		return sortByCreationDate(reminders, sortDirection);
 	case 'deadline':
 		return sortByDeadline(reminders, sortDirection);		
+	case 'manually':
+		return reminders;
 	}
 };

@@ -2,10 +2,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { selectUserAuthData } from 'store/selectors/userSelectors';
 import { AppDispatch } from 'store/config/store';
 import { arrayMove } from '@dnd-kit/sortable';
+import { selectActiveList } from 'store/selectors/activeListSelectors';
+import { sortReminders } from 'utils/utils';
 import appAxios from 'api/axios';
-
 import type { IList } from 'types/list';
 import type { StateSchema } from 'store/config/StateSchema';
+import { updateAllReminders } from './remindersActions';
 
 export const addList = createAsyncThunk<
 	IList,
@@ -65,10 +67,23 @@ type SortListDataType = Pick<IList, '_id' | 'sortField' | 'sortDirection'>;
 export const changeListSort = createAsyncThunk<
 	SortListDataType,
 	SortListDataType,
-	{ rejectValue: string }
+	{
+		rejectValue: string,
+		dispatch: AppDispatch,
+		state: StateSchema,
+	}
 >(
 	'changeListSort',
-	async (data, { rejectWithValue }) => {
+	async (data, { rejectWithValue, dispatch, getState }) => {
+		const activeList = selectActiveList(getState());
+		const sortedReminders = sortReminders(
+			activeList!.reminders,
+			data.sortField,
+			data.sortDirection,
+		);
+
+		await dispatch(updateAllReminders({ listId: activeList!._id, reminders: sortedReminders }));
+
 		try {
 			const response = await appAxios.patch<SortListDataType>(`/lists/${data._id}`, data);
 			return response.data;
@@ -101,7 +116,7 @@ export const moveLists = createAsyncThunk<
 	{ state: StateSchema, dispatch: AppDispatch }
 >(
 	'moveLists',
-	async ({ activeId, overId }, { getState, dispatch }) => {
+	({ activeId, overId }, { getState, dispatch }) => {
 		const authData = selectUserAuthData(getState());
 
 		const activeIndex = authData!.lists.findIndex((list) => list._id === activeId);

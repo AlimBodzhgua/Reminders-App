@@ -40,6 +40,13 @@ const userSlice = createSlice({
 		logout: (state) => {
 			state.authData = null;
 		},
+		resetListSort: (state, action: PayloadAction<string>) => {
+			if (state.authData) {
+				const index = state.authData.lists.findIndex(list => list._id === action.payload);
+				state.authData.lists[index].sortField = 'manually';
+				state.authData.lists[index].sortDirection = 'asc';
+			}
+		}
 	},
 	extraReducers: (builder) => {
 		builder

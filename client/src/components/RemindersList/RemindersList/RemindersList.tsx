@@ -9,6 +9,7 @@ import { RemindersListHeader } from 'components/ListHeader/RemindersListHeader';
 import { SearchListHeader } from 'components/ListHeader/SearchListHeader';
 import { selectSearchBarIsSearching } from 'store/selectors/searchBarSelectors';
 import { moveReminders } from 'store/actions/userActions/remindersActions';
+import { userActions } from 'store/slices/userSlice';
 
 import type { IReminder } from 'types/reminder';
 
@@ -39,7 +40,8 @@ export const RemindersList: FC<RemindersListProps> = memo(({reminders}) => {
 				listId: activeList!._id,
 				overId: String(e.over!.id),
 				activeId: String(e.active.id),
-			}))
+			}));
+			dispatch(userActions.resetListSort(activeList!._id));
 		}
 	};
 

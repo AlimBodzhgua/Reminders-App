@@ -7,10 +7,10 @@ import {
 	selectAllReminders,
 } from 'store/selectors/userSelectors';
 import { selectActiveList, selectActiveListType } from 'store/selectors/activeListSelectors';
-
-import type { IReminder, RemindersListType } from 'types/reminder';
-import { useAppSelector } from './redux';
 import { sortReminders } from 'utils/utils';
+import type { IReminder, RemindersListType } from 'types/reminder';
+
+import { useAppSelector } from './redux';
 
 export const useActiveList = () => {
 	const activeList = useAppSelector(selectActiveList);
@@ -22,22 +22,16 @@ export const useActiveList = () => {
 	const listType = useAppSelector(selectActiveListType) || 'others';
 
 	const mapToRemindersList: Record<RemindersListType, IReminder[]> = useMemo(() => ({
-		todays: todaysReminders,
-		flagged: flaggedReminders,
-		completed: completedReminders,
-		scheduled: scheduledReminders,
-		all: allReminders,
+		todays: sortReminders(todaysReminders, activeList?.sortField, activeList?.sortDirection),
+		flagged: sortReminders(flaggedReminders, activeList?.sortField, activeList?.sortDirection),
+		completed: sortReminders(completedReminders, activeList?.sortField, activeList?.sortDirection),
+		scheduled: sortReminders(scheduledReminders, activeList?.sortField, activeList?.sortDirection),
+		all: sortReminders(allReminders, activeList?.sortField, activeList?.sortDirection),
 		others: activeList?.reminders || [],
 	}), [activeList]);
 
-	const sortedReminders = useMemo(() => sortReminders(
-		mapToRemindersList[listType],
-		activeList?.sortField || 'creation',
-		activeList?.sortDirection || 'asc',
-	), [activeList]);
-
 	return {
-		currentList: sortedReminders,
+		currentList: mapToRemindersList[listType],
 		listType,
 		mapToRemindersList,
 	};

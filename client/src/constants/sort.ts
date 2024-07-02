@@ -1,5 +1,6 @@
 
 export const sortField = {
+	manually: 'manually',
 	name: 'name',
 	deadline: 'deadline',
 	creation: 'creation',
@@ -17,6 +18,7 @@ export const sortDirectionOptions = [
 ];
 
 export const sortFieldOptions = [
+	{ value: sortField.manually },
 	{ value: sortField.creation },
 	{ value: sortField.name },
 	{ value: sortField.deadline },

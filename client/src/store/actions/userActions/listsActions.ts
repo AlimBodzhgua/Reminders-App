@@ -4,7 +4,7 @@ import { AppDispatch } from 'store/config/store';
 import { arrayMove } from '@dnd-kit/sortable';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { sortReminders } from 'utils/utils';
-import appAxios from 'api/axios';
+import $axios from 'api/axios';
 
 import type { StateSchema } from 'store/config/StateSchema';
 import type {
@@ -26,7 +26,7 @@ export const addList = createAsyncThunk<
 		const body = { name: list.name, icon: list.icon, color: list.color };
 		
 		try {
-			const response = await appAxios.post<IList>('/lists', body);
+			const response = await $axios.post<IList>('/lists', body);
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -42,7 +42,7 @@ export const removeList = createAsyncThunk<
 	'removeList',
 	async (id, { rejectWithValue }) => {
 		try {
-			await appAxios.delete(`/lists/${id}`);
+			await $axios.delete(`/lists/${id}`);
 			return id;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -58,7 +58,7 @@ export const updateList = createAsyncThunk<
 	'updateList',
 	async (data, { rejectWithValue }) => {
 		try {
-			const response = await appAxios.patch<UpdateListDataType>(`/lists/${data._id}`, data);
+			const response = await $axios.patch<UpdateListDataType>(`/lists/${data._id}`, data);
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -87,7 +87,7 @@ export const changeListSort = createAsyncThunk<
 		await dispatch(updateAllReminders({ listId: activeList!._id, reminders: sortedReminders }));
 
 		try {
-			const response = await appAxios.patch<ChangeListSortDataType>(`/lists/${data._id}`, data);
+			const response = await $axios.patch<ChangeListSortDataType>(`/lists/${data._id}`, data);
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -103,7 +103,7 @@ export const updateAllLists = createAsyncThunk<
 	'updateAllLists',
 	async (lists, { rejectWithValue }) => {
 		try {
-			appAxios.post('/lists/all', { lists: lists });
+			$axios.post('/lists/all', { lists: lists });
 			return lists;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));

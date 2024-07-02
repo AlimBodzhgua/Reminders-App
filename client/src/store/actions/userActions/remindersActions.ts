@@ -3,7 +3,7 @@ import { selectUserAuthData } from 'store/selectors/userSelectors';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { AppDispatch } from 'store/config/store';
 import { arrayMove } from '@dnd-kit/sortable';
-import appAxios from 'api/axios';
+import $axios from 'api/axios';
 
 import type { IReminder } from 'types/reminder';
 import type { StateSchema } from 'store/config/StateSchema';
@@ -17,7 +17,7 @@ export const addReminder = createAsyncThunk<
 	'addReminder',
 	async (data, { rejectWithValue }) => {
 		try {
-			const response = await appAxios.post<IReminder>(
+			const response = await $axios.post<IReminder>(
 				`/lists/${data.listId}/reminders`,
 				data.reminder,
 			);
@@ -43,7 +43,7 @@ export const removeReminder = createAsyncThunk<
 	async (reminderId, { rejectWithValue, getState }) => {
 		const activeList = selectActiveList(getState());
 		try {
-			await appAxios.delete(
+			await $axios.delete(
 				`/lists/${activeList!._id}/reminders/${reminderId}`,
 			);
 			return {
@@ -68,7 +68,7 @@ export const clearReminders = createAsyncThunk<
 	async (_, { rejectWithValue, getState }) => {
 		const activeList = selectActiveList(getState());
 		try {
-			appAxios.delete(`/lists/${activeList!._id}/reminders`);
+			$axios.delete(`/lists/${activeList!._id}/reminders`);
 			return activeList!._id;
 		} catch (err) {
 			return (rejectWithValue(JSON.stringify(err)));
@@ -84,7 +84,7 @@ export const updateAllReminders = createAsyncThunk<
 	'updateAllReminders',
 	async ({ listId, reminders }, { rejectWithValue }) => {
 		try {
-			appAxios.post(`/lists/${listId}/reminders/all`, { reminders });
+			$axios.post(`/lists/${listId}/reminders/all`, { reminders });
 			return { listId, reminders };
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -132,7 +132,7 @@ export const updateReminder = createAsyncThunk<
 	async (data, { rejectWithValue, getState }) => {
 		const activeList = selectActiveList(getState());
 		try {
-			const response = await appAxios.patch<IReminder>(
+			const response = await $axios.patch<IReminder>(
 				`/lists/${activeList?._id}/reminders/${data._id}`,
 				data
 			);

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import appAxios from 'api/axios';
+import $axios from 'api/axios';
 
 import type { IUser } from 'types/user';
 import type { IAuthUser } from 'types/auth';
@@ -19,7 +19,7 @@ export const registerUser = createAsyncThunk<
 		};
 
 		try {
-			const response = await appAxios.post<IUser>('/users/auth/register', body);
+			const response = await $axios.post<IUser>('/users/auth/register', body);
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -41,7 +41,7 @@ export const loginUser = createAsyncThunk<
 		};
 
 		try {
-			const response = await appAxios.post<IUser>('/users/auth/login', body);
+			const response = await $axios.post<IUser>('/users/auth/login', body);
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -57,7 +57,7 @@ export const initUserAuth = createAsyncThunk<
 	'initUserAuth',
 	async (_, { rejectWithValue }) => {
 		try {
-			const response = await appAxios.get<IUser>('users/auth/me');
+			const response = await $axios.get<IUser>('users/auth/me');
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));

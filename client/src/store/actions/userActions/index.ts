@@ -10,6 +10,7 @@ export {
 	clearReminders,
 	updateAllReminders,
 	updateReminder,
+	moveReminders,
 } from './remindersActions';
 
 export {
@@ -18,4 +19,5 @@ export {
 	updateList,
 	updateAllLists,
 	changeListSort,
+	moveLists,
 } from './listsActions';

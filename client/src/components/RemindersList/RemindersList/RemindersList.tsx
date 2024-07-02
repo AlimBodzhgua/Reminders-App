@@ -8,7 +8,7 @@ import { useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
 import { RemindersListHeader } from 'components/ListHeader/RemindersListHeader';
 import { SearchListHeader } from 'components/ListHeader/SearchListHeader';
 import { selectSearchBarIsSearching } from 'store/selectors/searchBarSelectors';
-import { moveReminders } from 'store/actions/userActions/remindersActions';
+import { moveReminders } from 'store/actions/userActions';
 import { userActions } from 'store/slices/userSlice';
 
 import type { IReminder } from 'types/reminder';

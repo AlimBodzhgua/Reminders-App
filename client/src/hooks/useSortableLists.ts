@@ -1,6 +1,6 @@
 import { useAppDispatch } from 'hooks/redux';
 import { useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
-import { moveLists } from 'store/actions/userActions/listsActions';
+import { moveLists } from 'store/actions/userActions';
 
 import type { DragEndEvent } from '@dnd-kit/core';
 

@@ -1,10 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { selectUserLists } from 'store/selectors/userSelectors';
+import { selectUserAuthData, selectUserLists } from 'store/selectors/userSelectors';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import appAxios from 'api/axios';
 
 import type { IReminder } from 'types/reminder';
 import type { StateSchema } from 'store/config/StateSchema';
+import { AppDispatch } from 'store/config/store';
+import { arrayMove } from '@dnd-kit/sortable';
 
 
 export const addReminder = createAsyncThunk<
@@ -75,26 +77,55 @@ export const clearReminders = createAsyncThunk<
 );
 
 export const updateAllReminders = createAsyncThunk<
-	void,
-	void,
-	{
-		rejectValue: string,
-		state: StateSchema,
-	}
+	{ listId: string, reminders: IReminder[] },
+	{ listId: string, reminders: IReminder[] },
+	{ rejectValue: string }
 >(
 	'updateAllReminders',
-	async (_, { rejectWithValue, getState }) => {
-		const lists = selectUserLists(getState());
-		const activeList = selectActiveList(getState());
-		const activeListIndex = lists.findIndex(list => list._id === activeList?._id);
-		const body = { reminders: lists[activeListIndex].reminders };
+	async ({ listId, reminders }, { rejectWithValue }) => {
 		try {
-			appAxios.post(`/lists/${activeList!._id}/reminders/all`, body);
+			appAxios.post(`/lists/${listId}/reminders/all`, { reminders });
+			return { listId, reminders };
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
 		}
 	}
 );
+
+export const moveReminders = createAsyncThunk<
+	{ listId: string, movedReminders: IReminder[] },
+	{ listId: string, activeId: string, overId: string },
+	{
+		dispatch: AppDispatch,
+		state: StateSchema,
+	}
+>(
+	'moveReminders',
+	({ listId, activeId, overId }, { getState, dispatch }) => {
+		const authData = selectUserAuthData(getState());
+
+		const index = authData!.lists.findIndex((list) => list._id === listId);
+
+		const activeIndex = authData!.lists[index].reminders.findIndex(
+			(list) => list._id === activeId,
+		);
+
+		const overIndex = authData!.lists[index].reminders.findIndex(
+			(list) => list._id === overId,
+		);
+
+		const movedReminders = arrayMove(
+			authData!.lists[index].reminders,
+			activeIndex,
+			overIndex,
+		);
+
+		dispatch(updateAllReminders({ listId, reminders: movedReminders }));
+
+		return { listId, movedReminders };
+	}
+);
+
 
 
 type UpdateReminderData = Pick<IReminder, '_id'> & Partial<Omit<IReminder, '_id'>>;

@@ -51,31 +51,6 @@ const userSlice = createSlice({
 				state.authData.lists = arrayMove(authData.lists, activeId, overId);
 			}
 		},
-		moveReminders: (state, { payload }: PayloadAction<{
-			activeListId: string,
-			activeId: string,
-			overId: string,
-		}>) => {
-			if (state.authData) {
-				const { authData } = state;
-				const index = authData.lists.findIndex(
-					(list) => list._id === payload.activeListId,
-				);
-
-				const activeId = authData.lists[index].reminders.findIndex(
-					(list) => list._id === payload.activeId,
-				);
-				const overId = authData.lists[index].reminders.findIndex(
-					(list) => list._id === payload.overId,
-				);
-
-				state.authData.lists[index].reminders = arrayMove(
-					state.authData.lists[index].reminders,
-					activeId,
-					overId,
-				);
-			}
-		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -242,7 +217,14 @@ const userSlice = createSlice({
 			.addCase(updateAllReminders.rejected, (state, action) => {
 				state.isLoading = false;
 				state.error = action.payload;
-			});
+			})
+			.addCase(updateAllReminders.fulfilled, (state, action) => {
+				state.isLoading = false;
+				if (state.authData) {
+					const listIndex = state.authData.lists.findIndex(list => list._id === action.payload.listId)
+					state.authData.lists[listIndex].reminders = action.payload.reminders;
+				}
+			})
 	}
 });
 

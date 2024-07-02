@@ -18,3 +18,6 @@ export interface IList {
 	sortDirection: SortDirectionType;
 	reminders: Array<IReminder>;
 };
+
+export type UpdateListDataType = Pick<IList, '_id'> & Partial<Omit<IList, '_id'>>;
+export type ChangeListSortDataType = Pick<IList, '_id' | 'sortField' | 'sortDirection'>;

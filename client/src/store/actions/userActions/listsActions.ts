@@ -5,9 +5,16 @@ import { arrayMove } from '@dnd-kit/sortable';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { sortReminders } from 'utils/utils';
 import appAxios from 'api/axios';
-import type { IList } from 'types/list';
+
 import type { StateSchema } from 'store/config/StateSchema';
+import type {
+	IList,
+	ChangeListSortDataType,
+	UpdateListDataType,
+} from 'types/list';
+
 import { updateAllReminders } from './remindersActions';
+
 
 export const addList = createAsyncThunk<
 	IList,
@@ -27,7 +34,6 @@ export const addList = createAsyncThunk<
 	}
 );
 
-
 export const removeList = createAsyncThunk<
 	string,
 	string,
@@ -43,8 +49,6 @@ export const removeList = createAsyncThunk<
 		}
 	}
 );
-
-type UpdateListDataType = Pick<IList, '_id'> & Partial<Omit<IList, '_id'>>;
 
 export const updateList = createAsyncThunk<
 	UpdateListDataType,
@@ -62,11 +66,9 @@ export const updateList = createAsyncThunk<
 	}
 );
 
-type SortListDataType = Pick<IList, '_id' | 'sortField' | 'sortDirection'>;
-
 export const changeListSort = createAsyncThunk<
-	SortListDataType,
-	SortListDataType,
+	ChangeListSortDataType,
+	ChangeListSortDataType,
 	{
 		rejectValue: string,
 		dispatch: AppDispatch,
@@ -85,7 +87,7 @@ export const changeListSort = createAsyncThunk<
 		await dispatch(updateAllReminders({ listId: activeList!._id, reminders: sortedReminders }));
 
 		try {
-			const response = await appAxios.patch<SortListDataType>(`/lists/${data._id}`, data);
+			const response = await appAxios.patch<ChangeListSortDataType>(`/lists/${data._id}`, data);
 			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));

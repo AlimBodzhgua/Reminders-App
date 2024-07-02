@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { selectUserAuthData, selectUserLists } from 'store/selectors/userSelectors';
+import { selectUserAuthData } from 'store/selectors/userSelectors';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
+import { AppDispatch } from 'store/config/store';
+import { arrayMove } from '@dnd-kit/sortable';
 import appAxios from 'api/axios';
 
 import type { IReminder } from 'types/reminder';
 import type { StateSchema } from 'store/config/StateSchema';
-import { AppDispatch } from 'store/config/store';
-import { arrayMove } from '@dnd-kit/sortable';
 
 
 export const addReminder = createAsyncThunk<
@@ -95,10 +95,7 @@ export const updateAllReminders = createAsyncThunk<
 export const moveReminders = createAsyncThunk<
 	{ listId: string, movedReminders: IReminder[] },
 	{ listId: string, activeId: string, overId: string },
-	{
-		dispatch: AppDispatch,
-		state: StateSchema,
-	}
+	{ dispatch: AppDispatch, state: StateSchema }
 >(
 	'moveReminders',
 	({ listId, activeId, overId }, { getState, dispatch }) => {
@@ -126,13 +123,9 @@ export const moveReminders = createAsyncThunk<
 	}
 );
 
-
-
-type UpdateReminderData = Pick<IReminder, '_id'> & Partial<Omit<IReminder, '_id'>>;
-
 export const updateReminder = createAsyncThunk<
 	{ reminder: IReminder, listId: string },
-	UpdateReminderData,
+	Pick<IReminder, '_id'> & Partial<Omit<IReminder, '_id'>>,
 	{ rejectValue: string, state: StateSchema }
 >(
 	'updateReminder',

@@ -38,11 +38,6 @@ export default [
 			'prefer-const': 'warn',
 			'quotes': ['warn', 'single'],
 			'jsx-quotes': ['warn', 'prefer-single'],
-			//'jsx-a11y/click-events-have-key-events': 'warn',
-			//'jsx-a11y/control-has-associated-label': 'off',
-			//'jsx-a11y/label-has-associated-control': [ 'error', {
-			//    'controlComponents': ['Input'],
-			//}],
 			'array-callback-return': 'off',
 			'consistent-return': 'warn',
 			'react/jsx-indent': ['error', 'tab'],

@@ -5,6 +5,7 @@ import { updateReminder } from 'store/actions/userActions';
 import { priorityOptions } from 'constants/priority';
 import { FlagFilled, CloseOutlined } from '@ant-design/icons';
 import { StyledButton } from 'styled/Button.styles';
+import { AppMap } from 'components/AppMap/AppMap';
 import dayjs from 'dayjs';
 
 import type { DatePickerProps, TimePickerProps } from 'antd';
@@ -74,7 +75,7 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 	};
 
 	return (
-		<StyledReminderOverview data-testid='reminder-overview'>
+		<StyledReminderOverview	data-testid='reminder-overview'>
 			{contextHolder}
 			<Flex justify='space-between' align='center' gap={8}>
 				<StyledTitle
@@ -133,6 +134,20 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 					}
 				</Space>
 			</Flex>
+			<StyledDivider />
+			{reminder?.details?.location &&
+				<>
+					<StyledTitle level={5}>
+						Location: {reminder.details.location}
+					</StyledTitle>
+					<AppMap
+						initialLocation={reminder.details.location}
+						mapWidth={'100%'}
+						mapHeight={'155px'}
+						mapControls={['zoomControl', 'fullscreenControl']}
+					/>
+				</>
+			}
 			<StyledDivider />
 			<Space align='center'>
 				<StyledTitle level={5}>

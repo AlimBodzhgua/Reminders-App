@@ -56,7 +56,6 @@ export const Content: FC<ContentProps> = memo((props) => {
 		);
 	}
 
-
 	return (
 		<StyledContent
 			onClick={onToggleShowForm}

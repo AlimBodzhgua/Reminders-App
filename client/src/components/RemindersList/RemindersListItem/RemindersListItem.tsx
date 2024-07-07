@@ -129,9 +129,6 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 									{reminder.details?.time}
 								</StyledText>
 							)}
-							{reminder.details?.location && (
-								<StyledText>{reminder.details?.location}</StyledText>
-							)}
 						</Flex>
 					</Flex>
 				</Flex>

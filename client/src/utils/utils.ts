@@ -27,6 +27,7 @@ export const createReminder = (values: FormFields) => {
 		details: {
 			...(values.date && { date: toDateString(values.date) }),
 			...(values.time && { time: toTimeString(values.time) }),
+			...(values.location && { location: values.location }),
 		},
 	};
 };

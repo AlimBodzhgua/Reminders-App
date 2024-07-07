@@ -1,9 +1,10 @@
-import { FC, MouseEvent, memo, useState, useEffect } from 'react';
+import { FC, MouseEvent, memo, useState, useEffect, useCallback } from 'react';
 import {
 	Form,
 	Space,
 	Input,
 	DatePickerProps,
+	Popover,
 	Flex,
 } from 'antd';
 import { CloseOutlined, CheckOutlined } from '@ant-design/icons';
@@ -11,8 +12,9 @@ import { addReminder } from 'store/actions/userActions';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import { createReminder } from 'utils/utils';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
-import { FlagFilled } from '@ant-design/icons';
+import { FlagFilled, EnvironmentFilled } from '@ant-design/icons';
 import { isFlaggedList, isTodaysList, isScheduledList } from 'utils/utils';
+import { AppMap } from 'components/AppMap/AppMap';
 import dayjs from 'dayjs';
 
 import type { Dayjs } from 'dayjs';
@@ -38,6 +40,7 @@ export interface FormFields {
 	isCompleted?: boolean;
 	date?: Dayjs;
 	time?: Dayjs;
+	location?: string;
 }
 
 export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
@@ -46,6 +49,8 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 	const dispatch = useAppDispatch();
 	const [showTimePicker, setShowTimePicker] = useState<boolean>(false);
 	const [isFlagged, setIsFlagged] = useState<boolean>(false);
+	const [location, setLocation] = useState<string | undefined>();
+	const [showMap, setShowMap] = useState<boolean>(false);
 	const activeList = useAppSelector(selectActiveList);
 	const withInitialDate = isTodaysList(activeList!) || isScheduledList(activeList!);
 
@@ -61,6 +66,10 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 		e.stopPropagation();
 	};
 
+	const onLocationSelect = useCallback((address: string) => {
+		setLocation(address);
+	}, []);
+
 	const onChangeDate: DatePickerProps['onChange'] = (date, dateString) => {
 		if (dateString.length) {
 			setShowTimePicker(true);
@@ -71,8 +80,12 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 		setIsFlagged(prev => !prev);
 	};
 
+	const onToggleShowMap = () => {
+		setShowMap(prev => !prev);
+	}
+	
 	const onAddReminder: FormProps<FormFields>['onFinish'] = async (values) => {
-		const newReminder = createReminder({...values, isFlagged});
+		const newReminder = createReminder({...values, isFlagged, location});
 
 		const { meta } = await dispatch(addReminder({
 			listId: activeList!._id,
@@ -83,7 +96,6 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 			onSuccess();
 		}
 	};
-
 
 	return (
 		<StyledForm
@@ -136,6 +148,19 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 								/>
 							</Form.Item>
 						}
+						<Popover
+							open={showMap}
+							placement='top'
+							content={<AppMap onLocationSelect={onLocationSelect}/>}
+						>
+							<StyledButton
+								size='small'
+								icon={<EnvironmentFilled />}
+								onClick={onToggleShowMap}
+							>
+								Add Location
+							</StyledButton>
+						</Popover>
 						<StyledButton
 							size='small'
 							$color={isFlagged ? '#ff6600' : '#000'}

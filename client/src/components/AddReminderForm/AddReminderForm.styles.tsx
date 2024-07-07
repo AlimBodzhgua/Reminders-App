@@ -63,4 +63,5 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
 	margin-bottom: 5px;
 	color: ${props => props.$color || '#949090'};
 	border-color: rgb(0 0 0 / 4%);
+	font-size: 13px;
 `;

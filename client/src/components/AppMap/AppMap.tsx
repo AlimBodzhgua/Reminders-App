@@ -84,7 +84,6 @@ export const AppMap: FC<AppMapProps> = (props) => {
 			zoom: 10,
 			controls: mapControls ? mapControls : [
 				'zoomControl',
-				'searchControl',
 				'geolocationControl',
 				'fullscreenControl',
 			],
@@ -95,7 +94,7 @@ export const AppMap: FC<AppMapProps> = (props) => {
 	    if (initialLocation) {
 	        ymaps?.geocode(initialLocation).then((res) => {
 	        	myMap.geoObjects.add(res.geoObjects);
-	        }); 
+	        });
 	    } else {
 	    	myMap.events.add('click', (e) => onMapClick(e, myMap));
 	    }

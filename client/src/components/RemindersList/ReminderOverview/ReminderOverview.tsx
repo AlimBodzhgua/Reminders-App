@@ -75,7 +75,7 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 	};
 
 	return (
-		<StyledReminderOverview	data-testid='reminder-overview'>
+		<StyledReminderOverview data-testid='reminder-overview'>
 			{contextHolder}
 			<Flex justify='space-between' align='center' gap={8}>
 				<StyledTitle

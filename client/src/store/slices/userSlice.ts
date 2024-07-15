@@ -221,10 +221,12 @@ const userSlice = createSlice({
 			.addCase(updateAllReminders.fulfilled, (state, action) => {
 				state.isLoading = false;
 				if (state.authData) {
-					const listIndex = state.authData.lists.findIndex(list => list._id === action.payload.listId)
+					const listIndex = state.authData.lists.findIndex(
+						(list) => list._id === action.payload.listId
+					);
 					state.authData.lists[listIndex].reminders = action.payload.reminders;
 				}
-			})
+			});
 	}
 });
 

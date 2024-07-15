@@ -82,7 +82,7 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 
 	const onToggleShowMap = () => {
 		setShowMap(prev => !prev);
-	}
+	};
 	
 	const onAddReminder: FormProps<FormFields>['onFinish'] = async (values) => {
 		const newReminder = createReminder({...values, isFlagged, location});

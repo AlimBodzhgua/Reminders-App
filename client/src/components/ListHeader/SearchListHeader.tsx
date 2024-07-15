@@ -9,10 +9,6 @@ export const SearchListHeader: FC = memo(() => {
 	const searchValue = useAppSelector(selectSearchBarValue);
 	const searchResult = useAppSelector(selectSearchBarSearchResult);
 
-	const onShow = useCallback(() => {
-		console.log('show');
-	}, []);
-
 	const onClear = useCallback(() => {
 		dispatch(searchBarActions.clearSearchResult());
 	}, [dispatch]);
@@ -26,7 +22,6 @@ export const SearchListHeader: FC = memo(() => {
 			amount={searchResult.length}
 			color={'#000'}
 			onClear={onClear}
-			onShow={onShow}
 		/>
 	);
 });

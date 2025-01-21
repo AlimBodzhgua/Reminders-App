@@ -11,7 +11,6 @@ import { ACTIVE_LIST_LOCALSTORAGE_KEY } from 'constants/localStorage';
 
 export const SearchBar: FC = memo(() => {
 	const dispatch = useAppDispatch();
-	const authData = useAppSelector(selectUserAuthData);
 	const searchValue = useAppSelector(selectSearchBarValue);
 	const debouncedSearchValue = useDebounce(searchValue);
 	const allReminders = useAppSelector(selectAllReminders);
@@ -40,7 +39,6 @@ export const SearchBar: FC = memo(() => {
 			placeholder='Search'
 			value={searchValue}
 			onChange={onSearch}
-			disabled={!authData && true}
 		/>
 	);
 });

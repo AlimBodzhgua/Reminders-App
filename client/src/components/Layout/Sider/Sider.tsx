@@ -24,7 +24,8 @@ export const Sider: FC = memo(() => {
 	return (
 		<StyledSider
 			width={315}
-			collapsible
+			collapsible={!!authData}
+			defaultCollapsed={!!!authData}
 			collapsedWidth={0}
 			data-testid='sider'
 		>
@@ -34,21 +35,14 @@ export const Sider: FC = memo(() => {
 					<PinnedLists />
 					<UnpinnedLists />
 				</Flex>
-				{authData && 
-					<>
-						<Button
-							type='text'
-							icon={<PlusCircleOutlined />}
-							onClick={onOpenModal}
-						>
-							Add List
-						</Button>
-						<AddListModal
-							isOpen={isOpen}
-							onClose={onCloseModal}
-						/>
-					</>
-				}
+				<Button
+					type='text'
+					icon={<PlusCircleOutlined />}
+					onClick={onOpenModal}
+				>
+					Add List
+				</Button>
+				<AddListModal isOpen={isOpen} onClose={onCloseModal} />
 			</Flex>
 		</StyledSider>
 	);

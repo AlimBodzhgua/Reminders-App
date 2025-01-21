@@ -13,8 +13,7 @@ import {
 	selectSearchBarIsSearching,
 	selectSearchBarSearchResult,
 } from 'store/selectors/searchBarSelectors';
-
-import { StyledContent, StyledTitle } from './Content.styles';
+import { StyledContent, StyledTitle, StyledSubtitle, StyledLockFilled } from './Content.styles';
 
 interface ContentProps {
 	showForm: boolean;
@@ -47,10 +46,15 @@ export const Content: FC<ContentProps> = memo((props) => {
 	if (!authData) {
 		return (
 			<StyledContent data-testid='content'>
-				<Flex justify='center' align='center' style={{ height: '80%' }}>
+				<Flex justify='center' align='center' vertical style={{ height: '80%' }}>
+					<StyledLockFilled />
 					<StyledTitle $color='#D0D0D0' $weight={500}>
-						Login or register to have access
+						Restricted Access
 					</StyledTitle>
+					<StyledSubtitle $color='#bfbfbf' $weight={500} level={4}>
+						You don't have permission to this content
+						Login or register to have access
+					</StyledSubtitle>
 				</Flex>
 			</StyledContent>
 		);

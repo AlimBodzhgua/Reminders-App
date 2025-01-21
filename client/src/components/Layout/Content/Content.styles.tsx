@@ -1,5 +1,5 @@
 import { Layout, Typography } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, LockFilled } from '@ant-design/icons';
 import styled from 'styled-components';
 
 interface StyledContentProps {
@@ -24,6 +24,11 @@ export const StyledPlusOutlined = styled(PlusOutlined)`
 	font-size: 28px!important;
 `;
 
+export const StyledLockFilled = styled(LockFilled)`
+	color: #ffc069;
+	font-size: 42px;
+`
+
 interface StyledTitleProps {
 	$color?: string;
 	$weight?: number;
@@ -33,5 +38,16 @@ export const StyledTitle = styled(Typography.Title)<StyledTitleProps>`
 	&&& {
 		font-weight: ${props => props.$weight || 700};
 		color: ${props => props.$color};
+		margin: 0;
+	}
+`;
+
+export const StyledSubtitle = styled(Typography.Title)<StyledTitleProps>`
+	&&& {
+		font-weight: ${props => props.$weight || 700};
+		color: ${props => props.$color};
+		max-width: 430px;
+		text-align: center;
+		margin: 0;
 	}
 `;

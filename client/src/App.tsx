@@ -5,11 +5,12 @@ import { ACTIVE_LIST_LOCALSTORAGE_KEY, USER_LOCALSTORAGE_KEY } from 'constants/l
 import { initUserAuth } from 'store/actions/userActions';
 import { activeListActions } from 'store/slices/activeListSlice';
 import { IUser } from 'types/user';
+import { userActions } from 'store/slices/userSlice';
 
 const App: FC = memo(() => {
 	const dispatch = useAppDispatch();
 
-	const initApp = useCallback(async () => {
+	const initAuth = useCallback(async () => {
 		const { meta, payload } = await dispatch(initUserAuth());
 
 		if (meta.requestStatus === 'fulfilled') {
@@ -23,11 +24,16 @@ const App: FC = memo(() => {
 	}, [dispatch]);
 
 	useEffect(() => {
-		const user = localStorage.getItem(USER_LOCALSTORAGE_KEY);
-		if (user) {
-			initApp();
-		}
-	}, [initApp]);
+		const initApp = async () => {
+			const user = localStorage.getItem(USER_LOCALSTORAGE_KEY);
+
+			if (user) await initAuth();
+
+			dispatch(userActions.setMounted());
+		};
+
+		initApp();
+	}, [initAuth]);
 
 	return <AppLayout />;
 });

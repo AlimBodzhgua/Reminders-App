@@ -1,10 +1,10 @@
-import { FC, memo, useState, useCallback } from 'react';
+import { FC, memo, useState, useCallback, useEffect } from 'react';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { Button, Flex } from 'antd';
 import { PinnedLists } from 'components/PinnedLists/PinnedLists';
 import { UnpinnedLists } from 'components/UnpinnedLists';
 import { AddListModal } from 'components/AddList/AddListModal';
-import { selectUserAuthData } from 'store/selectors/userSelectors';
+import { selectUserAuthData, selectUserMounted } from 'store/selectors/userSelectors';
 import { useAppSelector } from 'hooks/redux';
 import { SearchBar } from 'components/SearchBar/SearchBar';
 import { StyledSider } from './Sider.styles';
@@ -12,6 +12,14 @@ import { StyledSider } from './Sider.styles';
 export const Sider: FC = memo(() => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const authData = useAppSelector(selectUserAuthData);
+	const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
+	const mounted = useAppSelector(selectUserMounted);
+
+	useEffect(() => {
+		if (mounted) {
+			setIsCollapsed(authData ? false : true);
+		}
+	}, [authData, mounted])
 
 	const onOpenModal = () => {
 		setIsOpen(true);
@@ -21,11 +29,16 @@ export const Sider: FC = memo(() => {
 		setIsOpen(false);
 	}, []);
 
+	const onToggleCollapse = () => {
+		setIsCollapsed((prev) => !prev);
+	};
+
 	return (
 		<StyledSider
 			width={315}
 			collapsible={!!authData}
-			defaultCollapsed={!!!authData}
+			collapsed={isCollapsed}
+			onCollapse={onToggleCollapse}
 			collapsedWidth={0}
 			data-testid='sider'
 		>

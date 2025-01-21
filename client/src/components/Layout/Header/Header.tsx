@@ -21,13 +21,13 @@ export const Header: FC<HeaderProps> = memo(({ onToggleShowForm }) => {
 	const [isRegisterModal, setIsRegisterModal] = useState<boolean>(false);
 	const dispatch = useAppDispatch();
 
-	const onOpenLogin = useCallback(() => {
+	const onOpenLogin = () => {
 		setIsLoginModal(true);
-	}, []);
+	};
 
-	const onOpenRegister = useCallback(() => {
+	const onOpenRegister = () => {
 		setIsRegisterModal(true);
-	}, []);
+	};
 
 	const onCloseRegister = useCallback(() => {
 		setIsRegisterModal(false);

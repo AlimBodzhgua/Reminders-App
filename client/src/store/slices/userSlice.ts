@@ -22,12 +22,14 @@ export interface UserStateSchema {
 
 	isLoading: boolean;
 	error?: string | undefined;
+	_mounted: boolean;
 }
 
 const initialState: UserStateSchema = {
 	authData: null,
 	isLoading: false,
 	error: undefined,
+	_mounted: false,
 };
 
 const userSlice = createSlice({
@@ -46,6 +48,9 @@ const userSlice = createSlice({
 				state.authData.lists[index].sortField = 'manually';
 				state.authData.lists[index].sortDirection = 'asc';
 			}
+		},
+		setMounted: (state) => {
+			state._mounted = true;
 		}
 	},
 	extraReducers: (builder) => {

@@ -6,7 +6,7 @@ import { arrayMove } from '@dnd-kit/sortable';
 import $axios from 'api/axios';
 
 import type { IReminder } from 'types/reminder';
-import type { StateSchema } from 'store/config/StateSchema';
+import type { AppState } from 'store/config/AppState';
 
 
 export const addReminder = createAsyncThunk<
@@ -36,7 +36,7 @@ export const removeReminder = createAsyncThunk<
 	string,
 	{
 		rejectValue: string;
-		state: StateSchema;
+		state: AppState;
 	}
 >(
 	'removeReminder',
@@ -61,7 +61,7 @@ export const clearReminders = createAsyncThunk<
 	void,
 	{
 		rejectValue: string,
-		state: StateSchema,
+		state: AppState,
 	}
 >(
 	'clearReminders',
@@ -95,7 +95,7 @@ export const updateAllReminders = createAsyncThunk<
 export const moveReminders = createAsyncThunk<
 	{ listId: string, movedReminders: IReminder[] },
 	{ listId: string, activeId: string, overId: string },
-	{ dispatch: AppDispatch, state: StateSchema }
+	{ dispatch: AppDispatch, state: AppState }
 >(
 	'moveReminders',
 	({ listId, activeId, overId }, { getState, dispatch }) => {
@@ -126,7 +126,7 @@ export const moveReminders = createAsyncThunk<
 export const updateReminder = createAsyncThunk<
 	{ reminder: IReminder, listId: string },
 	Pick<IReminder, '_id'> & Partial<Omit<IReminder, '_id'>>,
-	{ rejectValue: string, state: StateSchema }
+	{ rejectValue: string, state: AppState }
 >(
 	'updateReminder',
 	async (data, { rejectWithValue, getState }) => {

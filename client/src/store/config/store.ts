@@ -1,5 +1,5 @@
 import { configureStore, ReducersMapObject } from '@reduxjs/toolkit';
-import { StateSchema } from './StateSchema';
+import { AppState } from './AppState';
 import { userReducer } from 'store/slices/userSlice';
 import { searchBarReducer } from 'store/slices/searchBarSlice';
 import { activeListActions, activeListReducer } from 'store/slices/activeListSlice';
@@ -29,8 +29,8 @@ startAppListening({
 });
 
 
-export const createReduxStore = (initialState?: StateSchema) => {
-	const rootReducer: ReducersMapObject<StateSchema> = {
+export const createReduxStore = (initialState?: AppState) => {
+	const rootReducer: ReducersMapObject<AppState> = {
 		user: userReducer,
 		activeList: activeListReducer,
 		searchBar: searchBarReducer,

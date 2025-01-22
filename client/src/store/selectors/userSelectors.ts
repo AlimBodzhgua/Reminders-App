@@ -1,16 +1,16 @@
 import { createSelector } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 
-import type { StateSchema } from 'store/config/StateSchema';
+import type { AppState } from 'store/config/AppState';
 import type { IReminder } from 'types/reminder';
 
 import { selectActiveList } from './activeListSelectors';
 import { getRemindersListType } from 'utils/utils';
 
-export const selectUserAuthData = (state: StateSchema) => state.user.authData;
-export const selectUserIsLoading = (state: StateSchema) => state.user.isLoading;
-export const selectUserError = (state: StateSchema) => state.user.error;
-export const selectUserMounted = (state: StateSchema) => state.user._mounted;
+export const selectUserAuthData = (state: AppState) => state.user.authData;
+export const selectUserIsLoading = (state: AppState) => state.user.isLoading;
+export const selectUserError = (state: AppState) => state.user.error;
+export const selectUserMounted = (state: AppState) => state.user._mounted;
 
 export const selectUserLists = createSelector(
 	selectUserAuthData,

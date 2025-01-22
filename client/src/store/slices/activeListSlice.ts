@@ -3,12 +3,12 @@ import { IList } from 'types/list';
 import { RemindersListType } from 'types/reminder';
 import { getRemindersListType } from 'utils/utils';
 
-export interface ActiveListStateSchema {
+export interface ActiveListState {
 	list?: IList | undefined;
 	listType?: RemindersListType | undefined;
 }
 
-const initialState: ActiveListStateSchema = {
+const initialState: ActiveListState = {
 	list: undefined,
 	listType: undefined,
 };

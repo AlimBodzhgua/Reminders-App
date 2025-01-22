@@ -6,7 +6,7 @@ import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { sortReminders } from 'utils/utils';
 import $axios from 'api/axios';
 
-import type { StateSchema } from 'store/config/StateSchema';
+import type { AppState } from 'store/config/AppState';
 import type {
 	IList,
 	ChangeListSortDataType,
@@ -72,7 +72,7 @@ export const changeListSort = createAsyncThunk<
 	{
 		rejectValue: string,
 		dispatch: AppDispatch,
-		state: StateSchema,
+		state: AppState,
 	}
 >(
 	'changeListSort',
@@ -115,7 +115,7 @@ export const updateAllLists = createAsyncThunk<
 export const moveLists = createAsyncThunk<
 	IList[],
 	{ activeId: string, overId: string },
-	{ state: StateSchema, dispatch: AppDispatch }
+	{ state: AppState, dispatch: AppDispatch }
 >(
 	'moveLists',
 	({ activeId, overId }, { getState, dispatch }) => {

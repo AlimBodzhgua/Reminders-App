@@ -17,7 +17,7 @@ import {
 	changeListSort,
 } from '../actions/userActions';
 
-export interface UserStateSchema {
+export interface UserState {
 	authData: IUser | null;
 
 	isLoading: boolean;
@@ -25,7 +25,7 @@ export interface UserStateSchema {
 	_mounted: boolean;
 }
 
-const initialState: UserStateSchema = {
+const initialState: UserState = {
 	authData: null,
 	isLoading: false,
 	error: undefined,

@@ -1,13 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import type { IReminder } from 'types/reminder';
 
-export interface SearchBarStateSchema {
+export interface SearchBarState {
 	value: string;
 	isSearching: boolean;
 	searchResult: IReminder[];
 }
 
-const initialState: SearchBarStateSchema = {
+const initialState: SearchBarState = {
 	value: '',
 	isSearching: false,
 	searchResult: [],

@@ -54,6 +54,7 @@ export const StyledCheckbox = styled(Checkbox)<StyledCheckboxProps>`
 
 interface StyledButtonProps {
 	$color?: string;
+	$disableColor?: string;
 }
 
 export const StyledButton = styled(Button)<StyledButtonProps>`
@@ -64,4 +65,8 @@ export const StyledButton = styled(Button)<StyledButtonProps>`
 	color: ${props => props.$color || '#949090'};
 	border-color: rgb(0 0 0 / 4%);
 	font-size: 13px;
+
+	&:disabled {
+		color: ${props => props.$disableColor || 'rgba(0, 0, 0, 0.25)'};
+	}
 `;

@@ -1,4 +1,4 @@
-import { FC, MouseEvent, memo, useState, useEffect, useCallback } from 'react';
+import { FC, MouseEvent, memo, useState } from 'react';
 import {
 	Form,
 	Space,
@@ -15,6 +15,7 @@ import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { FlagFilled, EnvironmentFilled } from '@ant-design/icons';
 import { isFlaggedList, isTodaysList, isScheduledList } from 'utils/utils';
 import { AppMap } from 'components/AppMap/AppMap';
+import { colorMap } from 'constants/colorList';
 import dayjs from 'dayjs';
 
 import type { Dayjs } from 'dayjs';
@@ -47,28 +48,22 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 	const { onSuccess } = props;
 	const [form] = Form.useForm();
 	const dispatch = useAppDispatch();
-	const [showTimePicker, setShowTimePicker] = useState<boolean>(false);
-	const [isFlagged, setIsFlagged] = useState<boolean>(false);
 	const [location, setLocation] = useState<string | undefined>();
 	const [showMap, setShowMap] = useState<boolean>(false);
-	const activeList = useAppSelector(selectActiveList);
-	const withInitialDate = isTodaysList(activeList!) || isScheduledList(activeList!);
 
-	useEffect(() => {
-		if (isFlaggedList(activeList!)) {
-			setIsFlagged(true);
-		} else if (withInitialDate) {
-			setShowTimePicker(true);
-		}
-	}, []);
+	const activeList = useAppSelector(selectActiveList);
+	const [isFlagged, setIsFlagged] = useState<boolean>(isFlaggedList(activeList!));
+
+	const withInitialDate = isTodaysList(activeList!) || isScheduledList(activeList!);
+	const [showTimePicker, setShowTimePicker] = useState<boolean>(withInitialDate);
 
 	const onContentClick = (e: MouseEvent<HTMLFormElement>) => {
 		e.stopPropagation();
 	};
 
-	const onLocationSelect = useCallback((address: string) => {
+	const onLocationSelect = (address: string) => {
 		setLocation(address);
-	}, []);
+	};
 
 	const onChangeDate: DatePickerProps['onChange'] = (date, dateString) => {
 		if (dateString.length) {
@@ -77,15 +72,15 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 	};
 
 	const onToggleFlag = () => {
-		setIsFlagged(prev => !prev);
+		setIsFlagged((prev) => !prev);
 	};
 
 	const onToggleShowMap = () => {
-		setShowMap(prev => !prev);
+		setShowMap((prev) => !prev);
 	};
 	
 	const onAddReminder: FormProps<FormFields>['onFinish'] = async (values) => {
-		const newReminder = createReminder({...values, isFlagged, location});
+		const newReminder = createReminder({ ...values, isFlagged, location });
 
 		const { meta } = await dispatch(addReminder({
 			listId: activeList!._id,
@@ -135,7 +130,7 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 								variant='filled'
 								onChange={onChangeDate}
 								disabled={isTodaysList(activeList!)}
-								allowClear={{clearIcon: <CloseOutlined />}}
+								allowClear={{ clearIcon: <CloseOutlined /> }}
 							/>
 						</Form.Item>
 						{showTimePicker && 
@@ -144,7 +139,7 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 									placeholder='Add Time'
 									variant='filled'
 									format='HH:mm'
-									allowClear={{clearIcon: <CloseOutlined />}}
+									allowClear={{ clearIcon: <CloseOutlined /> }}
 								/>
 							</Form.Item>
 						}
@@ -163,18 +158,15 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 						</Popover>
 						<StyledButton
 							size='small'
-							$color={isFlagged ? '#ff6600' : '#000'}
+							$color={isFlagged ? colorMap.orange : colorMap.black}
 							onClick={onToggleFlag}
 							disabled={isFlaggedList(activeList!)}
+							$disableColor={isFlaggedList(activeList!) ? colorMap.orange : undefined}
 							data-testid='flag-btn'
 						>
 							<FlagFilled />
 						</StyledButton>
-						<StyledButton
-							htmlType='submit'
-							icon={<CheckOutlined />}
-						>
-						</StyledButton>
+						<StyledButton htmlType='submit' icon={<CheckOutlined />} />
 					</Space>
 				</StyledFlex>
 			</Flex>

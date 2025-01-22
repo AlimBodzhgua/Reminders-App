@@ -17,6 +17,7 @@ import {
 	Col,
 	Divider,
 } from 'antd';
+import { colorMap } from 'constants/colorList';
 
 interface AddListFormProps {
 	onSuccess?: () => void;
@@ -29,7 +30,7 @@ export const AddListForm: FC<AddListFormProps> = memo((props) => {
 		onCancel,
 	} = props;
 	const [form] = Form.useForm();
-	const [color, setColor] = useState<string>('#0033cc');
+	const [color, setColor] = useState<string>(colorMap.blue);
 	const [icon, setIcon] = useState<ListsIconType>('UnorderedListOutlined');
 	const dispatch = useAppDispatch();
 	const isLoading = useAppSelector(selectUserIsLoading);
@@ -42,7 +43,7 @@ export const AddListForm: FC<AddListFormProps> = memo((props) => {
 		setIcon(icon);
 	}, []);
 
-	const onAddList = useCallback(async () => {
+	const onAddList = async () => {
 		const { meta, payload } = await dispatch(addList({
 			name: form.getFieldValue('name'),
 			color: color,
@@ -54,7 +55,7 @@ export const AddListForm: FC<AddListFormProps> = memo((props) => {
 
 			if (onSuccess) onSuccess();
 		}
-	}, [dispatch, color, icon, onSuccess]);
+	};
 
 	return (
 		<Form requiredMark={false} onFinish={onAddList} form={form}>

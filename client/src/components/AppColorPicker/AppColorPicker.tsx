@@ -1,5 +1,5 @@
 import { FC, memo, useCallback } from 'react';
-import { colorList } from 'constants/colorList';
+import { colorList, colorMap } from 'constants/colorList';
 import { Radio, Flex, RadioChangeEvent } from 'antd';
 import { StyledRadioButton } from './AppColorPicker.styles';
 
@@ -12,7 +12,7 @@ export const AppColorPicker: FC<AppColorPickerProps> = memo((props) => {
 	const { color, onChange } = props;
 
 	const renderColorlist = useCallback(() => (
-		colorList.map(color => (
+		Object.values(colorMap).map((color) => (
 			<StyledRadioButton
 				key={color}
 				value={color}

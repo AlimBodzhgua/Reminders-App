@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
-import { LoginForm } from '../AuthForms/LoginForm';
 import { Modal } from 'antd';
+import { LoginForm } from '../AuthForms/LoginForm';
 
 interface LoginModalProps {
 	isOpen: boolean;

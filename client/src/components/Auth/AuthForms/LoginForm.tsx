@@ -1,4 +1,4 @@
-import { FC, memo, useCallback } from 'react';
+import { FC, memo } from 'react';
 import { Form, Input, Button } from 'antd';
 import { emailRules, passwordRules } from 'constants/rules';
 import { selectUserIsLoading } from 'store/selectors/userSelectors';
@@ -17,7 +17,7 @@ export const LoginForm: FC<LoginFormProps> = memo((props) => {
 	const dispatch = useAppDispatch();
 	const isLoading = useAppSelector(selectUserIsLoading);
 
-	const onSubmit = useCallback(async () => {
+	const onSubmit = async () => {
 		const data = {
 			email: form.getFieldValue('email'),
 			password: form.getFieldValue('password'),
@@ -30,7 +30,7 @@ export const LoginForm: FC<LoginFormProps> = memo((props) => {
 
 			if (onSuccess) onSuccess();
 		}
-	}, [dispatch]);
+	};
 
 	return (
 		<Form

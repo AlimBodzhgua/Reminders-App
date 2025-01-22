@@ -1,4 +1,4 @@
-import { FC, memo, useCallback } from 'react';
+import { FC, memo } from 'react';
 import { Button, Flex, Form, Input } from 'antd';
 import { emailRules, loginRules, passwordRules } from 'constants/rules';
 import { USER_LOCALSTORAGE_KEY } from 'constants/localStorage';
@@ -17,7 +17,7 @@ export const RegisterForm: FC<RegisterFormProps> = memo((props) => {
 	const dispatch = useAppDispatch();
 	const isLoading = useAppSelector(selectUserIsLoading);
 
-	const onSubmit = useCallback(async () => {
+	const onSubmit = async () => {
 		const data = {
 			email: form.getFieldValue('email'),
 			password: form.getFieldValue('password'),
@@ -32,11 +32,11 @@ export const RegisterForm: FC<RegisterFormProps> = memo((props) => {
 
 			if (onSuccess) onSuccess();
 		}
-	}, [dispatch]);
+	};
 
-	const onReset = useCallback(() => {
+	const onReset = () => {
 		form.resetFields();
-	}, []);
+	};
 
 	return (
 		<Form

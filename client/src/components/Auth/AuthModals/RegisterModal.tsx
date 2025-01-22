@@ -1,6 +1,6 @@
 import { FC, memo } from 'react';
-import { RegisterForm } from '../AuthForms/RegisterForm';
 import { Modal } from 'antd';
+import { RegisterForm } from '../AuthForms/RegisterForm';
 
 interface RegisterModalProps {
 	isOpen: boolean;

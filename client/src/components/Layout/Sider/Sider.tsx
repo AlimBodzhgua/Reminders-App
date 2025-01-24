@@ -1,7 +1,7 @@
 import { FC, memo, useState, useCallback, useEffect } from 'react';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { Button, Flex } from 'antd';
-import { PinnedLists } from 'components/PinnedLists/PinnedLists';
+import { PinnedLists } from 'components/PinnedLists';
 import { UnpinnedLists } from 'components/UnpinnedLists';
 import { AddListModal } from 'components/AddList/AddListModal';
 import { selectUserAuthData, selectUserMounted } from 'store/selectors/userSelectors';

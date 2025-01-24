@@ -2,17 +2,16 @@ import { FC, memo } from 'react';
 import { useAppSelector } from 'hooks/redux';
 import { List, Flex } from 'antd';
 import { selectPinnedLists, selectUserAuthData } from 'store/selectors/userSelectors';
-import { PinnedListItem } from './PinnedListItem/PinnedListItem';
 import { useSortableLists } from 'hooks/useSortableLists';
 import { restrictToParentElement } from '@dnd-kit/modifiers';
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
+import { PinnedListItem } from '../PinnedListItem/PinnedListItem';
 
 export const PinnedLists: FC = memo(() => {
 	const authData = useAppSelector(selectUserAuthData);
 	const pinnedLists = useAppSelector(selectPinnedLists);
 	const { onDragEnd, sensors } = useSortableLists();
-
 
 	return (
 		<DndContext

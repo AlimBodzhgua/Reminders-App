@@ -54,6 +54,7 @@ export const AddListForm: FC<AddListFormProps> = memo((props) => {
 			dispatch(activeListActions.setActiveList(payload as IList));
 
 			if (onSuccess) onSuccess();
+			form.resetFields();
 		}
 	};
 

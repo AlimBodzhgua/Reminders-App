@@ -35,7 +35,7 @@ interface PinnedListItemProps {
 	list: IList;
 }
 
-export const PinnedListItem: FC<PinnedListItemProps> = memo(({list}) => {
+export const PinnedListItem: FC<PinnedListItemProps> = memo(({ list }) => {
 	const [api, contextHolder] = notification.useNotification();
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const [value, setValue] = useState<string>(list.name);

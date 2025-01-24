@@ -19,6 +19,7 @@ import { StyledAvatar } from 'styled/Avatar.styles';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { useListActions } from 'hooks/useListActions';
 import { SortableItem } from 'lib/components/SortableItem';
+import { StyledButton } from 'styled/Button.styles';
 import DotesIcon from 'assets/icons/dotes.svg';
 
 import type { IList } from 'types/list';
@@ -30,7 +31,6 @@ import {
 	StyledName,
 	StyledInput,
 } from './UnpinnedListItem.styles';
-import { StyledButton } from 'styled/Button.styles';
 
 interface MyListsItemProps {
 	list: IList;

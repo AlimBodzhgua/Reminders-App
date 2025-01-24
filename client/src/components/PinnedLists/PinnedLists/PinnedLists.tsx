@@ -19,14 +19,13 @@ export const PinnedLists: FC = memo(() => {
 			modifiers={[restrictToParentElement]}
 			sensors={sensors}
 		>
-			<SortableContext
-				items={pinnedLists.map((list) => list._id)}
-			>
+			<SortableContext items={pinnedLists.map((list) => list._id)}>
 				<List data-testid='pinned-list'>
 					<Flex wrap align='center' gap='5px'>
-						{authData && pinnedLists.map((list) => (
-							<PinnedListItem key={list._id} list={list} />
-						))}
+						{authData &&
+							pinnedLists.map((list) => (
+								<PinnedListItem key={list._id} list={list} />
+							))}
 					</Flex>
 				</List>
 			</SortableContext>

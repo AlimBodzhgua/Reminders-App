@@ -37,7 +37,9 @@ export const StyledTitle = styled(Typography.Title)<StyledTitleProps>`
 
 export const StyledInput = styled(Input)`
 	margin-top: 6px;
-	padding: 0 2px;
+	padding: 0;
+	border-bottom: 1px solid #e5e5e5;
 	border-radius: 0;
-	border: none;
+	color: #fff;
+	font-size: 15px;
 `;

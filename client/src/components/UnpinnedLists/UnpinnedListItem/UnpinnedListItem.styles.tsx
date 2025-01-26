@@ -42,7 +42,8 @@ export const StyledName = styled.div<StyledNameProps>`
 `;
 
 export const StyledInput = styled(Input)`
-	width: 78%;
-	padding: 0 4px;
+	max-width: 70%;
+	padding: 0;
 	border-radius: 0;
+	border-bottom: 1px solid #bcbcbc;
 `;

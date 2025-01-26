@@ -74,6 +74,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 	const hoverExtraContent = (
 		<Dropdown menu={{ items }} placement='bottom'>
 			<StyledButton
+				size='small'
 				data-testid='dropdown-menu'
 				type='text'
 				icon={<DotesIcon />}
@@ -98,7 +99,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 					gap='10px'
 					align='center'
 					justify='space-between'
-					style={{ width: '85%' }}
+					style={{ width: '83%' }}
 				>
 					<Flex align='center' gap='10px'>
 						<StyledAvatar
@@ -110,6 +111,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 								onBlur={onBlurInput}
 								value={value}
 								onChange={onChangeInput}
+								variant='borderless'
 								suffix={<EnterOutlined />}
 								data-testid='list-item-input'
 								size='small'

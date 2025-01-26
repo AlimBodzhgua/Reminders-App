@@ -134,18 +134,19 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({ list }) => {
 								value={value}
 								onChange={onChangeInput}
 								onBlur={onBlurInput}
-								size='small'
+								onPressEnter={onSave}
 								suffix={<EnterOutlined />}
 								autoFocus
-								onPressEnter={onSave}
+								size='small'
+								variant='borderless'
 							/>
 						) : (
 							<StyledTitle
 								level={5}
 								onDoubleClick={onEdit}
+								$isActive={isActive}
 								$margin='5px 0 0 0'
 								$align='left'
-								$isActive={isActive}
 								$weight={500}
 							>
 								{list.name}

@@ -26,6 +26,7 @@ export type PriorityType = 'low' | 'medium' | 'high';
 
 export interface IReminder extends DocResult<IReminder> {
 	_id: Types.ObjectId;
+	listId: Types.ObjectId;
 	title: string;
 	notes?: string;
 	url?: string;

@@ -6,6 +6,11 @@ export const ReminderSchema = new mongoose.Schema<IReminder>({
 		type: String,
 		required: true,
 	},
+	listId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'List',
+		require: true,
+	},
 	notes: String,
 	url: String,
 	priority: String,

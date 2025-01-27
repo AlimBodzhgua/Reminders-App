@@ -10,21 +10,16 @@ import type { AppState } from 'store/config/AppState';
 
 
 export const addReminder = createAsyncThunk<
-	{ listId: string, reminder: IReminder },
-	{ listId: string, reminder: Omit<IReminder, '_id'> },
+	IReminder,
+	Omit<IReminder, '_id'>,
 	{ rejectValue: string }
 >(
 	'addReminder',
-	async (data, { rejectWithValue }) => {
+	async (reminder, { rejectWithValue }) => {
 		try {
-			const response = await $axios.post<IReminder>(
-				`/lists/${data.listId}/reminders`,
-				data.reminder,
-			);
-			return {
-				listId: data.listId,
-				reminder: response.data,
-			};
+			const response = await $axios.post<IReminder>(`/lists/${reminder.listId}/reminders`, reminder);
+
+			return response.data;
 		} catch (err) {
 			return (rejectWithValue(JSON.stringify(err)));
 		}
@@ -33,22 +28,18 @@ export const addReminder = createAsyncThunk<
 
 export const removeReminder = createAsyncThunk<
 	{ listId: string; reminderId: string },
-	string,
-	{
-		rejectValue: string;
-		state: AppState;
-	}
+	IReminder,
+	{ rejectValue: string }
 >(
 	'removeReminder',
-	async (reminderId, { rejectWithValue, getState }) => {
-		const activeList = selectActiveList(getState());
+	async (reminder, { rejectWithValue }) => {
 		try {
 			await $axios.delete(
-				`/lists/${activeList!._id}/reminders/${reminderId}`,
+				`/lists/${reminder.listId}/reminders/${reminder._id}`,
 			);
 			return {
-				listId: activeList!._id,
-				reminderId,
+				listId: reminder.listId,
+				reminderId: reminder._id,
 			};
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
@@ -59,14 +50,12 @@ export const removeReminder = createAsyncThunk<
 export const clearReminders = createAsyncThunk<
 	string,
 	void,
-	{
-		rejectValue: string,
-		state: AppState,
-	}
+	{ rejectValue: string, state: AppState }
 >(
 	'clearReminders',
 	async (_, { rejectWithValue, getState }) => {
 		const activeList = selectActiveList(getState());
+		
 		try {
 			$axios.delete(`/lists/${activeList!._id}/reminders`);
 			return activeList!._id;
@@ -123,23 +112,21 @@ export const moveReminders = createAsyncThunk<
 	}
 );
 
+type ReminderUpdateType = Partial<Omit<IReminder, '_id'>> & { '_id': string };
+
 export const updateReminder = createAsyncThunk<
-	{ reminder: IReminder, listId: string },
-	Pick<IReminder, '_id'> & Partial<Omit<IReminder, '_id'>>,
-	{ rejectValue: string, state: AppState }
+	IReminder,
+	ReminderUpdateType,
+	{ rejectValue: string }
 >(
 	'updateReminder',
-	async (data, { rejectWithValue, getState }) => {
-		const activeList = selectActiveList(getState());
+	async (data, { rejectWithValue }) => {
 		try {
 			const response = await $axios.patch<IReminder>(
-				`/lists/${activeList?._id}/reminders/${data._id}`,
+				`/lists/${data.listId}/reminders/${data._id}`,
 				data
 			);
-			return {
-				reminder: response.data,
-				listId: activeList!._id,
-			};
+			return response.data;
 		} catch (err) {
 			return rejectWithValue(JSON.stringify(err));
 		}

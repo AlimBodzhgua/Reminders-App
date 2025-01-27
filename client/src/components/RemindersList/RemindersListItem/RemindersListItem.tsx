@@ -37,7 +37,7 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 
 	const onRemove = async () => {
 		setIsDeleting(true);
-		const { meta } = await dispatch(removeReminder(reminder._id));
+		const { meta } = await dispatch(removeReminder(reminder));
 
 		if (meta.requestStatus === 'fulfilled' || meta.requestStatus === 'rejected') {
 			setIsDeleting(false);

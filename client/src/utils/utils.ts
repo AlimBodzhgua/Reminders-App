@@ -21,6 +21,7 @@ export const toTimeString = (time: Dayjs) => {
 export const createReminder = (values: FormFields) => {
 	return {
 		title: values.title,
+		listId: values.listId,
 		notes: values.notes,
 		isCompleted: values.isCompleted || false,
 		isFlagged: values.isFlagged,

@@ -28,8 +28,8 @@ export const useActiveList = () => {
 		scheduled: sortReminders(scheduledReminders, activeList?.sortField, activeList?.sortDirection),
 		all: sortReminders(allReminders, activeList?.sortField, activeList?.sortDirection),
 		others: activeList?.reminders || [],
-	}), [activeList]);
-
+	}), [activeList, flaggedReminders, todaysReminders, completedReminders, allReminders]);
+	
 	return {
 		currentList: mapToRemindersList[listType],
 		listType,

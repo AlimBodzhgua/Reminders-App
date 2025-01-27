@@ -165,7 +165,7 @@ const userSlice = createSlice({
 			.addCase(addReminder.fulfilled, (state, { payload }) => {
 				if (state.authData) {
 					const index = state.authData.lists.findIndex((list) => list._id === payload.listId);
-					const newReminders = state.authData.lists[index].reminders.concat(payload.reminder);
+					const newReminders = state.authData.lists[index].reminders.concat(payload);
 					state.authData.lists[index].reminders = newReminders;
 				}
 			})
@@ -189,9 +189,9 @@ const userSlice = createSlice({
 				if (state.authData) {
 					const linstIndex = state.authData.lists.findIndex((list) => list._id === payload.listId);
 					const reminderIndex = state.authData.lists[linstIndex].reminders.findIndex(
-						(reminder) => reminder._id === payload.reminder._id,
+						(reminder) => reminder._id === payload._id,
 					);
-					state.authData.lists[linstIndex].reminders[reminderIndex] = payload.reminder;
+					state.authData.lists[linstIndex].reminders[reminderIndex] = payload;
 				}
 			})
 			// clearReminders

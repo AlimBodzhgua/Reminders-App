@@ -9,6 +9,7 @@ export type PriorityType = 'low' | 'medium' | 'high';
 
 export interface IReminder {
 	_id: string;
+	listId: string;
 	title: string;
 	isCompleted: boolean;
 	isFlagged: boolean;

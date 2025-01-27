@@ -67,6 +67,7 @@ export const mutableListItem: IList = {
 
 export const reminder: IReminder = {
 	title: 'Test',
+	listId: '6479b87c317d486cfe6acd8a',
 	notes: 'test notes',
 	isCompleted: false,
 	priority: 'low',

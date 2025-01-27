@@ -37,6 +37,7 @@ interface AddReminderFormProps {
 export interface FormFields {
 	title: string;
 	isFlagged: boolean;
+	listId: string;
 	notes?: string;
 	isCompleted?: boolean;
 	date?: Dayjs;
@@ -80,12 +81,9 @@ export const AddReminderForm: FC<AddReminderFormProps> = memo((props) => {
 	};
 	
 	const onAddReminder: FormProps<FormFields>['onFinish'] = async (values) => {
-		const newReminder = createReminder({ ...values, isFlagged, location });
+		const reminder = createReminder({ ...values, isFlagged, location, listId: activeList!._id });
 
-		const { meta } = await dispatch(addReminder({
-			listId: activeList!._id,
-			reminder: newReminder,
-		}));
+		const { meta } = await dispatch(addReminder(reminder));
 
 		if (meta.requestStatus === 'fulfilled' && onSuccess) {
 			onSuccess();

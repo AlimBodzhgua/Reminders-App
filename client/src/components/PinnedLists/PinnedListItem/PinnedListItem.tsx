@@ -1,11 +1,4 @@
-import {
-	FC,
-	useState,
-	useMemo,
-	memo,
-	useCallback,
-	ChangeEvent,
-} from 'react';
+import { FC, useState, useMemo, memo, ChangeEvent } from 'react';
 import { Flex, Dropdown, notification } from 'antd';
 import { mapListToIcon } from 'constants/iconsList';
 import { useAppSelector } from 'hooks/redux';
@@ -47,17 +40,12 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({ list }) => {
 		onUpdate,
 		onTogglePin,
 		onSelectList,
-	} = useListActions({list, onEscape: onBlurInput});
+	} = useListActions({ list, onEscape: onBlurInput });
 	const { mapToRemindersList } = useActiveList();
 	
 	const amount = getRemindersListType(list) === 'others' 
 		? list.reminders.length
 		: mapToRemindersList[getRemindersListType(list)].length;
-
-	function onBlurInput() {
-		setIsEdit(false);
-		setValue(list.name);
-	}
 
 	const openNotification = () => {
 		api['info']({
@@ -67,11 +55,16 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({ list }) => {
 		});
 	};
 
-	const onEdit = useCallback(() => {
+	const onEdit = () => {
 		if (list._isMutable) {
 			setIsEdit(prev => !prev);
 		} else openNotification();
-	}, []);
+	};
+
+	function onBlurInput() {
+		setIsEdit(false);
+		setValue(list.name);
+	};
 
 	const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value);

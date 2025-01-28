@@ -1,16 +1,4 @@
-import {
-	FC,
-	memo,
-	useMemo,
-	useState,
-	useCallback,
-	ChangeEvent,
-} from 'react';
-import {
-	PushpinOutlined,
-	DeleteOutlined,
-	EnterOutlined,
-} from '@ant-design/icons';
+import { FC, memo, useMemo, useState, ChangeEvent } from 'react';
 import { Flex, Dropdown } from 'antd';
 import { useAppSelector } from 'hooks/redux';
 import { mapListToIcon } from 'constants/iconsList';
@@ -20,6 +8,11 @@ import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { useListActions } from 'hooks/useListActions';
 import { SortableItem } from 'lib/components/SortableItem';
 import { StyledButton } from 'styled/Button.styles';
+import {
+	PushpinOutlined,
+	DeleteOutlined,
+	EnterOutlined,
+} from '@ant-design/icons';
 import DotesIcon from 'assets/icons/dotes.svg';
 
 import type { IList } from 'types/list';
@@ -49,21 +42,21 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 	const activeList = useAppSelector(selectActiveList);
 	const isActive = activeList?._id === list._id;
 
+	const onToggleEdit = () => {
+		setIsEdit(prev => !prev);
+	};
+	
+	const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+		setValue(e.target.value);
+	};
+	
 	function onBlurInput() {
 		setIsEdit(false);
 		setValue(list.name);
 	}
 
-	const onEdit = useCallback(() => {
-		setIsEdit(prev => !prev);
-	}, []);
-
-	const onChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-		setValue(e.target.value);
-	}, []);
-
 	const onSave = () => {
-		onUpdate(value, onEdit);
+		onUpdate(value, onToggleEdit);
 	};
 
 	const items: MenuProps['items'] = useMemo(() => [
@@ -88,7 +81,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 			<StyledListItem
 				actions={[isHover && hoverExtraContent]}
 				extra={<StyledExtraItem>{list.reminders.length}</StyledExtraItem >}
-				onDoubleClick={onEdit}
+				onDoubleClick={onToggleEdit}
 				onClick={onSelectList}
 				data-testid='unpinned-list-item'
 				role='button'
@@ -108,14 +101,14 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 						/>
 						{isEdit ? (
 							<StyledInput
-								onBlur={onBlurInput}
 								value={value}
 								onChange={onChangeInput}
-								variant='borderless'
+								onBlur={onBlurInput}
+								onPressEnter={onSave}
 								suffix={<EnterOutlined />}
+								variant='borderless'
 								data-testid='list-item-input'
 								size='small'
-								onPressEnter={onSave}
 								autoFocus
 							/>
 						) : (

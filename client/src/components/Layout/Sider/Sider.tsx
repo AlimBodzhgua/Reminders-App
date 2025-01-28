@@ -19,7 +19,7 @@ export const Sider: FC = memo(() => {
 		if (mounted) {
 			setIsCollapsed(authData ? false : true);
 		}
-	}, [authData, mounted])
+	}, [authData, mounted]);
 
 	const onOpenModal = () => {
 		setIsOpen(true);

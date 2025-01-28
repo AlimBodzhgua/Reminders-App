@@ -44,7 +44,7 @@ export default [
 			'react/jsx-indent-props': ['error', 'tab'],
 			'react/jsx-max-props-per-line': ['warn', { maximum: 3 }],
 			'react/prop-types': 'off',
-			'indent': ['error', 'tab'],
+			'indent': ['error', 'tab', { 'SwitchCase': 1 }],
 			'react/jsx-filename-extension': [
 				2, 
 				{extensions: ['.js', '.jsx', '.tsx']}

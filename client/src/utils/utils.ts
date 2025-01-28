@@ -79,12 +79,13 @@ export const countCompletedReminders = (reminders: IReminder[]) => {
 
 export const toPriorityLevel = (priority: PriorityType) => {
 	switch (priority) {
-	case 'low':
-		return 1;
-	case 'medium':
-		return 2;
-	case 'high':
-		return 3;
+		case 'low':
+			return 1;
+		case 'medium':
+			return 2;
+		case 'high':
+			return 3;
+		default: return 0;
 	}
 };
 
@@ -153,15 +154,16 @@ export const sortReminders = (
 	sortDirection: SortDirectionType = 'asc',
 ) => {
 	switch (sortField) {
-	case 'name':
-		return sortByName(reminders, sortDirection);
-	case 'priority':
-		return sortByPriority(reminders, sortDirection);
-	case 'creation':
-		return sortByCreationDate(reminders, sortDirection);
-	case 'deadline':
-		return sortByDeadline(reminders, sortDirection);		
-	case 'manually':
-		return reminders;
+		case 'name':
+			return sortByName(reminders, sortDirection);
+		case 'priority':
+			return sortByPriority(reminders, sortDirection);
+		case 'creation':
+			return sortByCreationDate(reminders, sortDirection);
+		case 'deadline':
+			return sortByDeadline(reminders, sortDirection);
+		case 'manually':
+			return reminders;
+		default: return reminders;
 	}
 };

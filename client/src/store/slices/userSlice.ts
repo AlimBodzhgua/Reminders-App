@@ -113,13 +113,15 @@ const userSlice = createSlice({
 				state.isLoading = false;
 				state.error = undefined;
 				if (state.authData) {
-					const listIndex = state.authData.lists.findIndex((list) => list._id === action.payload._id);
+					const listIndex = state.authData.lists.findIndex(
+						(list) => list._id === action.payload._id,
+					);
 
 					state.authData.lists[listIndex] = {
 						...state.authData.lists[listIndex],
 						sortField: action.payload.sortField,
 						sortDirection: action.payload.sortDirection,
-					}
+					};
 				}
 			})
 			// removeList
@@ -148,10 +150,13 @@ const userSlice = createSlice({
 				state.isLoading = false;
 				state.error = undefined;
 
-				let listIndex = state.authData?.lists.findIndex((list) => list._id === action.payload._id);
+				const listIndex = state.authData?.lists.findIndex((list) => list._id === action.payload._id);
 
 				if (listIndex) {
-					state.authData!.lists[listIndex] = {...state.authData!.lists[listIndex], ...action.payload};
+					state.authData!.lists[listIndex] = {
+						...state.authData!.lists[listIndex],
+						...action.payload,
+					};
 				}
 			})
 			.addCase(updateList.rejected, (state, action) => {
@@ -176,7 +181,9 @@ const userSlice = createSlice({
 			.addCase(removeReminder.fulfilled, (state, { payload }) => {
 				if (state.authData) {
 					const listIndex = state.authData.lists.findIndex((list) => list._id === payload.listId);
-					const reminderIndex = state.authData.lists[listIndex].reminders.findIndex((reminder) => reminder._id === payload.reminderId);
+					const reminderIndex = state.authData.lists[listIndex].reminders.findIndex(
+						(reminder) => reminder._id === payload.reminderId,
+					);
 
 					state.authData.lists[listIndex].reminders.splice(reminderIndex, 1);
 				}

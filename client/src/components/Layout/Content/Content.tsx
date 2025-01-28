@@ -46,7 +46,12 @@ export const Content: FC<ContentProps> = memo((props) => {
 	if (!authData) {
 		return (
 			<StyledContent data-testid='content'>
-				<Flex justify='center' align='center' vertical style={{ height: '80%' }}>
+				<Flex
+					justify='center'
+					align='center'
+					vertical
+					style={{ height: '80%' }}
+				>
 					<StyledLockFilled />
 					<StyledTitle $color='#D0D0D0' $weight={500}>
 						Restricted Access

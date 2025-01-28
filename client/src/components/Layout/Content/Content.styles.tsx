@@ -27,7 +27,7 @@ export const StyledPlusOutlined = styled(PlusOutlined)`
 export const StyledLockFilled = styled(LockFilled)`
 	color: #ffc069;
 	font-size: 42px;
-`
+`;
 
 interface StyledTitleProps {
 	$color?: string;

@@ -11,7 +11,6 @@ export const StyledSider = styled(Layout.Sider)`
 	}
 
 	.ant-layout-sider-zero-width-trigger {
-		color: red;
 		top: 12px;
 		background-color: #F5F6F7;
 		color: #000;

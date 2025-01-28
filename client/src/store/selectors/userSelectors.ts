@@ -15,6 +15,11 @@ export const selectUserMounted = (state: AppState) => state.user._mounted;
 export const selectUserLists = createSelector(
 	selectUserAuthData,
 	(authData) => authData?.lists || []
+)
+
+export const selectListAll = createSelector(
+	selectUserLists,
+	(lists) => lists.find((list) => list.name === 'All' && !list._isMutable) || lists[0]
 );
 
 export const selectActiveListFromUser = createSelector(

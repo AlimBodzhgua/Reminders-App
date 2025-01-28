@@ -3,7 +3,8 @@ import { removeList, updateList } from 'store/actions/userActions';
 import { activeListActions } from 'store/slices/activeListSlice';
 import { searchBarActions } from 'store/slices/searchBarSlice';
 import { ACTIVE_LIST_LOCALSTORAGE_KEY } from 'constants/localStorage';
-import { useAppDispatch } from 'hooks/redux';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { selectListAll } from 'store/selectors/userSelectors';
 
 import type { IList } from 'types/list';
 
@@ -14,6 +15,7 @@ interface UseListActionsProps {
 
 export const useListActions = ({ list, onEscape }: UseListActionsProps) => {
 	const dispatch = useAppDispatch();
+	const allList = useAppSelector(selectListAll);
 
 	useEffect(() => {
 		window.addEventListener('keydown', onEscapePress);
@@ -29,6 +31,7 @@ export const useListActions = ({ list, onEscape }: UseListActionsProps) => {
 
 	const onRemove = useCallback(async () => {
 		await dispatch(removeList(list._id));
+		dispatch(activeListActions.setActiveList(allList));
 	}, [dispatch]);
 
 	const onTogglePin = useCallback(() => {

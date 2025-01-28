@@ -48,12 +48,14 @@ export const StyledLink = styled(Typography.Link)`
 
 interface StyledCheckboxProps {
 	$color?: string;
+	$opacity?: number;
 }
 
 export const StyledCheckbox = styled(Checkbox)<StyledCheckboxProps>`
 	${baseCheckbox};
 	margin-top: 5px;
 	border-color: ${props => props.$color || '#000'};
+	opacity: ${props => props.$opacity};
 	
 	.ant-checkbox-inner::after {
 		background-color: ${props => props.$color || '#000'};

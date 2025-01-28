@@ -33,27 +33,37 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 	const [notes, setNotes] = useState<string | undefined>(reminder.notes);
 
 	const onChangeTitle = (value: string) => {
-		dispatch(updateReminder({ _id: reminder._id, title: value }));
+		const newReminder = { _id: reminder._id, listId: reminder.listId, title: value };
+
+		dispatch(updateReminder(newReminder));
 		setTitle(value);
 	};
 
 	const onChangeNotes = (value: string) => {
-		dispatch(updateReminder({ _id: reminder._id, notes: value }));
+		const newReminder = { _id: reminder._id, listId: reminder.listId, notes: value };
+
+		dispatch(updateReminder(newReminder));
 		setNotes(value);
 	};
 
 	const onChangeDate: DatePickerProps['onChange'] = (date, dateString) => {
 		const newDetailsData = { ...reminder.details, date: dateString as string };
-		dispatch(updateReminder({ _id: reminder._id, details: newDetailsData }));
+		const newReminder = { _id: reminder._id, listId: reminder.listId, details: newDetailsData };
+
+		dispatch(updateReminder(newReminder));
 	};
 
 	const onChangeTime: TimePickerProps['onChange'] = (time, timeString) => {
 		const newDetailsData = { ...reminder.details, time: timeString as string };
-		dispatch(updateReminder({ _id: reminder._id, details: newDetailsData }));
+		const newReminder = { _id: reminder._id, listId: reminder.listId, details: newDetailsData };
+
+		dispatch(updateReminder(newReminder));
 	};
 
 	const onChangePriority = (value: PriorityType) => {
-		dispatch(updateReminder({ _id: reminder._id, priority: value }));
+		const newReminder = { _id: reminder._id, listId: reminder.listId, priority: value };
+
+		dispatch(updateReminder(newReminder));
 	};
 
 	const onChangeUrl = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,17 +71,18 @@ export const ReminderOverview: FC<ReminderOverviewProps> = memo(({reminder}) => 
 	};
 
 	const onAddURL = async () => {
-		const { meta } = await dispatch(updateReminder({ _id: reminder._id, url }));
+		const newReminder = { _id: reminder._id, listId: reminder.listId, url };
+
+		const { meta } = await dispatch(updateReminder(newReminder));
 		if (meta.requestStatus === 'rejected') {
 			messageApi.open({ type: 'error', content: 'Incorrect URL' });
 		}
 	};
 
 	const onToggleFlag = () => {
-		dispatch(updateReminder({
-			_id: reminder._id,
-			isFlagged: !reminder.isFlagged,
-		}));
+		const newReminder = { _id: reminder._id, listId: reminder.listId, isFlagged: !reminder.isFlagged };
+		
+		dispatch(updateReminder(newReminder));
 	};
 
 	return (

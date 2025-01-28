@@ -112,7 +112,7 @@ export const moveReminders = createAsyncThunk<
 	}
 );
 
-type ReminderUpdateType = Partial<Omit<IReminder, '_id'>> & { '_id': string };
+type ReminderUpdateType = Partial<Omit<IReminder, '_id' | 'listId'>> & { _id: string, listId: string };
 
 export const updateReminder = createAsyncThunk<
 	IReminder,

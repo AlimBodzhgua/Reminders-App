@@ -34,6 +34,7 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 	const isDatePassed = isDateBefore(reminder.details?.date, reminder.details?.time);
 	const [isHover, hoverProps] = useHover();
 	const [isDeleting, setIsDeleting] = useState<boolean>(false);
+	const [isChecking, setIsChecking] = useState<boolean>(false);
 
 	const onRemove = async () => {
 		setIsDeleting(true);
@@ -48,8 +49,15 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 		e.stopPropagation();
 	};
 
-	const onChangeCompleted: CheckboxProps['onChange'] = (e) => {
-		dispatch(updateReminder({ _id: reminder._id, isCompleted: e.target.checked }));
+	const onChangeCompleted: CheckboxProps['onChange'] = async (e) => {
+		setIsChecking(true);
+		const newReminder = { _id: reminder._id, listId: reminder.listId, isCompleted: e.target.checked };
+
+		const { meta } = await dispatch(updateReminder(newReminder));
+
+		if (meta.requestStatus === 'fulfilled' || meta.requestStatus === 'rejected') {
+			setIsChecking(false);
+		}
 	};
 
 	return (
@@ -63,8 +71,10 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 				<Flex gap={15} align='start' style={{width: '100%'}}>
 					<StyledCheckbox
 						$color={activeList?.color}
+						$opacity={isChecking ? 0.4 : 1}
 						checked={reminder.isCompleted}
 						onChange={onChangeCompleted}
+						disabled={isChecking}
 					/>
 					<Flex vertical gap={0} style={{width: '100%'}}>
 						<Flex

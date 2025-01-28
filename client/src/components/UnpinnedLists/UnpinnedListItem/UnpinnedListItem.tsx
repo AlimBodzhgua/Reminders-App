@@ -39,6 +39,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 	const [value, setValue] = useState<string>(list.name);
 	const [isHover, hoverProps] = useHover();
 	const [isEdit, setIsEdit] = useState<boolean>(false);
+	const [isDeleting, setisDeleting] = useState<boolean>(false);
 	const activeList = useAppSelector(selectActiveList);
 	const isActive = activeList?._id === list._id;
 
@@ -59,9 +60,15 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 		onUpdate(value, onToggleEdit);
 	};
 
+	const handleRemove = async () => {
+		setisDeleting(true);
+		await onRemove();
+		setisDeleting(false);
+	};
+
 	const items: MenuProps['items'] = useMemo(() => [
 		{ key: '1', label: <PushpinOutlined onClick={onTogglePin} /> },
-		{ key: '2', label: <DeleteOutlined onClick={onRemove} /> },
+		{ key: '2', label: <DeleteOutlined onClick={handleRemove} /> },
 	], []);
 
 	const hoverExtraContent = (
@@ -86,6 +93,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 				data-testid='unpinned-list-item'
 				role='button'
 				$bgColor={isActive ? '#d9d9d9' : ''}
+				$opacity={isDeleting ?  0.3 : 1}
 				{...hoverProps}
 			>
 				<Flex

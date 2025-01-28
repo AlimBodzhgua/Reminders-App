@@ -1,7 +1,14 @@
 import { Typography, Card, List, Input } from 'antd';
 import styled from 'styled-components';
 
-export const StyledListItem = styled(List.Item)`
+interface StyledListItemProps {
+	$opacity: number;
+}
+
+export const StyledListItem = styled(List.Item)<StyledListItemProps>`
+	transition: opacity .2s linear;
+	opacity: ${props => props.$opacity};
+
 	&&& {
 		padding: 2px 0;
 		border-block-end: none;

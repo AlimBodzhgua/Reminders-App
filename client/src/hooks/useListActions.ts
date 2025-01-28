@@ -27,13 +27,11 @@ export const useListActions = ({ list, onEscape }: UseListActionsProps) => {
 		}
 	}, [onEscape]);
 
-	const onRemove = useCallback((e: MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-		dispatch(removeList(list._id));
+	const onRemove = useCallback(async () => {
+		await dispatch(removeList(list._id));
 	}, [dispatch]);
 
-	const onTogglePin = useCallback((e: MouseEvent<SVGElement | HTMLSpanElement>) => {
-		e.stopPropagation();
+	const onTogglePin = useCallback(() => {
 		dispatch(updateList({ _id: list._id, pinned: !list.pinned }));
 	}, [dispatch]);
 

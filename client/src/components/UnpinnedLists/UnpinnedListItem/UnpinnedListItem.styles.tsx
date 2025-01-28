@@ -2,7 +2,8 @@ import { List, Input } from 'antd';
 import styled from 'styled-components';
 
 interface StyledListItemProps {
-	$bgColor?: string
+	$bgColor?: string;
+	$opacity?: number;
 }
 
 export const StyledListItem = styled(List.Item)<StyledListItemProps>`
@@ -10,7 +11,12 @@ export const StyledListItem = styled(List.Item)<StyledListItemProps>`
 	border-radius: 8px;
 	color: #515151;
 	background-color: ${props => props.$bgColor};
-	transition: background-color .3s;
+
+	opacity: ${props => props.$opacity};
+	
+	transition:
+		background-color .3s linear,
+		opacity .2s linear;
 
 	&&& {
 		border-block-end: none;

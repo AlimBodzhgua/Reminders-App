@@ -29,8 +29,8 @@ export const colorNames = [
 	'black',
 ] as const;
 
-type ColorType = typeof colorList[number];
-type ColorNames = typeof colorNames[number];
+export type ColorType = typeof colorList[number];
+export type ColorNames = typeof colorNames[number];
 
 export const colorMap: Record<ColorNames, ColorType> = {
 	red: '#ff0000',

@@ -23,6 +23,7 @@ import {
 	StyledTitle,
 	StyledInput
 } from './PinnedListItem.styles';
+import { ListDropdownMenu } from 'components/ListDropdownMenu/ListDropdownMenu';
 
 interface PinnedListItemProps {
 	list: IList;
@@ -101,61 +102,63 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({ list }) => {
 	return (
 		<SortableItem id={list._id} wrapperWidth='49%'>
 			{contextHolder}
-			<StyledListItem
-				onClick={onSelectList}
-				$opacity={isDeleting ?  0.3 : 1}
-				{...hoverProps}
-			>
-				<StyledCard
-					type='inner'
-					$bgColor={isActive ? activeList.color : '#D0D0D0'}
-					size='small'
+			<ListDropdownMenu listType='pinned' list={list} disabled={!(list._isMutable)}>
+				<StyledListItem
+					onClick={onSelectList}
+					$opacity={isDeleting ?  0.3 : 1}
+					{...hoverProps}
 				>
-					<Flex align='center' justify='space-between'>
-						<StyledAvatar
-							icon={mapListToIcon[list.icon]}
-							$bgColor={isActive ? '#fff' : list.color}
-							$color={isActive ? list.color : '#fff'}
-							size={28}
-						/>
-						<Flex align='center' gap='5px'>
-							{(isHover && list._isMutable) && hoverExtraContent}
-							<StyledTitle
-								level={4}
-								$margin='0'
-								$isActive={isActive}
-							>
-								{amount}
-							</StyledTitle>
-						</Flex>
-					</Flex>
-					{isEdit 
-						? (
-							<StyledInput
-								value={value}
-								onChange={onChangeInput}
-								onBlur={onBlurInput}
-								onPressEnter={onSave}
-								suffix={<EnterOutlined />}
-								autoFocus
-								size='small'
-								variant='borderless'
+					<StyledCard
+						type='inner'
+						$bgColor={isActive ? activeList.color : '#D0D0D0'}
+						size='small'
+					>
+						<Flex align='center' justify='space-between'>
+							<StyledAvatar
+								icon={mapListToIcon[list.icon]}
+								$bgColor={isActive ? '#fff' : list.color}
+								$color={isActive ? list.color : '#fff'}
+								size={28}
 							/>
-						) : (
-							<StyledTitle
-								level={5}
-								onDoubleClick={onEdit}
-								$isActive={isActive}
-								$margin='5px 0 0 0'
-								$align='left'
-								$weight={500}
-							>
-								{list.name}
-							</StyledTitle>
-						)
-					}
-				</StyledCard>
-			</StyledListItem>
+							<Flex align='center' gap='5px'>
+								{(isHover && list._isMutable) && hoverExtraContent}
+								<StyledTitle
+									level={4}
+									$margin='0'
+									$isActive={isActive}
+								>
+									{amount}
+								</StyledTitle>
+							</Flex>
+						</Flex>
+						{isEdit 
+							? (
+								<StyledInput
+									value={value}
+									onChange={onChangeInput}
+									onBlur={onBlurInput}
+									onPressEnter={onSave}
+									suffix={<EnterOutlined />}
+									autoFocus
+									size='small'
+									variant='borderless'
+								/>
+							) : (
+								<StyledTitle
+									level={5}
+									onDoubleClick={onEdit}
+									$isActive={isActive}
+									$margin='5px 0 0 0'
+									$align='left'
+									$weight={500}
+								>
+									{list.name}
+								</StyledTitle>
+							)
+						}
+					</StyledCard>
+				</StyledListItem>
+			</ListDropdownMenu>
 		</SortableItem>
 	);
 });

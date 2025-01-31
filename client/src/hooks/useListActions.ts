@@ -38,8 +38,7 @@ export const useListActions = ({ list, onEscape }: UseListActionsProps) => {
 		dispatch(updateList({ _id: list._id, pinned: !list.pinned }));
 	}, [dispatch]);
 
-	const onSelectList = useCallback((e: MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
+	const onSelectList = useCallback(() => {
 		dispatch(activeListActions.setActiveList(list));
 		dispatch(searchBarActions.setIsSearching(false));
 		localStorage.setItem(ACTIVE_LIST_LOCALSTORAGE_KEY, JSON.stringify(list));

@@ -1,6 +1,7 @@
 import { mapListToIcon } from 'constants/iconsList';
-import { IReminder } from './reminder';
 import { sortField, sortDirection } from 'constants/sort';
+import { ColorType } from 'constants/colorList';
+import { IReminder } from './reminder';
 
 export type ListsIconType = keyof typeof mapListToIcon;
 
@@ -12,7 +13,7 @@ export interface IList {
 	_isMutable: boolean;
 	name: string;
 	icon: ListsIconType;
-	color: string;
+	color: ColorType;
 	pinned: boolean;
 	sortField: SortFieldType;
 	sortDirection: SortDirectionType;

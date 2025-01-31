@@ -24,6 +24,7 @@ import {
 	StyledName,
 	StyledInput,
 } from './UnpinnedListItem.styles';
+import { ListDropdownMenu } from 'components/ListDropdownMenu/ListDropdownMenu';
 
 interface MyListsItemProps {
 	list: IList;
@@ -85,46 +86,48 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 
 	return (
 		<SortableItem id={list._id}>
-			<StyledListItem
-				actions={[isHover && hoverExtraContent]}
-				extra={<StyledExtraItem>{list.reminders.length}</StyledExtraItem >}
-				onDoubleClick={onToggleEdit}
-				onClick={onSelectList}
-				data-testid='unpinned-list-item'
-				role='button'
-				$bgColor={isActive ? '#d9d9d9' : ''}
-				$opacity={isDeleting ?  0.3 : 1}
-				{...hoverProps}
-			>
-				<Flex
-					gap='10px'
-					align='center'
-					justify='space-between'
-					style={{ width: '83%' }}
+			<ListDropdownMenu listType='unpinned' list={list}>
+				<StyledListItem
+					actions={[isHover && hoverExtraContent]}
+					extra={<StyledExtraItem>{list.reminders.length}</StyledExtraItem >}
+					onDoubleClick={onToggleEdit}
+					onClick={onSelectList}
+					data-testid='unpinned-list-item'
+					role='button'
+					$bgColor={isActive ? '#d9d9d9' : ''}
+					$opacity={isDeleting ?  0.3 : 1}
+					{...hoverProps}
 				>
-					<Flex align='center' gap='10px'>
-						<StyledAvatar
-							icon={mapListToIcon[list.icon]}
-							$bgColor={list.color}
-						/>
-						{isEdit ? (
-							<StyledInput
-								value={value}
-								onChange={onChangeInput}
-								onBlur={onBlurInput}
-								onPressEnter={onSave}
-								suffix={<EnterOutlined />}
-								variant='borderless'
-								data-testid='list-item-input'
-								size='small'
-								autoFocus
+					<Flex
+						gap='10px'
+						align='center'
+						justify='space-between'
+						style={{ width: '83%' }}
+					>
+						<Flex align='center' gap='10px'>
+							<StyledAvatar
+								icon={mapListToIcon[list.icon]}
+								$bgColor={list.color}
 							/>
-						) : (
-							<StyledName>{list.name}</StyledName>
-						)}
+							{isEdit ? (
+								<StyledInput
+									value={value}
+									onChange={onChangeInput}
+									onBlur={onBlurInput}
+									onPressEnter={onSave}
+									suffix={<EnterOutlined />}
+									variant='borderless'
+									data-testid='list-item-input'
+									size='small'
+									autoFocus
+								/>
+							) : (
+								<StyledName>{list.name}</StyledName>
+							)}
+						</Flex>
 					</Flex>
-				</Flex>
-			</StyledListItem>
+				</StyledListItem>
+			</ListDropdownMenu>							
 		</SortableItem>
 	);
 });

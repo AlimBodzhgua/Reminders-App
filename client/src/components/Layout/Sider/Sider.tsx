@@ -3,7 +3,7 @@ import { PlusCircleOutlined } from '@ant-design/icons';
 import { Button, Flex } from 'antd';
 import { PinnedLists } from 'components/PinnedLists';
 import { UnpinnedLists } from 'components/UnpinnedLists';
-import { AddListModal } from 'components/AddList/AddListModal';
+import { AddListModal } from 'components/ListForms';
 import { selectUserAuthData, selectUserMounted } from 'store/selectors/userSelectors';
 import { useAppSelector } from 'hooks/redux';
 import { SearchBar } from 'components/SearchBar/SearchBar';

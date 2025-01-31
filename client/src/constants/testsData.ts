@@ -1,6 +1,7 @@
 import { IList } from 'types/list';
 import { IReminder } from 'types/reminder';
 import { IUser } from 'types/user';
+import { colorMap } from './colorList';
 
 const authData: IUser = {
 	_id: '667a6de9317d486cfe6acdb4',
@@ -44,7 +45,7 @@ export const searchBar = {
 export const todayList: IList = {
 	name: 'Today',
 	icon: 'UnorderedListOutlined',
-	color: 'blue',
+	color: colorMap.blue,
 	pinned: true,
 	_isMutable: false,
 	sortField: 'name',
@@ -56,7 +57,7 @@ export const todayList: IList = {
 export const mutableListItem: IList = {
 	name: 'Test',
 	icon: 'UnorderedListOutlined',
-	color: 'blue',
+	color: colorMap.blue,
 	pinned: true,
 	_isMutable: true,
 	sortField: 'name',

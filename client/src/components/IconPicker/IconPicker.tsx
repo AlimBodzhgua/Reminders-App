@@ -3,9 +3,10 @@ import { Flex, Popover, Radio, RadioChangeEvent } from 'antd';
 import { mapListToIcon } from 'constants/iconsList';
 import { ListsIconType } from 'types/list';
 import { StyledButton } from 'styled/Button.styles';
+import { ColorType } from 'constants/colorList';
 
 interface IconPickerColor {
-	color: string;
+	color: ColorType;
 	icon: ListsIconType;
 	onChange: (icon: ListsIconType) => void;
 }

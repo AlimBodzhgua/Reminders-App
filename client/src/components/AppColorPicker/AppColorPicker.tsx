@@ -1,10 +1,10 @@
 import { FC, memo, useCallback } from 'react';
-import { colorList, colorMap } from 'constants/colorList';
+import { colorList, colorMap, ColorType } from 'constants/colorList';
 import { Radio, Flex, RadioChangeEvent } from 'antd';
 import { StyledRadioButton } from './AppColorPicker.styles';
 
 interface AppColorPickerProps {
-	color: string;
+	color: ColorType;
 	onChange: (e: RadioChangeEvent) => void;
 }
 

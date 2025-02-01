@@ -1,17 +1,22 @@
 import { useState, useMemo } from 'react';
 
-interface hoverProps {
+type HoverProps = {
 	onMouseEnter: () => void;
 	onMouseLeave: () => void;
 }
 
-export const useHover = (): [boolean, hoverProps] => {
-	const [hovering, setHovering] = useState<boolean>(false);
+type HoverReturnValues = {
+	isHover: boolean;
+	hoverProps: HoverProps;
+}
 
-	const hoverProps:hoverProps = useMemo(() => ({
-		onMouseEnter: () => setHovering(true),
-		onMouseLeave: () => setHovering(false),
+export const useHover = (): HoverReturnValues => {
+	const [isHover, setIsHover] = useState<boolean>(false);
+
+	const hoverProps: HoverProps = useMemo(() => ({
+		onMouseEnter: () => setIsHover(true),
+		onMouseLeave: () => setIsHover(false),
 	}), []);
 
-	return [hovering, hoverProps];
+	return { isHover, hoverProps };
 };

@@ -32,9 +32,9 @@ export const RemindersListItem: FC<RemindersListItemProps> = memo(({reminder}) =
 	const dispatch = useAppDispatch();
 	const activeList = useAppSelector(selectActiveList);
 	const isDatePassed = isDateBefore(reminder.details?.date, reminder.details?.time);
-	const [isHover, hoverProps] = useHover();
 	const [isDeleting, setIsDeleting] = useState<boolean>(false);
 	const [isChecking, setIsChecking] = useState<boolean>(false);
+	const { isHover, hoverProps } = useHover();
 
 	const onRemove = async () => {
 		setIsDeleting(true);

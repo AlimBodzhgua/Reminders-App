@@ -1,9 +1,10 @@
 import { FC, memo, useCallback, useState } from 'react';
-import { Flex, Popover, Radio, RadioChangeEvent } from 'antd';
+import { RadioChangeEvent } from 'antd';
 import { mapListToIcon } from 'constants/iconsList';
-import { ListsIconType } from 'types/list';
 import { StyledButton } from 'styled/Button.styles';
-import { ColorType } from 'constants/colorList';
+import type { ColorType } from 'constants/colorList';
+import type { ListsIconType } from 'types/list';
+import { IconPopover } from './IconPopover';
 
 interface IconPickerColor {
 	color: ColorType;
@@ -28,37 +29,12 @@ export const IconPicker: FC<IconPickerColor> = memo((props) => {
 		setIsOpen(false);
 	};
 
-	const renderIconslist = useCallback(() => (
-		Object.keys(mapListToIcon).map((icon, index) => (
-			<Radio.Button
-				key={index}
-				value={icon}
-				data-testid='icon-item'
-			>
-				{mapListToIcon[icon as ListsIconType]}
-			</Radio.Button>
-		))
-	), [mapListToIcon, color]);
-
-
-	const content = (
-		<Radio.Group
-			size='small'
-			onChange={onChangeIcon}
-			data-testid='icon-popover-content'
-		>
-			<Flex wrap gap='small' style={{width: '145px'}}>
-				{renderIconslist()}
-			</Flex>
-		</Radio.Group>
-	);
 
 	return (
-		<Popover
-			open={isOpen}
-			content={content}
+		<IconPopover
+			isOpen={isOpen}
 			onOpenChange={onToggleShow}
-			trigger='click'
+			onIconChange={onChangeIcon}
 			placement='right'
 		>
 			<StyledButton
@@ -70,6 +46,6 @@ export const IconPicker: FC<IconPickerColor> = memo((props) => {
 				$color='white'
 				$hoverBgColor={color}
 			/>
-		</Popover>
+		</IconPopover>
 	);
 });

@@ -1,9 +1,7 @@
 import { FC, useState, useMemo, memo, ChangeEvent } from 'react';
 import { Flex, Dropdown, notification } from 'antd';
-import { mapListToIcon } from 'constants/iconsList';
 import { useAppSelector } from 'hooks/redux';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
-import { StyledAvatar } from 'styled/Avatar.styles';
 import { StyledButton } from 'styled/Button.styles';
 import { useHover } from 'hooks/useHover';
 import { EnterOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -11,6 +9,8 @@ import { useListActions } from 'hooks/useListActions';
 import { SortableItem } from 'lib/components/SortableItem';
 import { useActiveList } from 'hooks/useActiveList';
 import { getRemindersListType } from 'utils/utils';
+import { ListDropdownMenu } from 'components/ListDropdownMenu/ListDropdownMenu';
+import { ListAvatar } from 'components/ListAvatar/ListAvatar';
 import UnpinIcon from 'assets/icons/unpin.svg';
 import DotesIcon from 'assets/icons/dotes.svg';
 
@@ -23,7 +23,6 @@ import {
 	StyledTitle,
 	StyledInput
 } from './PinnedListItem.styles';
-import { ListDropdownMenu } from 'components/ListDropdownMenu/ListDropdownMenu';
 
 interface PinnedListItemProps {
 	list: IList;
@@ -33,8 +32,8 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({ list }) => {
 	const [api, contextHolder] = notification.useNotification();
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const [value, setValue] = useState<string>(list.name);
-	const [isHover, hoverProps] = useHover();
 	const [isDeleting, setIsDeleting] = useState<boolean>(false);
+	const { isHover, hoverProps } = useHover();
 	const activeList = useAppSelector(selectActiveList);
 	const isActive = activeList?._id === list._id;
 	const {
@@ -114,12 +113,8 @@ export const PinnedListItem: FC<PinnedListItemProps> = memo(({ list }) => {
 						size='small'
 					>
 						<Flex align='center' justify='space-between'>
-							<StyledAvatar
-								icon={mapListToIcon[list.icon]}
-								$bgColor={isActive ? '#fff' : list.color}
-								$color={isActive ? list.color : '#fff'}
-								size={28}
-							/>
+							<ListAvatar list={list} isActive={isActive}/>
+
 							<Flex align='center' gap='5px'>
 								{(isHover && list._isMutable) && hoverExtraContent}
 								<StyledTitle

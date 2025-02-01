@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import { componentRender } from 'lib/tests/componentRender';
 import { mapListToIcon } from 'constants/iconsList';
+import { colorMap } from 'constants/colorList';
 import userEvent from '@testing-library/user-event';
 import { IconPicker } from './IconPicker';
 
@@ -9,7 +10,7 @@ describe('IconPicker', () => {
 	it('Components should render', () => {
 		componentRender(
 			<IconPicker
-				color={'#ff0000'}
+				color={colorMap.red}
 				onChange={vi.fn()}
 				icon='UnorderedListOutlined'
 			/>
@@ -21,7 +22,7 @@ describe('IconPicker', () => {
 		const user = userEvent.setup();
 		componentRender(
 			<IconPicker
-				color={'#ff0000'}
+				color={colorMap.red}
 				onChange={vi.fn()}
 				icon='UnorderedListOutlined'
 			/>
@@ -34,7 +35,7 @@ describe('IconPicker', () => {
 		const user = userEvent.setup();
 		componentRender(
 			<IconPicker
-				color={'#ff0000'}
+				color={colorMap.red}
 				onChange={vi.fn()}
 				icon='UnorderedListOutlined'
 			/>

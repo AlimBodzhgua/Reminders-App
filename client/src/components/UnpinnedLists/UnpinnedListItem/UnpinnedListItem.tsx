@@ -1,9 +1,7 @@
 import { FC, memo, useMemo, useState, ChangeEvent } from 'react';
 import { Flex, Dropdown } from 'antd';
 import { useAppSelector } from 'hooks/redux';
-import { mapListToIcon } from 'constants/iconsList';
 import { useHover } from 'hooks/useHover';
-import { StyledAvatar } from 'styled/Avatar.styles';
 import { selectActiveList } from 'store/selectors/activeListSelectors';
 import { useListActions } from 'hooks/useListActions';
 import { SortableItem } from 'lib/components/SortableItem';
@@ -13,6 +11,8 @@ import {
 	DeleteOutlined,
 	EnterOutlined,
 } from '@ant-design/icons';
+import { ListAvatar } from 'components/ListAvatar/ListAvatar';
+import { ListDropdownMenu } from 'components/ListDropdownMenu/ListDropdownMenu';
 import DotesIcon from 'assets/icons/dotes.svg';
 
 import type { IList } from 'types/list';
@@ -24,7 +24,6 @@ import {
 	StyledName,
 	StyledInput,
 } from './UnpinnedListItem.styles';
-import { ListDropdownMenu } from 'components/ListDropdownMenu/ListDropdownMenu';
 
 interface MyListsItemProps {
 	list: IList;
@@ -38,7 +37,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 		onSelectList,
 	} = useListActions({ list, onEscape: onBlurInput });
 	const [value, setValue] = useState<string>(list.name);
-	const [isHover, hoverProps] = useHover();
+	const { isHover, hoverProps} = useHover();
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const [isDeleting, setisDeleting] = useState<boolean>(false);
 	const activeList = useAppSelector(selectActiveList);
@@ -84,18 +83,19 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 		</Dropdown>
 	);
 
+
 	return (
 		<SortableItem id={list._id}>
 			<ListDropdownMenu listType='unpinned' list={list}>
 				<StyledListItem
 					actions={[isHover && hoverExtraContent]}
-					extra={<StyledExtraItem>{list.reminders.length}</StyledExtraItem >}
+					extra={<StyledExtraItem>{list.reminders.length}</StyledExtraItem>}
 					onDoubleClick={onToggleEdit}
 					onClick={onSelectList}
 					data-testid='unpinned-list-item'
 					role='button'
 					$bgColor={isActive ? '#d9d9d9' : ''}
-					$opacity={isDeleting ?  0.3 : 1}
+					$opacity={isDeleting ? 0.3 : 1}
 					{...hoverProps}
 				>
 					<Flex
@@ -105,10 +105,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 						style={{ width: '83%' }}
 					>
 						<Flex align='center' gap='10px'>
-							<StyledAvatar
-								icon={mapListToIcon[list.icon]}
-								$bgColor={list.color}
-							/>
+							<ListAvatar list={list}/>
 							{isEdit ? (
 								<StyledInput
 									value={value}
@@ -127,7 +124,7 @@ export const UnpinnedListItem: FC<MyListsItemProps> = memo(({ list }) => {
 						</Flex>
 					</Flex>
 				</StyledListItem>
-			</ListDropdownMenu>							
+			</ListDropdownMenu>
 		</SortableItem>
 	);
 });

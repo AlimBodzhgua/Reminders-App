@@ -1,4 +1,5 @@
-import { List, Input } from 'antd';
+import { List, Input, Skeleton } from 'antd';
+import { DashOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 interface StyledListItemProps {
@@ -53,3 +54,19 @@ export const StyledInput = styled(Input)`
 	border-radius: 0;
 	border-bottom: 1px solid #bcbcbc;
 `;
+
+export const StyledDashOutlined = styled(DashOutlined)`
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 100;
+`
+
+export const StyledSkeleton = styled(Skeleton)`
+
+	.ant-skeleton-avatar {
+		width: 30px!important;
+		height: 30px!important;
+	}
+`

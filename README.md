@@ -38,7 +38,7 @@ VITE_YMAPS_API_KEY='Your api key here' <br />
 For Server folder:
 
 PORT="4000" - here you can set post number. <br />
-DB_PASSWORD="" - your db password here. <br />
+DATABASE_PASSWORD="" - your db password here. <br />
 JWT_SECRET="" - your jwt secret key (you can set any value). <br />
 DATABASE="mongodb+srv://"username":<PASSWORD>@testconstuctorcluster.irsbj.mongodb.net/?retryWrites=true&w=majority&appName=TestConstuctorCluster" - put your cluster link and set your username instaed "username"  and put  <PASSWORD> keyword instead of password like in example. <br />
 

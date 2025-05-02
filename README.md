@@ -15,7 +15,7 @@ A smart task scheduler with advanced features (web clone of reminders app from M
 ## How to run the project
 
 ### Requirements
-To install and run the aplication you need [NodeJs](https://nodejs.org/en)
+To install and run the application you need [NodeJs](https://nodejs.org/en)
 
 ### Install Dependencies
 ```

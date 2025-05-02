@@ -41,3 +41,6 @@ PORT="4000" - here you can set post number(if you change it, you also need to se
 DATABASE_PASSWORD="" - your db password here. <br />
 JWT_SECRET="" - your jwt secret key (you can set any value). <br />
 DATABASE="mongodb+srv://"username":<PASSWORD>@testconstuctorcluster.irsbj.mongodb.net/?retryWrites=true&w=majority&appName=TestConstuctorCluster" - put your cluster link and set your username instaed "username"  and put  <PASSWORD> keyword instead of password like in example. <br />
+
+###  To run this app use: npm run start
+Use npm run start in server and client folder with 2 consoles at the same time.

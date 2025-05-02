@@ -1,7 +1,7 @@
 # Reminders-App
 A smart task scheduler with advanced features (web clone of reminders app from MacOS, but more simplified)
 
-#Technology stack
+# Technology stack
 - [React](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [AntDesign](https://ant.design/)
